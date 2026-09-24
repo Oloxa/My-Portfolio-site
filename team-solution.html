@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fetch Setter Polyfill/Safeguard for iframe Sandbox Environments -->
+    <script>
+        (function() {
+            try {
+                var _currentFetch = window.fetch;
+                if (typeof Window !== 'undefined' && Window.prototype) {
+                    try {
+                        var protoDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+                        if (!protoDesc || !protoDesc.set || !protoDesc.writable) {
+                            Object.defineProperty(Window.prototype, 'fetch', {
+                                get: function() { return _currentFetch; },
+                                set: function(fn) { _currentFetch = fn; },
+                                configurable: true,
+                                enumerable: true
+                            });
+                        }
+                    } catch (err) {}
+                }
+                try {
+                    var winDesc = Object.getOwnPropertyDescriptor(window, 'fetch');
+                    if (!winDesc || !winDesc.set || !winDesc.writable) {
+                        Object.defineProperty(window, 'fetch', {
+                            get: function() { return _currentFetch; },
+                            set: function(fn) { _currentFetch = fn; },
+                            configurable: true,
+                            enumerable: true
+                        });
+                    }
+                } catch (err) {}
+            } catch (e) {}
+        })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=leadership-business.html">
+    <title>Redirecting to Leadership & Business - Michael H Oloyede</title>
+    <link rel="canonical" href="leadership-business.html">
+    <script>
+        window.location.href = "leadership-business.html";
+    </script>
+</head>
+<body style="background-color: #0D0F12; color: #F5E6C8; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+    <p>Redirecting to <a href="leadership-business.html" style="color: #E6C280;">Leadership, Business & Health Solutions</a>...</p>
+</body>
+</html>

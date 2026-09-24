@@ -1,0 +1,117 @@
+        body {
+            background-color: #06020b;
+            color: #e9d5ff;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        header { display: none !important; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #06020b; }
+        ::-webkit-scrollbar-thumb { background: #7e22ce; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
+
+        .cursor-dot, .cursor-glow {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+        }
+        .cursor-glow {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(179,102,255,0.4) 0%, rgba(126,34,206,0) 70%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .glass-panel {
+            background: rgba(35, 15, 55, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(126, 34, 206, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(126, 34, 206, 0.1);
+            transition: all 0.4s ease;
+        }
+        .glass-panel:hover {
+            border-color: rgba(126, 34, 206, 0.7);
+            background: rgba(45, 20, 70, 0.55);
+            box-shadow: 0 10px 40px rgba(126, 34, 206, 0.3), inset 0 0 35px rgba(126, 34, 206, 0.2);
+        }
+
+        .text-outline-permanent {
+            color: transparent !important;
+            -webkit-text-stroke: 2px #b366ff;
+            text-shadow: 0 0 20px rgba(126, 34, 206, 0.8);
+        }
+
+        .badge-pulse {
+            animation: badge-pulse-scale 2s infinite ease-in-out;
+        }
+        @keyframes badge-pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .dot-purple {
+            background-color: #b366ff;
+            box-shadow: 0 0 0 0 rgba(179, 102, 255, 0.7);
+            animation: pulse-glow-purple 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        @keyframes pulse-glow-purple {
+            to { box-shadow: 0 0 0 8px rgba(179, 102, 255, 0); }
+        }
+
+        .dot-green {
+            background-color: #4ade80;
+            box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+            animation: pulse-glow-green 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        @keyframes pulse-glow-green {
+            to { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+        }
+
+        .hover-expand {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hover-expand:hover {
+            transform: scale(1.15);
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            15% { transform: translateX(-3px) rotate(-1.5deg); }
+            30% { transform: translateX(2px) rotate(1deg); }
+            45% { transform: translateX(-2px) rotate(-0.5deg); }
+            60% { transform: translateX(1px) rotate(0.5deg); }
+            75% { transform: translateX(-1px) rotate(-0.2deg); }
+        }
+        .wobble-hover:hover {
+            animation: wobble 0.8s ease-in-out both;
+        }
+
+        @keyframes textBounce {
+            0%, 100% { transform: scale(1) translateY(0); }
+            30% { transform: scale(1.15) translateY(-6px); text-shadow: 0 10px 25px rgba(179, 102, 255, 0.8); }
+            50% { transform: scale(1.1) translateY(-2px); }
+            70% { transform: scale(1.12) translateY(-4px); }
+        }
+        .purple-bounce-hover {
+            display: inline-block;
+            color: #b366ff;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-shadow: 0 0 15px rgba(126, 34, 206, 0.4);
+        }
+        .purple-bounce-hover:hover {
+            animation: textBounce 0.8s ease infinite;
+            color: #e9d5ff;
+            cursor: default;
+        }

@@ -1,0 +1,126 @@
+        @keyframes boil-rise {
+            0% { transform: translateY(20px) scale(0.5); opacity: 0; }
+            30% { opacity: 1; }
+            100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+        }
+
+        .btn-premium {
+            background: #d8b4fe;
+            color: #2e1065;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s, color 0.3s;
+        }
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #7e22ce, #b366ff);
+            z-index: -1;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .btn-premium:hover {
+            color: white !important;
+            box-shadow: 0 10px 40px rgba(179,102,255,0.8);
+        }
+        .btn-premium:hover::before { transform: translateY(0); }
+        .btn-premium:hover i { color: white !important; }
+
+        .team-avatar {
+            background: linear-gradient(145deg, #2e1065, #1a0b2e);
+            border: 2px solid rgba(179,102,255,0.5);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card {
+            background: rgba(25, 10, 45, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(179,102,255,0.3);
+        }
+
+        .tech-badge {
+            background: rgba(126,34,206,0.2);
+            border: 1px solid rgba(179,102,255,0.4);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 15px rgba(126,34,206,0.2);
+            transition: all 0.3s;
+        }
+
+        .title-glow { text-shadow: 0 0 25px rgba(179,102,255,0.6); }
+
+        #smooth-wrapper { width: 100%; overflow: hidden; perspective: 1000px; }
+        #smooth-content { will-change: transform; }
+        .word-illuminate { color: rgba(233, 213, 255, 0.2); transition: color 0.1s; }
+
+        .galaxy-wrapper {
+            background-color: #020005;
+        }
+        .galaxy-spiral {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 1500px; height: 1500px;
+            margin-top: -750px; margin-left: -750px;
+            background: conic-gradient(from 0deg, transparent 0%, rgba(179,102,255,0.05) 20%, transparent 40%, transparent 50%, rgba(126,34,206,0.05) 70%, transparent 90%);
+            border-radius: 50%;
+            animation: spin 40s linear infinite;
+            filter: blur(50px);
+            pointer-events: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spaceship-panel {
+            background: linear-gradient(160deg, rgba(20, 8, 40, 0.9) 0%, rgba(5, 2, 10, 0.95) 100%);
+            border: 1px solid rgba(179, 102, 255, 0.3);
+            border-top: 2px solid rgba(216, 180, 254, 0.6);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), inset 0 20px 50px rgba(126, 34, 206, 0.15);
+            border-radius: 2.5rem;
+            backdrop-filter: blur(20px);
+        }
+        .ufo-float { animation: ufo-float 6s ease-in-out infinite; }
+        @keyframes ufo-float {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-25px) rotate(-5deg); }
+        }
+        .astronaut-float { animation: astro-float 8s ease-in-out infinite reverse; }
+        @keyframes astro-float {
+            0%, 100% { transform: translateY(0) rotate(-10deg) scale(0.9); }
+            50% { transform: translateY(30px) rotate(10deg) scale(1); }
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(150%); }
+        }
+        .btn-rocket-flame {
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1); opacity: 0.7; }
+            100% { transform: translateX(-50%) scaleY(1.3); opacity: 1; }
+        }
+
+        .a11y-high-contrast {
+            filter: contrast(120%) grayscale(100%) !important;
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        .a11y-highlight-links a, .a11y-highlight-links button {
+            outline: 2px solid #ffea00 !important;
+            background-color: rgba(255, 234, 0, 0.1) !important;
+            color: #ffea00 !important;
+        }
+        .a11y-pause-animations *, .a11y-pause-animations *::before, .a11y-pause-animations *::after {
+            animation-play-state: paused !important;
+            transition: none !important;
+        }
+        .a11y-menu {
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(10px);
+        }
+        .a11y-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }

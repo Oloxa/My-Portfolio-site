@@ -1,0 +1,155 @@
+        .blueprint-canvas {
+            background-color: #06020b;
+            background-image:
+                radial-gradient(rgba(126, 34, 206, 0.1) 1.5px, transparent 1.5px),
+                radial-gradient(rgba(126, 34, 206, 0.1) 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            animation: panGrid 60s linear infinite;
+            cursor: crosshair;
+        }
+        @keyframes panGrid {
+            0% { background-position: 0 0, 20px 20px; }
+            100% { background-position: 40px 40px, 60px 60px; }
+        }
+
+        .blueprint-perspective {
+            perspective: 1500px;
+            transform-style: preserve-3d;
+        }
+
+        .n8n-node-premium {
+            background: rgba(30, 15, 45, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(126, 34, 206, 0.2);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+        .n8n-node-premium:hover {
+            transform: translate(-50%, -50%) scale(1.05) translateZ(30px) !important;
+            z-index: 50 !important;
+            border-color: var(--node-color, #b366ff);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px -5px var(--node-color-ghost, rgba(126, 34, 206, 0.5));
+        }
+
+        .scanning-line {
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--node-color, #b366ff), transparent);
+            box-shadow: 0 0 15px var(--node-color, #b366ff);
+            animation: scanAnim 1.5s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .n8n-node-premium:hover .scanning-line {
+            opacity: 1;
+        }
+        @keyframes scanAnim {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        .wire-base {
+            transition: stroke 0.3s ease, filter 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+        }
+        .wire-dimmed {
+            opacity: 0.1 !important;
+            filter: grayscale(100%);
+        }
+        .wire-active {
+            stroke-width: 5px !important;
+            opacity: 1 !important;
+        }
+        .packet-dimmed {
+            opacity: 0 !important;
+        }
+
+        .ai-core-glow {
+            animation: aiPulseGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes aiPulseGlow {
+            0% { box-shadow: 0 0 20px rgba(126, 34, 206, 0.3), inset 0 0 10px rgba(126, 34, 206, 0.1); border-color: rgba(126, 34, 206, 0.4); }
+            100% { box-shadow: 0 0 60px rgba(126, 34, 206, 0.8), inset 0 0 25px rgba(126, 34, 206, 0.4); border-color: rgba(179, 102, 255, 0.9); }
+        }
+
+        .port-breathe {
+            animation: portBreathe 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+        @keyframes portBreathe {
+            0% { box-shadow: 0 0 0 0 var(--port-color); }
+            70% { box-shadow: 0 0 0 8px rgba(0,0,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+        }
+
+        .float-delay-1 { animation: floatNode 6s ease-in-out infinite alternate; }
+        .float-delay-2 { animation: floatNode 7s ease-in-out 1s infinite alternate; }
+        .float-delay-3 { animation: floatNode 5s ease-in-out 2s infinite alternate; }
+        @keyframes floatNode {
+            0% { transform: translate(-50%, -50%) translateY(0); }
+            100% { transform: translate(-50%, -50%) translateY(-12px); }
+        }
+
+        .json-block {
+            background: #0d0614;
+            border: 1px solid rgba(126, 34, 206, 0.15);
+            font-family: monospace;
+            font-size: 10px;
+            color: #b366ff;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: left;
+            direction: ltr;
+        }
+        .json-key { color: #a78bfa; }
+        .json-val-str { color: #c084fc; }
+        .json-val-num { color: #f472b6; }
+
+        .logo-filter {
+            filter: grayscale(80%) sepia(100%) hue-rotate(220deg) opacity(0.6);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .logo-filter:hover {
+            filter: grayscale(0%) opacity(1) drop-shadow(0 0 10px rgba(126, 34, 206, 0.5));
+            transform: scale(1.1);
+            color: #b366ff;
+        }
+
+        .perspective-container {
+            perspective: 2000px;
+        }
+
+        .floating-icon-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .floating-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(126, 34, 206, 0.15);
+            border: 1px solid rgba(179, 102, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 25px rgba(179, 102, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .floating-icon-wrapper:hover .floating-icon {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 35px rgba(179, 102, 255, 0.9);
+            border-color: rgba(200, 150, 255, 0.9);
+        }
+        .floating-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.05);
+        }

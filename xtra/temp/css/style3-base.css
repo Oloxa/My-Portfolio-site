@@ -1,0 +1,209 @@
+        body {
+            background-color: #06020b;
+            color: #e9d5ff;
+            overflow-x: hidden;
+            font-family: 'Heebo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #06020b; }
+        ::-webkit-scrollbar-thumb { background: #7e22ce; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
+
+        .cursor-dot, .cursor-glow {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+        }
+        .cursor-glow {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(179,102,255,0.4) 0%, rgba(126,34,206,0) 70%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .premium-center-glow {
+            position: fixed;
+            inset: -20%;
+            background: radial-gradient(circle at center, rgba(126, 34, 206, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            will-change: transform;
+        }
+
+        .glass-panel {
+            background: rgba(20, 8, 35, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(126, 34, 206, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(126, 34, 206, 0.05);
+        }
+
+        .policy-content h2 {
+            color: #b366ff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(179, 102, 255, 0.2);
+            text-shadow: 0 0 10px rgba(126, 34, 206, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .policy-content h2 { font-size: 1.75rem; }
+        }
+
+        .policy-content p {
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .policy-content ul {
+            list-style-type: none;
+            padding-right: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-content ul li {
+            position: relative;
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+            padding-right: 1.5rem;
+        }
+
+        .policy-content ul li::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background-color: #b366ff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px #b366ff;
+        }
+
+        .policy-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .text-highlight {
+            background: linear-gradient(120deg, #b366ff, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .hero-title-glow {
+            text-shadow: 0 0 30px rgba(179, 102, 255, 0.6);
+        }
+
+        .a11y-high-contrast {
+            filter: contrast(120%) grayscale(100%) !important;
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        .a11y-highlight-links a, .a11y-highlight-links button {
+            outline: 2px solid #ffea00 !important;
+            background-color: rgba(255, 234, 0, 0.1) !important;
+            color: #ffea00 !important;
+        }
+        .a11y-pause-animations *, .a11y-pause-animations *::before, .a11y-pause-animations *::after {
+            animation-play-state: paused !important;
+            transition: none !important;
+        }
+        .a11y-menu {
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(10px);
+        }
+        .a11y-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        .xpera-hdr-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            width: 100%;
+            background-color: #110524;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 4rem;
+            font-family: 'Heebo', sans-serif !important;
+            border-bottom: 1px solid rgba(179, 102, 255, 0.1);
+        }
+        .xpera-hdr-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .xpera-hdr-img-logo {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .xpera-hdr-nav {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+        }
+        .xpera-hdr-link {
+            color: #b366ff;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .xpera-hdr-link.active {
+            color: #E9D5FF
+        }
+
+        .xpera-hdr-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(179, 102, 255, 0.8);
+        }
+        .xpera-hdr-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #b366ff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        @media (max-width: 1024px) {
+            .xpera-hdr-nav { gap: 2rem; }
+            .xpera-hdr-wrapper { padding: 1.25rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            .xpera-hdr-nav { display: none; }
+            .xpera-hdr-mobile-btn { display: block; }
+            .xpera-hdr-wrapper { padding: 1rem 1.5rem; }
+        }

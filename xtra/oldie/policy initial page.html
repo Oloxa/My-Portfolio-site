@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>מדיניות פרטיות ותנאי שירות | XPERA</title>
+    
+    <!-- Fonts: Modern Hebrew & Playfair for Footer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Config -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#06020b',
+                        brand: {
+                            purple: '#7e22ce',
+                            light: '#b366ff',
+                            soft: '#d8b4fe'
+                        },
+                        light: {
+                            DEFAULT: '#e9d5ff',
+                            pure: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* --- BASE STYLES & UI ARCHITECTURE --- */
+        body {
+            background-color: #06020b;
+            color: #e9d5ff;
+            overflow-x: hidden;
+            font-family: 'Heebo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #06020b; }
+        ::-webkit-scrollbar-thumb { background: #7e22ce; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9333ea; }
+
+        /* Ambient Glows */
+        .premium-center-glow {
+            position: fixed;
+            inset: -20%;
+            background: radial-gradient(circle at center, rgba(126, 34, 206, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            will-change: transform;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(20, 8, 35, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(126, 34, 206, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(126, 34, 206, 0.05);
+        }
+
+        /* Typography Styles for Policy Content */
+        .policy-content h2 {
+            color: #b366ff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(179, 102, 255, 0.2);
+            text-shadow: 0 0 10px rgba(126, 34, 206, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            .policy-content h2 { font-size: 1.75rem; }
+        }
+
+        .policy-content p {
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .policy-content ul {
+            list-style-type: none;
+            padding-right: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-content ul li {
+            position: relative;
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+            padding-right: 1.5rem;
+        }
+
+        .policy-content ul li::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background-color: #b366ff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px #b366ff;
+        }
+
+        .policy-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Highlight Text Effect */
+        .text-highlight {
+            background: linear-gradient(120deg, #b366ff, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Intro Section Glow */
+        .hero-title-glow {
+            text-shadow: 0 0 30px rgba(179, 102, 255, 0.6);
+        }
+
+        /* --- ACCESSIBILITY STYLES --- */
+        .a11y-high-contrast {
+            filter: contrast(120%) grayscale(100%) !important;
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        .a11y-highlight-links a, .a11y-highlight-links button {
+            outline: 2px solid #ffea00 !important;
+            background-color: rgba(255, 234, 0, 0.1) !important;
+            color: #ffea00 !important;
+        }
+        .a11y-pause-animations *, .a11y-pause-animations *::before, .a11y-pause-animations *::after {
+            animation-play-state: paused !important;
+            transition: none !important;
+        }
+        .a11y-menu {
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(10px);
+        }
+        .a11y-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+    </style>
+
+    <!-- ==========================================
+        XPERA ISOLATED HEADER SECTION
+        ========================================== -->
+    <style>
+        .xpera-hdr-wrapper {
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            background-color: #110524;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 4rem;
+            font-family: 'Heebo', sans-serif !important;
+            border-bottom: 1px solid rgba(179, 102, 255, 0.1);
+        }
+        .xpera-hdr-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .xpera-hdr-img-logo {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .xpera-hdr-nav {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+        }
+        .xpera-hdr-link {
+            color: #b366ff;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .xpera-hdr-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(179, 102, 255, 0.8);
+        }
+        .xpera-hdr-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #b366ff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        @media (max-width: 1024px) {
+            .xpera-hdr-nav { gap: 2rem; }
+            .xpera-hdr-wrapper { padding: 1.25rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            .xpera-hdr-nav { display: none; }
+            .xpera-hdr-mobile-btn { display: block; }
+            .xpera-hdr-wrapper { padding: 1rem 1.5rem; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-purple selection:text-white">
+
+    <!-- Header -->
+    <div class="xpera-hdr-wrapper" dir="ltr">
+        <nav class="xpera-hdr-nav">
+            <a href="index.html#contact" class="xpera-hdr-link">Contact</a>
+            <a href="index.html#solution" class="xpera-hdr-link">Solution</a>
+            <a href="index.html#article" class="xpera-hdr-link">Article</a>
+            <a href="index.html#team" class="xpera-hdr-link">Team</a>
+            <a href="index.html" class="xpera-hdr-link">Home</a>
+        </nav>
+        <button class="xpera-hdr-mobile-btn" aria-label="Open Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <a href="index.html" class="xpera-hdr-logo">
+            <img src="C:/Users/teame/Downloads/Mykee/Work Projects/website project/Xperia/Resources/Auth Logo small.png" alt="XPERA Logo" class="xpera-hdr-img-logo">
+        </a>
+    </div>
+
+    <!-- Floating WhatsApp (Left) -->
+    <a href="https://wa.me/972000000000" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 left-4 md:left-6 lg:left-16 z-50 flex items-center gap-3 group cursor-pointer anim-floater opacity-0" dir="ltr" aria-label="WhatsApp">
+        <div class="relative flex items-center justify-center w-12 h-12 md:w-10 md:h-10 bg-brand-purple rounded-full shadow-lg transition-transform group-hover:scale-75 hover:shadow-[0_0_15px_#b366ff]">
+            <div class="absolute inset-0 rounded-full bg-brand-purple opacity-40 animate-ping"></div>
+            <i class="fa-brands fa-whatsapp text-white text-2xl md:text-3xl relative z-10"></i>
+        </div>
+    </a>
+
+    <!-- Accessibility Widget (Right) -->
+    <div class="fixed bottom-6 right-4 md:right-6 lg:right-16 z-[60] flex items-center gap-[10px] md:gap-3 anim-floater opacity-0" dir="rtl">
+        <div class="relative flex items-center justify-center">
+            <!-- Accessibility Menu Panel -->
+            <div id="a11yMenu" class="a11y-menu absolute bottom-full mb-4 right-0 bg-[#0a0314]/95 border border-[#7e22ce]/50 backdrop-blur-xl rounded-2xl p-4 md:p-5 w-[240px] md:w-72 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+                <div class="flex justify-between items-center mb-4 border-b border-[#7e22ce]/30 pb-2">
+                    <h3 class="text-white font-bold text-base md:text-lg font-sans flex items-center gap-2"><i class="fa-solid fa-universal-access text-[#b366ff]"></i> תפריט נגישות</h3>
+                    <button id="closeA11y" class="text-[#e9d5ff]/60 hover:text-white transition cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="flex flex-col gap-2 font-sans text-sm md:text-base">
+                    <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="textSize">
+                        <span>הגדלת טקסט</span><i class="fa-solid fa-magnifying-glass-plus text-[#b366ff]"></i>
+                    </button>
+                    <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="contrast">
+                        <span>ניגודיות גבוהה</span><i class="fa-solid fa-circle-half-stroke text-[#b366ff]"></i>
+                    </button>
+                    <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="highlightLinks">
+                        <span>הדגשת קישורים</span><i class="fa-solid fa-link text-[#b366ff]"></i>
+                    </button>
+                    <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="pauseAnimations">
+                        <span>עצירת אנימציות</span><i class="fa-solid fa-pause text-[#b366ff]"></i>
+                    </button>
+                    <button class="a11y-btn flex items-center justify-center w-full bg-[#7e22ce]/20 hover:bg-[#7e22ce]/50 border border-[#7e22ce]/50 rounded-lg px-4 py-2.5 mt-2 text-white font-bold transition shadow-[0_0_10px_rgba(126,34,206,0.2)]" data-action="reset">
+                        איפוס הגדרות
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Toggle Icon Button -->
+            <button id="a11yToggle" class="flex items-center justify-center w-[42px] h-[42px] md:w-[50px] md:h-[50px] bg-[#110524] border border-[#7e22ce]/60 rounded-full shadow-[0_0_15px_rgba(126,34,206,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(179,102,255,0.7)] text-white hover:text-[#d8b4fe] cursor-pointer" aria-label="פתח תפריט נגישות" style="backdrop-filter: blur(10px);">
+                <i class="fa-solid fa-universal-access text-[18px] md:text-[22px]"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Background Elements -->
+    <div class="premium-center-glow"></div>
+    <div class="fixed top-0 left-0 w-full h-[500px] bg-gradient-to-b from-brand-purple/10 to-transparent pointer-events-none z-[-1]"></div>
+
+    <main class="relative z-10 pt-16 md:pt-24 pb-32 px-4 md:px-6">
+        
+        <!-- Hero Title Section -->
+        <div class="max-w-4xl mx-auto text-center mb-12 anim-fade-in opacity-0">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-light/20 bg-brand-purple/10 mb-6">
+                <span class="w-2 h-2 rounded-full bg-brand-light animate-pulse"></span>
+                <span class="text-xs font-bold tracking-widest uppercase text-brand-light">Legal & Privacy</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 hero-title-glow tracking-tight">מדיניות פרטיות ותנאי שירות</h1>
+            <p class="text-brand-soft font-medium">עודכן לאחרונה: 01.04.2026</p>
+        </div>
+
+        <!-- Glassmorphism Content Container -->
+        <div class="max-w-4xl mx-auto glass-panel p-6 md:p-10 lg:p-14 anim-slide-up opacity-0">
+            <div class="policy-content">
+                
+                <p class="text-lg font-medium text-white mb-8">
+                    אנחנו ב-<span class="text-highlight">Xpera</span> מכבדים את פרטיות המשתמשים והלקוחות שלנו ופועלים בהתאם לחוק הגנת הפרטיות, התשמ"א-1981, ולתיקון 13 לחוק. מסמך זה מסביר כיצד אנו אוספים, שומרים, מעבדים ומשתמשים במידע שלך במסגרת שירותי הייעוץ, האפיון והטמעת האוטומציות, ואילו זכויות עומדות לרשותך.
+                    <br><br>
+                    <strong>השימוש באתר ובשירותי החברה מהווה הסכמה למדיניות זו.</strong>
+                </p>
+
+                <h2>1. איסוף מידע וגישה לנתונים</h2>
+                <p>במסגרת שירותי הטמעת מערכות ואוטומציה, אנו אוספים מידע בכמה רמות:</p>
+                <ul>
+                    <li><strong>מידע שמסרת באופן ישיר:</strong> שם, טלפון, אימייל, פרטי העסק, ומידע המועבר במסגרת שאלוני אפיון צרכים.</li>
+                    <li><strong>גישה למערכות לקוח (Credentials):</strong> לצורך ביצוע העבודה, הלקוח עשוי להעניק ל-Xpera גישה למערכות צד ג' (כגון: CRM, ERP, Make, Zapier, Monday, Google Workspace וכו'). הגישה תיעשה אך ורק לצורך הגדרת האוטומציות ושיפור תהליכי העבודה.</li>
+                    <li><strong>מידע שנאסף אוטומטית:</strong> כתובת IP, נתוני שימוש באתר, Cookies וכלי אנליטיקה לשיפור חוויית הגלישה.</li>
+                </ul>
+
+                <h2>2. מטרות השירות והשימוש במידע</h2>
+                <ul>
+                    <li>מתן שירותי אפיון, בנייה והטמעה של מערכות מידע ואוטומציה.</li>
+                    <li>חיבור ממשקים (API) בין פלטפורמות שונות של הלקוח.</li>
+                    <li>תמיכה טכנית, תחזוקה ופתרון תקלות במערכות שהוטמעו.</li>
+                    <li>ניהול חשבונות, גבייה ושליחת עדכונים מקצועיים (בכפוף להסכמתך).</li>
+                </ul>
+
+                <h2>3. סודיות והגנה על מידע עסקי (NDA)</h2>
+                <p>Xpera מתחייבת לשמור בסודיות מוחלטת כל מידע עסקי, רשימות לקוחות, תהליכים פנימיים או נתונים פיננסיים אליהם תיחשף במסגרת עבודת האוטומציה. המידע לא יועבר לשום גורם שלישי ללא אישור מפורש בכתב מהלקוח, אלא אם הדבר נדרש לצורך תפעול המערכת (כגון חיבור ספק סליקה או שירות הודעות).</p>
+
+                <h2>4. אחריות על מערכות צד שלישי (Liability)</h2>
+                <ul>
+                    <li><strong>שירותי ענן ותוכנה:</strong> האוטומציות נבנות על גבי תשתיות צד ג' (Make, Zapier, N8N, חברות CRM וכו'). Xpera אינה אחראית לשינויים במדיניות המחירים של ספקים אלו, לתקלות בשרתים שלהם, לשינויים ב-API או להפסקת שירות מצדם.</li>
+                    <li><strong>אובדן נתונים:</strong> באחריות הלקוח לדאוג לגיבוי שוטף של נתוניו. Xpera לא תישא באחריות לכל נזק ישיר או עקיף, אובדן רווחים או אובדן מידע שנגרם עקב תקלה טכנית במערכת צד ג' או בשימוש באוטומציה.</li>
+                </ul>
+
+                <h2>5. קניין רוחני</h2>
+                <p>כל הכלים, הסקריפטים ושיטות העבודה הייחודיות של Xpera שפותחו לפני או במהלך העבודה נשארים קניינה הבלעדי.<br>
+                עם סיום התשלום עבור הפרויקט, יוענק ללקוח רישיון שימוש באוטומציות שנבנו עבורו במערכותיו, אך אין לו זכות למכור או להפיץ את ארכיטקטורת המערכת לצדדים שלישיים ללא אישור.</p>
+
+                <h2>6. שיתוף מידע עם צדדים שלישיים</h2>
+                <p>המידע ישותף רק במקרים הבאים:</p>
+                <ul>
+                    <li>לצורך מתן השירות (למשל: רישום הלקוח לשירות ענן כחלק מהפרויקט).</li>
+                    <li>בהתאם לדרישת חוק או צו שיפוטי.</li>
+                    <li>במקרה של שינוי מבני בחברה (מיזוג/מכירה), תוך התחייבות הגוף הרוכש לשמירה על תנאים אלו.</li>
+                </ul>
+
+                <h2>7. אבטחת מידע</h2>
+                <p>Xpera מיישמת סטנדרטים גבוהים של אבטחת מידע. בעת עבודה על מערכות לקוח, אנו ממליצים על שימוש בהרשאות מוגבלות (Least Privilege) ושימוש בניהול סיסמאות מאובטח. באחריות הלקוח לבטל גישות של Xpera למערכותיו עם סיום ההתקשרות.</p>
+
+                <h2>8. דיוור ושירותי הודעות</h2>
+                <p>אנו עשויים לשלוח עדכונים טכניים, הצעות לשיפור המערכות או מידע שיווקי באמצעות אימייל, SMS או WhatsApp. ניתן להסיר את עצמך מרשימת התפוצה בכל עת.</p>
+
+                <h2>9. זכויות הלקוח</h2>
+                <p>לפי חוק הגנת הפרטיות, הינך זכאי לעיין במידע המוחזק עליך, לבקש את תיקונו או מחיקתו. פניות בנושא זה יש להפנות לאימייל המופיע בסעיף 11.</p>
+
+                <h2>10. שינויים בתנאים</h2>
+                <p>Xpera שומרת לעצמה את הזכות לעדכן את מדיניות זו מעת לעת. המשך קבלת השירות לאחר השינוי מהווה הסכמה לתנאים החדשים.</p>
+
+                <h2>11. יצירת קשר</h2>
+                <ul class="mt-4 border-t border-brand-purple/20 pt-6">
+                    <li><strong>שם העסק:</strong> Xpera.io</li>
+                    <li><strong>אימייל:</strong> <a href="mailto:office@xpera.io" class="text-brand-light hover:text-white transition-colors duration-300">office@xpera.io</a></li>
+                    <li><strong>טלפון:</strong> <a href="tel:0548133430" class="text-brand-light hover:text-white transition-colors duration-300" dir="ltr">054-813-3430</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ==========================================
+    NEW CUSTOM FOOTER (ISOLATED)               
+    ========================================== -->
+    <style id="xpera-isolated-footer-css">
+        #xpera-isolated-footer {
+            background-color: #1a052b;
+            background-image: 
+                linear-gradient(115deg, transparent 20%, rgba(0,0,0,0.2) 25%, rgba(255,255,255,0.03) 30%, transparent 45%),
+                linear-gradient(260deg, transparent 35%, rgba(0,0,0,0.3) 45%, rgba(255,255,255,0.02) 50%, transparent 65%),
+                radial-gradient(circle at 70% 30%, #431273 0%, #1a052b 70%);
+            position: relative;
+            width: 100%;
+            padding: 5rem 5rem 2.5rem 5rem;
+            overflow: hidden;
+            font-family: 'Heebo', sans-serif;
+            z-index: 10;
+            box-sizing: border-box;
+            color: #d8b4fe;
+            border-top: 1px solid rgba(179, 102, 255, 0.08);
+        }
+        #xpera-isolated-footer * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .xif-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        .xif-main-nav {
+            display: flex;
+            gap: 2.5rem;
+            padding-top: 0.5rem;
+        }
+        .xif-nav-link {
+            color: #e9d5ff;
+            font-size: 17px;
+            font-weight: 300;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .xif-nav-link:hover { color: #ffffff; }
+        .xif-contact-block {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1.5rem;
+        }
+        .xif-serif-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: #d8b4fe;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .xif-email-area {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            align-items: flex-end;
+        }
+        .xif-email-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: #c4a5ff;
+        }
+        .xif-email-link {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: #e9d5ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .xif-email-link:hover { color: #ffffff; }
+        .xif-giant-text-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            margin: 1rem 0 3rem 0;
+        }
+        .xif-giant-text {
+            font-size: clamp(80px, 18.5vw, 350px);
+            font-weight: 500;
+            letter-spacing: clamp(10px, 2vw, 40px);
+            line-height: 0.8;
+            margin: 0;
+            background: linear-gradient(180deg, #9333ea 0%, #6b21a8 40%, rgba(30, 6, 50, 0.1) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; 
+            user-select: none;
+            padding-left: clamp(10px, 2vw, 40px); 
+        }
+        .xif-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        .xif-social-nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .xif-social-link {
+            color: #c4a5ff;
+            font-size: 14px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .xif-social-link:hover { color: #ffffff; }
+        .xif-copyright {
+            color: #9333ea;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        @media (max-width: 1024px) {
+            #xpera-isolated-footer { padding: 4rem 3rem 2rem 3rem; }
+            .xif-main-nav { gap: 1.5rem; }
+            .xif-serif-heading { font-size: 22px; }
+        }
+        @media (max-width: 768px) {
+            #xpera-isolated-footer { padding: 3rem 1.5rem 2rem 1.5rem; }
+            .xif-top {
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+                gap: 3rem;
+            }
+            .xif-contact-block { align-items: center; text-align: center; }
+            .xif-email-area { align-items: center; }
+            .xif-main-nav { flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+            .xif-giant-text-container { margin: 2rem 0; }
+            .xif-bottom { flex-direction: column; gap: 1.5rem; }
+            .xif-social-nav { flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+        }
+    </style>
+
+    <div id="xpera-isolated-footer" class="xif-wrapper" dir="ltr" role="contentinfo">
+        <div class="xif-top">
+            <nav class="xif-main-nav">
+                <a href="#" class="xif-nav-link">Contact Us</a>
+                <a href="#" class="xif-nav-link">Solution</a>
+                <a href="#" class="xif-nav-link">Article</a>
+                <a href="#" class="xif-nav-link">Team</a>
+                <a href="#" class="xif-nav-link">Home</a>
+            </nav>
+            <div class="xif-contact-block">
+                <h3 class="xif-serif-heading">
+                    Interested In Working Us, Try Our<br>
+                    !!!Services Or Simply Learn More
+                </h3>
+                <div class="xif-email-area">
+                    <span class="xif-email-label">:Contact Xpera At</span>
+                    <a href="mailto:Xperaio@Gmail.Com" class="xif-email-link">
+                        <span class="xif-arrow">&larr;</span> Xperaio@Gmail.Com
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="xif-giant-text-container">
+            <h1 class="xif-giant-text">XPERA</h1>
+        </div>
+        <div class="xif-bottom">
+            <nav class="xif-social-nav">
+                <a href="#" class="xif-social-link">Instagram</a>
+                <a href="#" class="xif-social-link">Whatsapp</a>
+                <a href="#" class="xif-social-link">Facebook</a>
+                <a href="#" class="xif-social-link">Linkedin</a>
+            </nav>
+            <div class="xif-copyright">
+                Xpera. All Rights Reserved 2026 &copy;
+            </div>
+        </div>
+    </div>
+    <!-- ========================================== -->
+
+    <!-- GSAP Animations & Accessibility Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. Initial Page Load Animations ---
+            const tl = gsap.timeline();
+            
+            // Fade in Hero Title
+            tl.fromTo('.anim-fade-in', 
+                { opacity: 0, y: -30 },
+                { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }
+            )
+            // Slide up Glass Panel
+            .fromTo('.anim-slide-up',
+                { opacity: 0, y: 50, scale: 0.98 },
+                { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'expo.out' },
+                "-=0.7"
+            )
+            // Pop in floating buttons
+            .fromTo('.anim-floater', 
+                { opacity: 0, scale: 0.5, y: 20 }, 
+                { opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'back.out(1.8)' },
+                "-=0.5"
+            );
+
+            // --- 2. Scroll Triggered Content Animations ---
+            const headings = gsap.utils.toArray('.policy-content h2');
+            
+            headings.forEach((heading) => {
+                // Animate Section Heading
+                gsap.fromTo(heading,
+                    { opacity: 0, x: 30 },
+                    {
+                        opacity: 1, x: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: heading,
+                            start: 'top 85%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    }
+                );
+
+                // Find and animate siblings (Paragraphs & Lists) immediately following the heading
+                let nextEl = heading.nextElementSibling;
+                const pTags = [];
+                const lists = [];
+
+                while(nextEl && nextEl.tagName !== 'H2') {
+                    if (nextEl.tagName === 'P') pTags.push(nextEl);
+                    if (nextEl.tagName === 'UL') lists.push(nextEl);
+                    nextEl = nextEl.nextElementSibling;
+                }
+
+                if (pTags.length > 0) {
+                    gsap.fromTo(pTags,
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out',
+                            scrollTrigger: { trigger: heading, start: 'top 80%', toggleActions: 'play none none reverse' }
+                        }
+                    );
+                }
+
+                if (lists.length > 0) {
+                    lists.forEach(ul => {
+                        const lis = ul.querySelectorAll('li');
+                        gsap.fromTo(lis,
+                            { opacity: 0, x: -20 },
+                            {
+                                opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.2)',
+                                scrollTrigger: { trigger: ul, start: 'top 85%', toggleActions: 'play none none reverse' }
+                            }
+                        );
+                    });
+                }
+            });
+
+            // --- 3. Parallax Background Glow ---
+            gsap.to('.premium-center-glow', {
+                yPercent: 20,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1
+                }
+            });
+
+            // --- 4. ACCESSIBILITY LOGIC ---
+            const a11yToggle = document.getElementById('a11yToggle');
+            const a11yMenu = document.getElementById('a11yMenu');
+            const closeA11y = document.getElementById('closeA11y');
+            
+            let a11yState = {
+                textSize: 100,
+                contrast: false,
+                links: false,
+                animationsPaused: false
+            };
+
+            function toggleA11yMenu() {
+                a11yMenu.classList.toggle('active');
+            }
+
+            if(a11yToggle) a11yToggle.addEventListener('click', toggleA11yMenu);
+            if(closeA11y) closeA11y.addEventListener('click', toggleA11yMenu);
+
+            document.querySelectorAll('.a11y-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const action = e.currentTarget.dataset.action;
+                    switch(action) {
+                        case 'textSize':
+                            a11yState.textSize = a11yState.textSize >= 140 ? 100 : a11yState.textSize + 20;
+                            document.documentElement.style.fontSize = `${a11yState.textSize}%`;
+                            setTimeout(() => ScrollTrigger.refresh(), 200);
+                            break;
+                        case 'contrast':
+                            a11yState.contrast = !a11yState.contrast;
+                            document.body.classList.toggle('a11y-high-contrast', a11yState.contrast);
+                            break;
+                        case 'highlightLinks':
+                            a11yState.links = !a11yState.links;
+                            document.body.classList.toggle('a11y-highlight-links', a11yState.links);
+                            break;
+                        case 'pauseAnimations':
+                            a11yState.animationsPaused = !a11yState.animationsPaused;
+                            document.body.classList.toggle('a11y-pause-animations', a11yState.animationsPaused);
+                            if(a11yState.animationsPaused) {
+                                gsap.globalTimeline.pause();
+                            } else {
+                                gsap.globalTimeline.play();
+                            }
+                            break;
+                        case 'reset':
+                            a11yState = { textSize: 100, contrast: false, links: false, animationsPaused: false };
+                            document.documentElement.style.fontSize = '100%';
+                            document.body.classList.remove('a11y-high-contrast', 'a11y-highlight-links', 'a11y-pause-animations');
+                            gsap.globalTimeline.play();
+                            setTimeout(() => ScrollTrigger.refresh(), 200);
+                            break;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

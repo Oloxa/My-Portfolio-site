@@ -1,0 +1,121 @@
+        *:not(i), ::placeholder {
+            font-family: 'Heebo', sans-serif !important;
+        }
+
+        body {
+            background-color: #06020b;
+            color: #e9d5ff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        header { display: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #06020b; }
+        ::-webkit-scrollbar-thumb { background: #7e22ce; border-radius: 4px; }
+
+        .cursor-dot, .cursor-glow {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+        }
+        .cursor-glow {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(179,102,255,0.4) 0%, rgba(126,34,206,0) 70%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .glass-panel {
+            background: rgba(35, 15, 55, 0.45);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(126, 34, 206, 0.4);
+            border-radius: 2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .glass-panel:hover {
+            border-color: rgba(179, 102, 255, 0.8);
+            background: rgba(45, 20, 70, 0.65);
+            box-shadow: 0 20px 40px rgba(126, 34, 206, 0.4);
+        }
+
+        .badge-transition {
+            transition-property: all;
+            transition-duration: 1600ms;
+            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .hero-badge.simulate-hover { padding-left: 2rem !important; padding-right: 2rem !important; background-color: rgba(139, 49, 227, 0.4) !important; }
+        .hero-badge.simulate-hover .badge-space { width: 4rem !important; }
+        .hero-badge.simulate-hover .badge-dot { opacity: 0 !important; transform: scale(0.5) !important; }
+        .hero-badge.simulate-hover .badge-icon { opacity: 1 !important; transform: scale(1.25) translateY(-1rem) !important; }
+        .hero-badge.simulate-hover, .hero-badge.simulate-hover .badge-space, .hero-badge.simulate-hover .badge-dot, .hero-badge.simulate-hover .badge-icon { transition-duration: 1600ms !important; transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1) !important; }
+
+        .moon-phase-shadow {
+            animation: phase-shift 18s infinite linear;
+            box-shadow: 0 0 15px #06020b;
+        }
+        @keyframes phase-shift {
+            0% { transform: translateX(110%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(-110%); }
+        }
+
+        .moon-glow-sync {
+            animation: moon-glow 18s infinite linear;
+        }
+        @keyframes moon-glow {
+            0%, 100% { box-shadow: 0 0 60px rgba(216,180,254,0.7); opacity: 1; }
+            50% { box-shadow: 0 0 10px rgba(216,180,254,0.1); opacity: 0.5; }
+        }
+
+        .global-moonlight-sync {
+            animation: moonlight-bg 18s infinite linear;
+        }
+        @keyframes moonlight-bg {
+            0%, 100% { background-color: rgba(90, 30, 140, 0.15); }
+            50% { background-color: rgba(6, 2, 11, 0); }
+        }
+
+        .tech-carousel-pill {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .tech-carousel-pill:hover {
+            transform: scale(1.15) translateY(-8px) rotate(-2deg) !important;
+            box-shadow: 0 15px 35px rgba(179,102,255,0.4), inset 0 0 15px rgba(179,102,255,0.2);
+            border-color: #d8b4fe;
+            background-color: #1a0b2e;
+            z-index: 20;
+        }
+        .tech-carousel-pill i {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s;
+        }
+        .tech-carousel-pill:hover i {
+            transform: rotate(20deg) scale(1.3);
+            color: #ffffff;
+            text-shadow: 0 0 10px #b366ff;
+        }
+        .marquee-track {
+            animation: scroll-left 35s linear infinite;
+        }
+        .marquee-track.reverse {
+            animation: scroll-right 30s linear infinite;
+        }
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-100% - 1.5rem)); }
+        }
+        @keyframes scroll-right {
+            from { transform: translateX(calc(-100% - 1.5rem)); }
+            to { transform: translateX(0); }
+        }

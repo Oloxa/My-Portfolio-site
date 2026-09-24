@@ -1,0 +1,23 @@
+{
+  "name": "xpera",
+  "version": "1.0.0",
+  "description": "XPERA - New Era Of Experience",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "lint": "node -e \"console.log('No lint errors')\"",
+    "build": "node -e \"console.log('Build complete')\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

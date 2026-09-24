@@ -1,0 +1,1522 @@
+<!doctype html>
+<html lang="he" dir="rtl" style="scroll-behavior: smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <title>XPERA | הנבחרת שמהנדסת צמיחה עם AI</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <!-- Fonts: Modern Hebrew -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Tailwind CSS Config -->
+        <script>
+            window.tailwind = window.tailwind || {}
+            window.tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            dark: '#06020b',
+                            brand: {
+                                purple: '#7e22ce',
+                                light: '#b366ff',
+                                soft: '#d8b4fe',
+                            },
+                            light: {
+                                DEFAULT: '#e9d5ff',
+                                pure: '#ffffff',
+                            },
+                        },
+                        fontFamily: {
+                            sans: ['Heebo', 'sans-serif'],
+                        },
+                    },
+                },
+            }
+        </script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- FontAwesome 6 -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <!-- GSAP & Plugins -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+        <link rel="stylesheet" href="/css/style2.css" />
+        <style>
+            .vintage-horizontal-form {
+                border: 1px solid rgba(179, 102, 255, 0.4);
+                border-radius: 12px;
+                padding: 2rem;
+                background: linear-gradient(
+                    180deg,
+                    rgba(35, 15, 65, 0.8) 0%,
+                    rgba(20, 8, 35, 0.95) 100%
+                );
+                box-shadow:
+                    0 20px 50px rgba(0, 0, 0, 0.5),
+                    inset 0 0 30px rgba(179, 102, 255, 0.15);
+            }
+            .vintage-input {
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid rgba(179, 102, 255, 0.4);
+                padding: 0.5rem 0;
+                color: #e9d5ff;
+                transition:
+                    border-color 0.3s,
+                    box-shadow 0.3s;
+            }
+            .vintage-input::placeholder {
+                color: rgba(179, 102, 255, 0.5);
+            }
+            .vintage-input:focus {
+                outline: none;
+                border-bottom-color: #b366ff;
+                box-shadow: 0 1px 0 0 #b366ff;
+            }
+            .premium-center-glow {
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(179, 102, 255, 0.15) 0%,
+                    rgba(126, 34, 206, 0.09) 40%,
+                    transparent 75%
+                );
+                pointer-events: none;
+                z-index: 0;
+            }
+            .btn-premium-submit {
+                background: linear-gradient(135deg, #3b0764, #2e1065);
+                color: #d8b4fe;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1;
+                border: 1px solid rgba(168, 85, 247, 0.2);
+            }
+            .btn-premium-submit::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 60%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.15),
+                    transparent
+                );
+                transform: skewX(-25deg);
+                transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: -1;
+            }
+            .btn-premium-submit:hover {
+                transform: translateY(-4px) scale(1.02);
+                box-shadow:
+                    0 15px 30px rgba(126, 34, 206, 0.6),
+                    0 0 25px rgba(179, 102, 255, 0.4);
+                background: linear-gradient(135deg, #b366ff, #a855f7);
+                color: #06020b;
+                border-color: #d8b4fe;
+            }
+            .btn-premium-submit:hover::before {
+                left: 150%;
+            }
+            .btn-premium-submit .arrow-icon {
+                display: inline-block;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .btn-premium-submit:hover .arrow-icon {
+                transform: translateX(-6px);
+            }
+            @keyframes diamondBreathe {
+                0%,
+                100% {
+                    transform: rotate(45deg) scale(1);
+                    box-shadow: 0 0 5px rgba(126, 34, 206, 0.4);
+                    opacity: 0.6;
+                }
+                50% {
+                    transform: rotate(45deg) scale(1.5);
+                    box-shadow:
+                        0 0 15px rgba(179, 102, 255, 0.9),
+                        0 0 5px rgba(255, 255, 255, 0.4);
+                    opacity: 1;
+                    background-color: #d8b4fe;
+                }
+            }
+            .diamond-breathe {
+                animation: diamondBreathe 3s ease-in-out infinite;
+            }
+            .delay-1 {
+                animation-delay: 0.75s;
+            }
+            .delay-2 {
+                animation-delay: 1.5s;
+            }
+            .delay-3 {
+                animation-delay: 2.25s;
+            }
+        </style>
+    </head>
+    <body class="antialiased">
+        <!-- ==========================================
+         NEW ISOLATED HEADER SECTION (BASED ON IMAGE)
+         ========================================== -->
+
+        <div class="xpera-hdr-wrapper" dir="ltr">
+            <nav class="xpera-hdr-nav">
+                <a href="/articles" class="xpera-hdr-link">מאמרים</a>
+                <a href="#contact" class="xpera-hdr-link">צור קשר</a>
+                <a href="/#solution" class="xpera-hdr-link">הפתרון</a>
+                <a href="/team.html" class="xpera-hdr-link active">הצוות</a>
+                <a href="/" class="xpera-hdr-link">דף הבית</a>
+            </nav>
+            <button class="xpera-hdr-mobile-btn" aria-label="Open Menu">
+                <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <a href="#" class="xpera-hdr-logo">
+                <img src="/logo.png" alt="XPERA Logo" class="xpera-hdr-img-logo" />
+            </a>
+        </div>
+        <!-- ========================================== -->
+
+        <!-- Global Moonlight Background -->
+        <div class="fixed inset-0 pointer-events-none z-0 global-moonlight-sync"></div>
+
+        <!-- Global Starry Background -->
+        <div class="fixed inset-0 pointer-events-none z-0" id="warpBg"></div>
+
+        <!-- Custom Cursor -->
+        <div class="cursor-glow" id="cursorGlow"></div>
+        <div class="cursor-dot" id="cursorDot"></div>
+
+        <!-- MAIN SCROLL WRAPPER -->
+        <div id="smooth-wrapper" class="relative z-10">
+            <div id="smooth-content" class="skew-elem">
+                <main class="relative">
+                    <!-- NEW INNOVATIVE HERO SECTION (FLIPPED RTL) -->
+                    <section
+                        id="hero-section"
+                        class="relative min-h-screen flex flex-col justify-center pt-24 pb-48 md:pb-40 px-4 md:px-6 lg:px-16 overflow-hidden z-10"
+                    >
+                        <!-- Ambient Glows (Flipped X) -->
+                        <div class="absolute inset-0 pointer-events-none z-0" id="ambientBg">
+                            <div
+                                class="absolute top-1/3 right-0 -translate-y-1/2 w-[500px] md:w-[800px] h-[500px] md:h-[800px] bg-brand-purple/20 rounded-full blur-[140px] mix-blend-screen"
+                            ></div>
+                            <div
+                                class="absolute bottom-1/4 left-1/4 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#b366ff]/10 rounded-full blur-[120px] mix-blend-screen"
+                            ></div>
+                        </div>
+
+                        <!-- Glowing Moon in Top Left (Flipped) -->
+                        <div
+                            class="absolute top-[5%] md:top-[8%] left-[5%] md:left-[8%] w-[80px] md:w-[120px] h-[80px] md:h-[120px] z-0 pointer-events-none moon-glow-sync rounded-full"
+                        >
+                            <div
+                                class="w-full h-full rounded-full bg-gradient-to-tr from-[#7e22ce] via-[#d8b4fe] to-[#ffffff] overflow-hidden relative"
+                            >
+                                <div
+                                    class="absolute -top-[10%] -left-[10%] w-[120%] h-[120%] bg-[#06020b] rounded-full moon-phase-shadow"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <!-- RTL wrapper to ensure absolute right visual anchoring for title -->
+                        <div
+                            class="w-full flex justify-start z-20 mb-16 md:mb-24 lg:mb-32"
+                            dir="rtl"
+                        >
+                            <div class="flex flex-col items-start w-full max-w-[100rem]">
+                                <!-- Top Badge with AI Eruption Hover -->
+                                <div dir="rtl" class="mb-8 pr-2">
+                                    <div
+                                        class="hero-badge group relative inline-flex items-center px-6 py-2.5 rounded-full border border-brand-light/40 bg-brand-purple/20 backdrop-blur-md badge-transition hover:px-8 hover:bg-[#8b31e3]/40 cursor-default"
+                                        dir="ltr"
+                                    >
+                                        <!-- Left Text (English reads LTR) -->
+                                        <span
+                                            class="text-xs md:text-sm tracking-[0.2em] text-[#f3e8ff] font-bold uppercase z-10 badge-transition"
+                                            >XPERA</span
+                                        >
+
+                                        <!-- Expanding Space & AI Eruption Center -->
+                                        <div
+                                            class="badge-space relative flex items-center justify-center w-5 group-hover:w-16 h-4 badge-transition mx-1.5"
+                                        >
+                                            <span
+                                                class="badge-dot absolute w-2 h-2 rounded-full bg-[#b366ff] shadow-[0_0_12px_4px_rgba(179,102,255,0.9)] animate-pulse badge-transition group-hover:opacity-0 group-hover:scale-50"
+                                            ></span>
+                                            <div
+                                                class="badge-icon absolute opacity-0 scale-50 translate-y-3 group-hover:opacity-100 group-hover:scale-125 group-hover:-translate-y-4 badge-transition flex items-center justify-center pointer-events-none z-50"
+                                            >
+                                                <i
+                                                    class="fa-solid fa-brain text-[#e9d5ff] text-[1.6rem] drop-shadow-[0_0_20px_#b366ff]"
+                                                ></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Right Text -->
+                                        <span
+                                            class="text-xs md:text-sm tracking-[0.2em] text-[#f3e8ff] font-bold uppercase z-10 badge-transition"
+                                            >INTELLIGENCE</span
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- Massive Right-Aligned Title -->
+                                <h1 class="flex flex-col items-start select-none w-full">
+                                    <span
+                                        class="hero-title-main hero-hover inline-block font-black tracking-tighter text-[18vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] text-[#f3e8ff] drop-shadow-[0_0_30px_rgba(179,102,255,0.6)] cursor-default"
+                                        dir="ltr"
+                                    >
+                                        .XPERA
+                                    </span>
+                                    <span
+                                        class="hero-title-sub1 hero-hover inline-block font-bold tracking-normal text-[13vw] md:text-[9vw] lg:text-[7.5vw] leading-[0.9] text-[#d8b4fe] mt-4 md:mt-2 cursor-default drop-shadow-[0_0_15px_rgba(126,34,206,0.3)]"
+                                        dir="rtl"
+                                    >
+                                        מהנדסים צמיחה
+                                    </span>
+                                    <span
+                                        class="hero-title-sub2 hero-hover inline-block font-bold tracking-normal text-[7vw] md:text-[5vw] lg:text-[4.2vw] leading-[1.1] text-[#b366ff] mt-4 md:mt-3 cursor-default drop-shadow-[0_0_15px_rgba(126,34,206,0.3)]"
+                                        dir="rtl"
+                                    >
+                                        מבוססת דאטה ובינה מלאכותית
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+
+                        <!-- Lowered Bottom Fixed Elements (Flipped) -->
+                        <div
+                            class="absolute bottom-2 md:bottom-4 left-4 right-4 md:left-6 md:right-6 lg:left-16 lg:right-16 flex flex-col md:flex-row justify-between items-end gap-10 md:gap-0 z-20 pointer-events-none"
+                            dir="rtl"
+                        >
+                            <!-- CTA Button: Now right-aligned visually in RTL -->
+                            <div class="pointer-events-auto pb-[80px] md:pb-[100px]">
+                                <a
+                                    href="/#contact-cta"
+                                    class="btn-premium hero-cta-btn px-8 py-4 md:px-10 md:py-5 rounded-full inline-flex items-center justify-center gap-4 shadow-[0_10px_30px_rgba(126,34,206,0.5)] group min-w-[240px] md:min-w-[280px]"
+                                >
+                                    <span
+                                        class="font-sans font-bold text-lg md:text-xl text-[#2e1065] group-hover:text-white transition-colors"
+                                        >התחילו פרויקט צמיחה</span
+                                    >
+                                    <i
+                                        class="fa-solid fa-arrow-left text-[#2e1065] group-hover:text-white text-lg md:text-xl transition-colors"
+                                    ></i>
+                                </a>
+                            </div>
+
+                            <!-- Bracket Text: Now left-aligned visually in RTL -->
+                            <div
+                                class="pointer-events-auto flex items-center gap-2 md:gap-4 group w-full md:max-w-md lg:max-w-xl text-right pb-4 md:pb-8"
+                            >
+                                <span
+                                    class="hero-bracket text-[5rem] md:text-[8rem] font-thin text-[#a855f7] group-hover:text-[#d8b4fe] transition-colors duration-500 leading-none h-full flex items-center -translate-y-1"
+                                    >}</span
+                                >
+                                <p
+                                    class="hero-desc-text text-[#e9d5ff]/90 text-sm md:text-lg font-medium leading-relaxed self-center py-2"
+                                >
+                                    אנחנו האדריכלים של התשתית העסקית המודרנית. מחברים מערכות
+                                    מנותקות, מטמיעים בינה מלאכותית (AI) בלב התהליכים העסקיים,
+                                    והופכים כאוס למנוע עסקי משומן שעושה Scale אמיתי.
+                                </p>
+                                <span
+                                    class="hero-bracket text-[5rem] md:text-[8rem] font-thin text-[#a855f7] group-hover:text-[#d8b4fe] transition-colors duration-500 leading-none h-full flex items-center -translate-y-1"
+                                    >{</span
+                                >
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- WHY XPERA SECTION -->
+                    <section class="py-20 md:py-32 px-6 relative z-10" id="why-section">
+                        <div class="max-w-5xl mx-auto">
+                            <div class="text-center mb-12 why-header">
+                                <span
+                                    class="text-[#b366ff] text-sm uppercase tracking-[0.2em] font-bold"
+                                    >WHY XPERA</span
+                                >
+                                <h2
+                                    class="text-3xl md:text-5xl font-bold mt-4 text-[#f3e8ff] title-glow why-title-type leading-[1.6] md:leading-[1.4]"
+                                >
+                                    למה XPERA? כי "<span
+                                        class="inline-block transform -rotate-2 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans"
+                                        >אוטומציה</span
+                                    >" רגילה כבר לא מספקת
+                                </h2>
+                            </div>
+                            <div
+                                class="glass-panel p-8 md:p-14 rounded-3xl relative overflow-hidden group border border-[#a855f7]/50"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-brand-purple/0 via-brand-purple/20 to-brand-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+                                ></div>
+
+                                <p
+                                    class="text-xl md:text-3xl leading-snug md:leading-relaxed font-medium"
+                                    id="illuminate-text"
+                                >
+                                    בעולם של היום, עסק שלא משלב AI בתהליכים שלו נשאר מאחור. רוב
+                                    העסקים טובעים במידע שמפוזר בין 6 מערכות שונות, אקסלים וקבוצות
+                                    וואטסאפ. ב-XPERA אנחנו לא רק עושים סדר – אנחנו מביאים
+                                    אינטליגנציה. המומחיות שלנו היא לקחת תהליכים ידניים מתישים ולהפוך
+                                    אותם לאוטומציה חכמה שמתקתקת כמו שעון.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- TEAM SECTION (Section 3) -->
+                    <section
+                        id="team-section"
+                        class="py-20 md:py-32 px-6 relative z-10 perspective-[2000px]"
+                        style="font-family: 'Heebo', sans-serif !important"
+                    >
+                        <div class="max-w-6xl mx-auto">
+                            <div
+                                class="text-center mb-16 md:mb-24 team-header flex flex-col items-center"
+                            >
+                                <h2
+                                    class="font-sans text-4xl md:text-5xl font-black text-[#f3e8ff] mb-4 tracking-tight"
+                                    style="font-family: 'Heebo', sans-serif !important"
+                                >
+                                    הנבחרת של XPERA
+                                </h2>
+                                <h3
+                                    class="font-sans text-xl md:text-2xl text-[#b366ff] font-bold mb-6"
+                                    style="font-family: 'Heebo', sans-serif !important"
+                                >
+                                    הכוח המשולב של עסקים ו-AI
+                                </h3>
+                                <p
+                                    class="font-sans text-[#e9d5ff]/90 max-w-5xl mx-auto text-base md:text-lg leading-relaxed font-medium"
+                                    style="font-family: 'Heebo', sans-serif !important"
+                                >
+                                    אנחנו חיים ונושמים את עולמות ה-
+                                    <span
+                                        class="team-pill inline-block transform -rotate-2 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans mx-1 whitespace-nowrap"
+                                        dir="ltr"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                        >Generative AI (GenAI)</span
+                                    >
+                                    והאוטומציה המתקדמת. אנחנו משתמשים בכלים המובילים בשוק
+                                    <span
+                                        class="team-pill inline-block transform rotate-1 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans mx-1 mt-2 md:mt-0 leading-tight"
+                                        dir="ltr"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                        >(OpenAI / GPT-4, Anthropic Claude, Midjourney)</span
+                                    >
+                                    כדי לעבוד מהר יותר עבור עצמנו, וכדי לבנות פתרונות חכמים יותר
+                                    עבורכם.
+                                </p>
+                            </div>
+
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10 items-stretch"
+                                id="team-cards-container"
+                            >
+                                <!-- ILAI (Right Card in Image, First in RTL DOM) -->
+                                <div
+                                    class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col"
+                                    style="
+                                        transform-style: preserve-3d;
+                                        font-family: 'Heebo', sans-serif !important;
+                                    "
+                                >
+                                    <div
+                                        class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative"
+                                    >
+                                        <img
+                                            src="http://new.xpera.io/wp-content/uploads/2026/04/ILAI2.png"
+                                            onerror="
+                                                this.src =
+                                                    'https://ui-avatars.com/api/?name=Ilai&background=0b0514&color=b366ff'
+                                            "
+                                            alt="עילאי"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3
+                                        class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        עילאי
+                                    </h3>
+                                    <p
+                                        class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        BUSINESS DEVELOPMENT &<br />INTEGRATION ARCHITECT
+                                    </p>
+                                    <div
+                                        class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"
+                                    ></div>
+                                    <div
+                                        class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        מומחה באפיון תהליכים עסקיים והטמעת מערכות CRM. עילאי מוודא
+                                        שהטכנולוגיה תשרת את היעדים העסקיים שלכם ומייצר את התשתית
+                                        שמאפשרת צמיחה מהירה מבוססת דאטה.
+                                    </div>
+                                </div>
+
+                                <!-- ALEX (Middle Card) -->
+                                <div
+                                    class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col md:-mt-4 md:mb-4"
+                                    style="
+                                        transform-style: preserve-3d;
+                                        font-family: 'Heebo', sans-serif !important;
+                                    "
+                                >
+                                    <div
+                                        class="team-badge font-sans absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#9333ea] to-[#b366ff] text-white text-xs md:text-sm font-bold px-6 py-1.5 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.5)] whitespace-nowrap z-10"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        AI Mastermind
+                                    </div>
+                                    <div
+                                        class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative"
+                                    >
+                                        <img
+                                            src="http://new.xpera.io/wp-content/uploads/2026/04/ALEX2.png"
+                                            onerror="
+                                                this.src =
+                                                    'https://ui-avatars.com/api/?name=Alex&background=0b0514&color=b366ff'
+                                            "
+                                            alt="אלכס"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3
+                                        class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        אלכס
+                                    </h3>
+                                    <p
+                                        class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        AI & AUTOMATION EXPERT
+                                    </p>
+                                    <div
+                                        class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"
+                                    ></div>
+                                    <div
+                                        class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        המוח מאחורי הבינה. אלכס מתמחה בהטמעת מודלי שפה (LLMs), בניית
+                                        צ'אט-בוטים חכמים ל-WhatsApp ול-Web, וחיבור AI לתהליכי עבודה
+                                        מורכבים ב-Make/N8N , כדי להפוך נתונים לפעולות אוטומטיות.
+                                    </div>
+                                </div>
+
+                                <!-- OREN (Left Card in Image, Last in RTL DOM) -->
+                                <div
+                                    class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col"
+                                    style="
+                                        transform-style: preserve-3d;
+                                        font-family: 'Heebo', sans-serif !important;
+                                    "
+                                >
+                                    <div
+                                        class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative"
+                                    >
+                                        <img
+                                            src="http://new.xpera.io/wp-content/uploads/2026/04/OREN2.png"
+                                            onerror="
+                                                this.src =
+                                                    'https://ui-avatars.com/api/?name=Oren&background=0b0514&color=b366ff'
+                                            "
+                                            alt="אורן"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3
+                                        class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        אורן
+                                    </h3>
+                                    <p
+                                        class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        CTO & SOFTWARE DEVELOPER
+                                    </p>
+                                    <div
+                                        class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"
+                                    ></div>
+                                    <div
+                                        class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        האיש שמאחורי הקוד והתשתית. אורן מפתח את התוכנות, האפליקציות
+                                        והפתרונות המותאמים אישית שדרושים כשה-AI צריך פתרון 'תפור'
+                                        (Tailor-made), ומבטיח שהמערכות שלכם יהיו היציבות והמאובטחות
+                                        ביותר בשוק.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NEW: Inline Conversion Hook -->
+                            <div
+                                class="mt-16 md:mt-24 text-center relative z-20 team-conversion-hook"
+                            >
+                                <h4
+                                    class="text-2xl md:text-3xl font-bold text-[#f3e8ff] mb-6 font-sans drop-shadow-[0_0_15px_rgba(179,102,255,0.4)]"
+                                >
+                                    הטכנולוגיה שלנו,
+                                    <span class="text-[#b366ff]">הצמיחה שלכם.</span>
+                                </h4>
+                                <a
+                                    href="/#contact-cta"
+                                    class="btn-premium inline-flex font-sans font-bold rounded-full px-8 md:px-10 py-4 text-lg items-center gap-3 justify-center shadow-[0_0_25px_rgba(126,34,206,0.5)] border border-[#d8b4fe]/30 group"
+                                >
+                                    <span
+                                        class="group-hover:text-white transition-colors drop-shadow-md"
+                                        >בואו נדבר על העסק שלכם</span
+                                    >
+                                    <i
+                                        class="fa-solid fa-rocket transform -rotate-45 group-hover:text-white group-hover:translate-x-[-4px] group-hover:translate-y-[-4px] transition-all drop-shadow-md"
+                                    ></i>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- TECH EXPERTISE (Section 4 - Higher Z-index for overlay effect) -->
+                    <section
+                        class="py-20 md:py-32 px-4 md:px-6 relative z-30 overflow-hidden perspective-[2000px]"
+                        id="tech-section"
+                        style="font-family: 'Heebo', sans-serif !important"
+                    >
+                        <div
+                            class="tech-card-bg max-w-6xl mx-auto bg-[#0b0514] border border-[#2a1b3d] rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu"
+                            style="transform-style: preserve-3d"
+                        >
+                            <!-- 1. Header Group: Badge + Titles (Top) -->
+                            <div
+                                class="text-center mb-12 relative z-10 tech-header-group flex flex-col items-center"
+                            >
+                                <!-- Tech Badge -->
+                                <div
+                                    class="tech-pre-badge inline-flex items-center gap-3 px-6 py-2 rounded-full border border-[#b366ff]/40 bg-[#7e22ce]/20 backdrop-blur-md shadow-[0_0_20px_rgba(126,34,206,0.4)] cursor-default transition-transform hover:scale-105 mb-8"
+                                    style="transform: translateZ(40px)"
+                                >
+                                    <i
+                                        class="fa-solid fa-layer-group text-[#d8b4fe] animate-pulse text-lg"
+                                    ></i>
+                                    <span
+                                        class="text-[#f3e8ff] text-sm md:text-base font-bold tracking-widest uppercase font-sans"
+                                        >Tech Stack</span
+                                    >
+                                </div>
+
+                                <!-- Glowing Title -->
+                                <h2
+                                    class="tech-main-title font-sans text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight cursor-default transition-transform duration-500 hover:scale-[1.02]"
+                                    style="
+                                        font-family: 'Heebo', sans-serif !important;
+                                        transform: translateZ(50px);
+                                        text-shadow: 0 0 30px rgba(179, 102, 255, 0.8);
+                                    "
+                                >
+                                    מומחיות טכנולוגית ואינטגרציית AI
+                                </h2>
+
+                                <!-- Highlighted Paragraph -->
+                                <p
+                                    class="tech-sub-text font-sans text-[#f3e8ff] text-xl md:text-2xl max-w-4xl mx-auto mb-8 font-medium leading-relaxed relative group cursor-default transition-transform duration-300 drop-shadow-md"
+                                    style="
+                                        font-family: 'Heebo', sans-serif !important;
+                                        transform: translateZ(30px);
+                                    "
+                                >
+                                    אנחנו משלבים את הפלטפורמות המובילות בשוק עם
+                                    <span
+                                        class="text-white font-bold relative inline-block mx-1 px-2"
+                                    >
+                                        <span
+                                            class="absolute inset-0 bg-[#7e22ce] opacity-60 rounded-lg -rotate-2 group-hover:rotate-1 group-hover:opacity-80 transition-all duration-300 scale-105 shadow-[0_0_15px_rgba(179,102,255,0.6)]"
+                                        ></span>
+                                        <span
+                                            class="relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_#ffffff]"
+                                            >יכולות AI מתקדמות</span
+                                        > </span
+                                    >, ליצירת סינרגיה מושלמת.
+                                </p>
+
+                                <!-- Interactive Dashed Note -->
+                                <div
+                                    class="tech-note-wrapper relative inline-block group"
+                                    style="transform: translateZ(20px)"
+                                >
+                                    <p
+                                        class="tech-note-text font-sans text-[#d8b4fe] text-sm md:text-base font-bold px-6 py-2.5 rounded-xl border border-dashed border-[#7e22ce]/80 bg-[#1a0b2e]/70 backdrop-blur-sm cursor-default transition-transform duration-300 group-hover:bg-[#7e22ce]/30 group-hover:border-[#f3e8ff] group-hover:-translate-y-1 group-hover:text-white group-hover:shadow-[0_8px_25px_rgba(179,102,255,0.5)] flex items-center gap-2 justify-center"
+                                        style="font-family: 'Heebo', sans-serif !important"
+                                    >
+                                        <i
+                                            class="fa-solid fa-code-compare opacity-90 transition-transform group-hover:rotate-180 duration-500"
+                                        ></i>
+                                        <span
+                                            >(מומחים באינטגרציות מורכבות למערכות ה-SaaS המובילות
+                                            בעולם.)</span
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Infinite Carousels -->
+                            <div
+                                class="flex flex-col gap-5 relative z-10"
+                                dir="ltr"
+                                style="transform: translateZ(40px)"
+                            >
+                                <!-- ROW 1 (Scrolls Left) -->
+                                <div
+                                    class="marquee-container w-full overflow-hidden flex gap-6 py-4"
+                                    style="
+                                        -webkit-mask-image: linear-gradient(
+                                            to right,
+                                            transparent,
+                                            black 10%,
+                                            black 90%,
+                                            transparent
+                                        );
+                                        mask-image: linear-gradient(
+                                            to right,
+                                            transparent,
+                                            black 10%,
+                                            black 90%,
+                                            transparent
+                                        );
+                                    "
+                                >
+                                    <div
+                                        class="marquee-track flex gap-6 min-w-full shrink-0 items-center justify-around"
+                                    >
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#FF3D57">
+                                                <path
+                                                    d="M22.8 14.8c-.5-1.9-2.2-3.3-4.2-3.3-1.6 0-3.1.9-3.8 2.3l-2.4-5.3c-.6-1.3-1.8-2.2-3.3-2.2-2 0-3.6 1.6-3.6 3.6v9c0 2 1.6 3.6 3.6 3.6 1.6 0 2.9-1 3.4-2.4l2.5 5.5c.6 1.3 1.9 2.2 3.4 2.2 2 0 3.6-1.6 3.6-3.6v-9.4zM5.5 10.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9zm8.5 8.9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4l2.6 5.8c.4 1 1.4 1.7 2.6 1.7 1.5 0 2.8-1.2 2.8-2.7v-2.3l-3.8-8.4v15.3zm8.5-4.5c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9.4z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Monday.com</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#18BFFF">
+                                                <path
+                                                    d="M15.429 5.314H8.571a2.143 2.143 0 100 4.286h6.858a2.143 2.143 0 000-4.286zm-6.858 8.572h4.286a2.143 2.143 0 100-4.286H8.571a2.143 2.143 0 000 4.286zm0 4.285h2.143a2.143 2.143 0 000-4.285H8.571a2.143 2.143 0 000 4.285z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Airtable</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff">
+                                                <path
+                                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.286A6.286 6.286 0 1112 5.714a6.286 6.286 0 010 12.572z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Make (Integromat)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00AA55">
+                                                <path
+                                                    d="M16.58 3c-2.3 0-4.22 1.83-4.32 4.1h-4.35C7.8 4.83 5.88 3 3.58 3 1.6 3 0 4.6 0 6.58v10.84C0 19.4 1.6 21 3.58 21c2.3 0 4.22-1.83 4.32-4.1h4.35c.1 2.27 2.02 4.1 4.33 4.1 1.98 0 3.58-1.6 3.58-3.58V6.58C20.16 4.6 18.56 3 16.58 3zM3.58 17.5c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92zm13 0c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Pipedrive</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="w-5 h-5"
+                                                fill="url(#fireberry-grad)"
+                                            >
+                                                <defs>
+                                                    <linearGradient
+                                                        id="fireberry-grad"
+                                                        x1="0%"
+                                                        y1="0%"
+                                                        x2="100%"
+                                                        y2="100%"
+                                                    >
+                                                        <stop offset="0%" stop-color="#FF3366" />
+                                                        <stop offset="100%" stop-color="#FF9933" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <path
+                                                    d="M12 2c0 0-5 4.5-5 10 0 2.8 2.2 5 5 5s5-2.2 5-5c0-5.5-5-10-5-10zm0 13c-1.7 0-3-1.3-3-3 0-2 2-4.5 3-6.5 1 2 3 4.5 3 6.5 0 1.7-1.3 3-3 3z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Fireberry</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00C4CC">
+                                                <path
+                                                    d="M2.5 12l4-4v10l-4-6zm4-4l8-4-4 8-4-4zm8-4l7 10-9-2 2-8zm-7 10l6-2-4 6-2-4z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Origamy</span
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <!-- Track 1 Duplicate -->
+                                    <div
+                                        class="marquee-track flex gap-6 min-w-full shrink-0 items-center justify-around"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#FF3D57">
+                                                <path
+                                                    d="M22.8 14.8c-.5-1.9-2.2-3.3-4.2-3.3-1.6 0-3.1.9-3.8 2.3l-2.4-5.3c-.6-1.3-1.8-2.2-3.3-2.2-2 0-3.6 1.6-3.6 3.6v9c0 2 1.6 3.6 3.6 3.6 1.6 0 2.9-1 3.4-2.4l2.5 5.5c.6 1.3 1.9 2.2 3.4 2.2 2 0 3.6-1.6 3.6-3.6v-9.4zM5.5 10.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9zm8.5 8.9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4l2.6 5.8c.4 1 1.4 1.7 2.6 1.7 1.5 0 2.8-1.2 2.8-2.7v-2.3l-3.8-8.4v15.3zm8.5-4.5c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9.4z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Monday.com</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#18BFFF">
+                                                <path
+                                                    d="M15.429 5.314H8.571a2.143 2.143 0 100 4.286h6.858a2.143 2.143 0 000-4.286zm-6.858 8.572h4.286a2.143 2.143 0 100-4.286H8.571a2.143 2.143 0 000 4.286zm0 4.285h2.143a2.143 2.143 0 000-4.285H8.571a2.143 2.143 0 000 4.285z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Airtable</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff">
+                                                <path
+                                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.286A6.286 6.286 0 1112 5.714a6.286 6.286 0 010 12.572z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Make (Integromat)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00AA55">
+                                                <path
+                                                    d="M16.58 3c-2.3 0-4.22 1.83-4.32 4.1h-4.35C7.8 4.83 5.88 3 3.58 3 1.6 3 0 4.6 0 6.58v10.84C0 19.4 1.6 21 3.58 21c2.3 0 4.22-1.83 4.32-4.1h4.35c.1 2.27 2.02 4.1 4.33 4.1 1.98 0 3.58-1.6 3.58-3.58V6.58C20.16 4.6 18.56 3 16.58 3zM3.58 17.5c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92zm13 0c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Pipedrive</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="w-5 h-5"
+                                                fill="url(#fireberry-grad)"
+                                            >
+                                                <path
+                                                    d="M12 2c0 0-5 4.5-5 10 0 2.8 2.2 5 5 5s5-2.2 5-5c0-5.5-5-10-5-10zm0 13c-1.7 0-3-1.3-3-3 0-2 2-4.5 3-6.5 1 2 3 4.5 3 6.5 0 1.7-1.3 3-3 3z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Fireberry</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00C4CC">
+                                                <path
+                                                    d="M2.5 12l4-4v10l-4-6zm4-4l8-4-4 8-4-4zm8-4l7 10-9-2 2-8zm-7 10l6-2-4 6-2-4z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Origamy</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ROW 2 (Scrolls Right) -->
+                                <div
+                                    class="marquee-container w-full overflow-hidden flex gap-6 py-4"
+                                    style="
+                                        -webkit-mask-image: linear-gradient(
+                                            to right,
+                                            transparent,
+                                            black 10%,
+                                            black 90%,
+                                            transparent
+                                        );
+                                        mask-image: linear-gradient(
+                                            to right,
+                                            transparent,
+                                            black 10%,
+                                            black 90%,
+                                            transparent
+                                        );
+                                    "
+                                >
+                                    <!-- Track 2 -->
+                                    <div
+                                        class="marquee-track reverse flex gap-6 min-w-full shrink-0 items-center justify-center lg:justify-around"
+                                    >
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff">
+                                                <path
+                                                    d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >OpenAI (ChatGPT)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff">
+                                                <path
+                                                    d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Claude (Anthropic)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="w-5 h-5"
+                                                fill="none"
+                                                stroke="#b366ff"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                                <path
+                                                    d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
+                                                ></path>
+                                                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="1.5"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="16"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="8"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <path d="M12 12l4 4M12 12l-4 4"></path>
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >AI Vector Databases</span
+                                            >
+                                        </div>
+                                        <!-- Repeated implicitly to ensure it spans full width -->
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff">
+                                                <path
+                                                    d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >OpenAI (ChatGPT)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff">
+                                                <path
+                                                    d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Claude (Anthropic)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="w-5 h-5"
+                                                fill="none"
+                                                stroke="#b366ff"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                                <path
+                                                    d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
+                                                ></path>
+                                                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="1.5"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="16"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="8"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <path d="M12 12l4 4M12 12l-4 4"></path>
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >AI Vector Databases</span
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <!-- Track 2 Duplicate -->
+                                    <div
+                                        class="marquee-track reverse flex gap-6 min-w-full shrink-0 items-center justify-center lg:justify-around"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff">
+                                                <path
+                                                    d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >OpenAI (ChatGPT)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff">
+                                                <path
+                                                    d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >Claude (Anthropic)</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                class="w-5 h-5"
+                                                fill="none"
+                                                stroke="#b366ff"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                                <path
+                                                    d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
+                                                ></path>
+                                                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="1.5"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="16"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <circle
+                                                    cx="8"
+                                                    cy="16"
+                                                    r="1"
+                                                    fill="#f3e8ff"
+                                                    stroke="none"
+                                                ></circle>
+                                                <path d="M12 12l4 4M12 12l-4 4"></path>
+                                            </svg>
+                                            <span
+                                                class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap"
+                                                style="font-family: 'Heebo', sans-serif !important"
+                                                >AI Vector Databases</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- FINAL CTA (GALAXY & SPACE THEME) -->
+                    <section
+                        id="contact"
+                        class="py-24 md:py-40 px-6 relative z-10 galaxy-wrapper overflow-hidden"
+                    >
+                        <!-- Milky Way Core & Spirals -->
+                        <div class="galaxy-spiral"></div>
+                        <div
+                            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-30 pointer-events-none"
+                        ></div>
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-gradient-to-tr from-[#7e22ce]/20 via-[#b366ff]/5 to-transparent rounded-full blur-[100px] pointer-events-none"
+                        ></div>
+
+                        <!-- Floating Cosmic Elements -->
+                        <div
+                            class="absolute top-[10%] left-[5%] md:left-[15%] astronaut-float z-20 opacity-80 drop-shadow-[0_0_15px_#b366ff]"
+                        >
+                            <i
+                                class="fa-solid fa-user-astronaut text-5xl md:text-7xl text-[#d8b4fe]"
+                            ></i>
+                        </div>
+
+                        <div
+                            class="absolute bottom-[15%] right-[5%] md:right-[15%] ufo-float z-20 opacity-90 drop-shadow-[0_0_20px_#ffffff]"
+                        >
+                            <i
+                                class="fa-solid fa-shuttle-space text-4xl md:text-6xl text-white transform -rotate-45"
+                            ></i>
+                            <div
+                                class="absolute -bottom-6 -left-6 w-12 h-12 bg-[#ff00e5]/30 blur-xl rounded-full pointer-events-none"
+                            ></div>
+                        </div>
+
+                        <div class="max-w-6xl mx-auto relative z-30">
+                            <div
+                                class="w-full vintage-horizontal-form bg-gradient-to-br from-[#1b0a30] to-[#0a0314] border border-brand-purple/40 shadow-[0_20px_50px_rgba(126,34,206,0.3)] relative overflow-hidden !p-6 md:!p-16 rounded-2xl"
+                            >
+                                <div class="premium-center-glow"></div>
+
+                                <div
+                                    class="absolute top-4 md:top-6 left-4 md:left-6 w-2 md:w-2.5 h-2 md:h-2.5 bg-brand-purple diamond-breathe"
+                                ></div>
+                                <div
+                                    class="absolute top-4 md:top-6 right-4 md:right-6 w-2 md:w-2.5 h-2 md:h-2.5 bg-brand-purple diamond-breathe delay-1"
+                                ></div>
+                                <div
+                                    class="absolute bottom-4 md:bottom-6 left-4 md:left-6 w-2 md:w-2.5 h-2 md:h-2.5 bg-brand-purple diamond-breathe delay-2"
+                                ></div>
+                                <div
+                                    class="absolute bottom-4 md:bottom-6 right-4 md:right-6 w-2 md:w-2.5 h-2 md:h-2.5 bg-brand-purple diamond-breathe delay-3"
+                                ></div>
+
+                                <div class="text-center mb-8 relative z-10 mt-4 md:mt-0">
+                                    <p
+                                        class="text-[#a78bfa] tracking-[0.2em] text-xs md:text-sm uppercase mb-4 flex items-center justify-center gap-4"
+                                    >
+                                        <span class="w-8 md:w-12 h-px bg-[#4a2e7c]"></span> LET'S
+                                        TALK
+                                        <span class="w-8 md:w-12 h-px bg-[#4a2e7c]"></span>
+                                    </p>
+                                    <h2
+                                        class="text-3xl md:text-5xl font-light text-white mb-2 md:mb-3 drop-shadow-md"
+                                    >
+                                        מוכנים להוציא את הכאוס מהמערכת ?
+                                    </h2>
+                                    <p class="text-gray-400 text-sm md:text-lg">
+                                        השאירו פרטים ונחזור אליכם בהקדם האפשרי
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-center gap-2.5 bg-[#b366ff]/10 border border-[#b366ff]/30 text-brand-light px-4 py-2.5 rounded-full mx-auto w-max mb-10 shadow-[0_0_15px_rgba(126,34,206,0.15)] relative z-10"
+                                >
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+
+                                <form
+                                    id="xpera-lead-form-team"
+                                    class="flex flex-col gap-8 md:gap-12 w-full relative z-10"
+                                >
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 w-full"
+                                    >
+                                        <div class="relative">
+                                            <input
+                                                type="text"
+                                                name="full_name"
+                                                placeholder="שם מלא *"
+                                                class="vintage-input w-full text-right pb-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="relative">
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                placeholder="אימייל *"
+                                                class="vintage-input w-full text-right pb-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="relative">
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                placeholder="טלפון *"
+                                                class="vintage-input w-full text-right pb-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="relative">
+                                            <input
+                                                type="text"
+                                                name="company_website"
+                                                placeholder="אתר החברה"
+                                                class="vintage-input w-full text-right pb-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-end mt-2 w-full">
+                                        <button
+                                            type="submit"
+                                            class="btn-premium-submit w-full md:w-auto font-bold px-8 md:px-10 py-3.5 rounded-lg flex items-center justify-center gap-3 shadow-sm"
+                                        >
+                                            <span>שלח טופס</span>
+                                            <span class="text-xl leading-none arrow-icon"
+                                                >&larr;</span
+                                            >
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- NEW CUSTOM FOOTER (ISOLATED & RTL ADAPTED) -->
+        <!-- ========================================== -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <footer id="xpera-isolated-footer" dir="rtl" role="contentinfo">
+            <div class="xif-main">
+                <div class="xif-brand-col">
+                    <img src="/logo.png" alt="XPERA" class="xif-logo-img" />
+                    <p class="xif-tagline">תשתית דיגיטלית שהופכת צמיחה לאוטומטית</p>
+                    <div class="xif-social-icons">
+                        <a href="https://www.linkedin.com/company/xpera-io/" aria-label="LinkedIn"
+                            ><i class="fa-brands fa-linkedin-in"></i
+                        ></a>
+                        <a
+                            href="https://www.instagram.com/xpera.io?igsh=YndubjFsMWd3bjRl&utm_source=qr"
+                            aria-label="Instagram"
+                            ><i class="fa-brands fa-instagram"></i
+                        ></a>
+                        <a
+                            href="https://www.facebook.com/share/17SBsV4qVR/?mibextid=wwXIfr"
+                            aria-label="Facebook"
+                            ><i class="fa-brands fa-facebook-f"></i
+                        ></a>
+                        <a href="https://wa.me/972504506225" aria-label="WhatsApp"
+                            ><i class="fa-brands fa-whatsapp"></i
+                        ></a>
+                    </div>
+                </div>
+                <div class="xif-links-col">
+                    <h4 class="xif-col-title">ניווט</h4>
+                    <a href="/">דף הבית</a>
+                    <a href="/team.html">הצוות</a>
+                    <a href="/#solution">הפתרון</a>
+                    <a href="/#contact">יצירת קשר</a>
+                </div>
+                <div class="xif-contact-col">
+                    <h4 class="xif-col-title">דברו איתנו</h4>
+                    <a href="mailto:office.xpera@gmail.com"
+                        ><i class="fa-solid fa-envelope"></i> office.xpera@gmail.com</a
+                    >
+                    <a href="https://wa.me/972504506225"
+                        ><i class="fa-brands fa-whatsapp"></i> 055-271-9499</a
+                    >
+                </div>
+            </div>
+            <div class="xif-divider"></div>
+            <div class="xif-bottom-bar">
+                <span>&copy; 2026 XPERA. כל הזכויות שמורות.</span>
+                <a href="/privacy-policy.html">מדיניות פרטיות</a>
+            </div>
+        </footer>
+        <!-- ========================================== -->
+
+        <!-- FLOATING UTILITIES (Visible across all sections) -->
+        <div
+            class="fixed bottom-6 left-0 w-full px-4 md:px-6 lg:px-16 flex justify-between items-end pointer-events-none z-[999980]"
+        >
+            <!-- WhatsApp Button (Left aligned) -->
+            <a
+                href="https://wa.me/972504506225"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="pointer-events-auto flex items-center gap-3 group cursor-pointer bg-[#110524] px-[30px] rounded-full h-[46px] border border-[#7e22ce]/50 hover:shadow-[0_0_25px_rgba(179,102,255,0.7)] hover:border-[#b366ff]/80 transition-all"
+                dir="ltr"
+                aria-label="WhatsApp"
+            >
+                <div
+                    class="relative flex items-center justify-center w-[28px] h-[28px] bg-brand-purple rounded-full shadow-lg transition-transform group-hover:scale-105"
+                >
+                    <div
+                        class="absolute inset-0 rounded-full bg-brand-purple opacity-40 animate-ping"
+                    ></div>
+                    <i class="fa-brands fa-whatsapp text-white text-[16px] relative z-10"></i>
+                </div>
+                <span
+                    class="text-white font-bold text-[14px] whitespace-nowrap drop-shadow-md pr-2"
+                    style="font-family: 'Heebo', sans-serif"
+                    >דברו איתנו</span
+                >
+            </a>
+
+            <!-- Accessibility & Floating CTA Equivalent (RTL Right Aligned) -->
+            <div class="pointer-events-auto flex items-center gap-3" dir="rtl">
+                <!-- A11y Button & Menu -->
+                <div class="relative flex items-center justify-center">
+                    <!-- Accessibility Menu Panel (Opens Upward) -->
+                    <div
+                        id="a11yMenu"
+                        class="a11y-menu absolute bottom-full mb-4 right-0 bg-[#0a0314]/95 border border-[#7e22ce]/50 backdrop-blur-xl rounded-2xl p-4 md:p-5 w-[240px] md:w-72 shadow-[0_15px_40px_rgba(0,0,0,0.8)] z-[9999]"
+                    >
+                        <div
+                            class="flex justify-between items-center mb-4 border-b border-[#7e22ce]/30 pb-2"
+                        >
+                            <h3
+                                class="text-white font-bold text-base md:text-lg font-sans flex items-center gap-2"
+                                style="font-family: 'Heebo', sans-serif"
+                            >
+                                <i class="fa-solid fa-universal-access text-[#b366ff]"></i> תפריט
+                                נגישות
+                            </h3>
+                            <button
+                                id="closeA11y"
+                                class="text-[#e9d5ff]/60 hover:text-white transition cursor-pointer p-1"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div
+                            class="flex flex-col gap-2 font-sans text-sm md:text-base"
+                            style="font-family: 'Heebo', sans-serif"
+                        >
+                            <button
+                                class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition"
+                                data-action="textSize"
+                            >
+                                <span>הגדלת טקסט</span
+                                ><i class="fa-solid fa-magnifying-glass-plus text-[#b366ff]"></i>
+                            </button>
+                            <button
+                                class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition"
+                                data-action="contrast"
+                            >
+                                <span>ניגודיות גבוהה</span
+                                ><i class="fa-solid fa-circle-half-stroke text-[#b366ff]"></i>
+                            </button>
+                            <button
+                                class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition"
+                                data-action="highlightLinks"
+                            >
+                                <span>הדגשת קישורים</span
+                                ><i class="fa-solid fa-link text-[#b366ff]"></i>
+                            </button>
+                            <button
+                                class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition"
+                                data-action="pauseAnimations"
+                            >
+                                <span>עצירת אנימציות</span
+                                ><i class="fa-solid fa-pause text-[#b366ff]"></i>
+                            </button>
+                            <button
+                                class="a11y-btn flex items-center justify-center w-full bg-[#7e22ce]/20 hover:bg-[#7e22ce]/50 border border-[#7e22ce]/50 rounded-lg px-4 py-2.5 mt-2 text-white font-bold transition shadow-[0_0_10px_rgba(126,34,206,0.2)]"
+                                data-action="reset"
+                            >
+                                איפוס הגדרות
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Icon Button -->
+                    <button
+                        id="a11yToggle"
+                        class="flex items-center justify-center w-[46px] h-[46px] bg-[#110524] border border-[#7e22ce]/50 rounded-full shadow-[0_0_15px_rgba(126,34,206,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(179,102,255,0.7)] hover:border-[#b366ff]/80 text-white hover:text-[#d8b4fe] cursor-pointer"
+                        aria-label="פתח תפריט נגישות"
+                        style="backdrop-filter: blur(10px)"
+                    >
+                        <i class="fa-solid fa-universal-access text-[20px]"></i>
+                    </button>
+                </div>
+
+                <!-- CTA Button -->
+                <a
+                    href="/#contact-cta"
+                    class="flex items-center gap-[10px] group cursor-pointer bg-gradient-to-r from-[#1a0b2e] to-[#4c1d95] px-[36px] rounded-full shadow-[0_0_20px_rgba(126,34,206,0.6)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(179,102,255,0.9)] border border-[#b366ff]/40 text-white font-bold font-sans h-[46px]"
+                    style="backdrop-filter: blur(10px)"
+                >
+                    <span
+                        class="text-[14px] drop-shadow-md tracking-wide"
+                        style="font-family: 'Heebo', sans-serif"
+                        >קבעו שיחת ייעוץ</span
+                    >
+                    <div
+                        class="relative flex items-center justify-center w-[28px] h-[28px] bg-[#b366ff] rounded-full text-[#06020b] shadow-[0_0_10px_#b366ff]"
+                    >
+                        <i
+                            class="fa-solid fa-arrow-left text-[12px] transition-transform group-hover:-translate-x-[2px]"
+                        ></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <script src="/js/mobile-menu.js"></script>
+        <script src="/js/form-submit.js"></script>
+        <script src="/js/main2-forms.js"></script>
+        <script src="/js/main2-init.js"></script>
+        <script src="/js/main2-cursor.js"></script>
+        <script src="/js/main2-hero.js"></script>
+        <script src="/js/main2-hero2.js"></script>
+        <script src="/js/main2-sections.js"></script>
+        <script src="/js/main2-tech.js"></script>
+    </body>
+</html>

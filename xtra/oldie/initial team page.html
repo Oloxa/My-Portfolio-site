@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>XPERA | הנבחרת שמהנדסת צמיחה עם AI</title>
+    <!-- Fonts: Modern Hebrew -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS Config -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#06020b',
+                        brand: {
+                            purple: '#7e22ce',
+                            light: '#b366ff',
+                            soft: '#d8b4fe'
+                        },
+                        light: {
+                            DEFAULT: '#e9d5ff',
+                            pure: '#ffffff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* --- GLOBAL FONT ENFORCEMENT --- */
+        *:not(i), ::placeholder {
+            font-family: 'Heebo', sans-serif !important;
+        }
+
+        /* --- BASE STYLES & OVERRIDES --- */
+        body {
+            background-color: #06020b;
+            color: #e9d5ff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        header, footer { display: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #06020b; }
+        ::-webkit-scrollbar-thumb { background: #7e22ce; border-radius: 4px; }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-glow {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+        }
+        .cursor-glow {
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(179,102,255,0.4) 0%, rgba(126,34,206,0) 70%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* --- EFFECTS --- */
+        .glass-panel {
+            background: rgba(35, 15, 55, 0.45);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(126, 34, 206, 0.4);
+            border-radius: 2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .glass-panel:hover {
+            border-color: rgba(179, 102, 255, 0.8);
+            background: rgba(45, 20, 70, 0.65);
+            box-shadow: 0 20px 40px rgba(126, 34, 206, 0.4);
+        }
+
+        /* --- BADGE SIMULATE HOVER --- */
+        .badge-transition {
+            transition-property: all;
+            transition-duration: 1600ms;
+            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .hero-badge.simulate-hover { padding-left: 2rem !important; padding-right: 2rem !important; background-color: rgba(139, 49, 227, 0.4) !important; }
+        .hero-badge.simulate-hover .badge-space { width: 4rem !important; }
+        .hero-badge.simulate-hover .badge-dot { opacity: 0 !important; transform: scale(0.5) !important; }
+        .hero-badge.simulate-hover .badge-icon { opacity: 1 !important; transform: scale(1.25) translateY(-1rem) !important; }
+        /* Slow down the transitions specifically when auto-simulating for a premium draggy feel */
+        .hero-badge.simulate-hover, .hero-badge.simulate-hover .badge-space, .hero-badge.simulate-hover .badge-dot, .hero-badge.simulate-hover .badge-icon { transition-duration: 1600ms !important; transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1) !important; }
+
+        /* --- MOON ANIMATION & LIGHTING SYNC --- */
+        .moon-phase-shadow {
+            animation: phase-shift 18s infinite linear;
+            box-shadow: 0 0 15px #06020b;
+        }
+        @keyframes phase-shift {
+            0% { transform: translateX(110%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(-110%); }
+        }
+
+        .moon-glow-sync {
+            animation: moon-glow 18s infinite linear;
+        }
+        @keyframes moon-glow {
+            0%, 100% { box-shadow: 0 0 60px rgba(216,180,254,0.7); opacity: 1; }
+            50% { box-shadow: 0 0 10px rgba(216,180,254,0.1); opacity: 0.5; }
+        }
+
+        .global-moonlight-sync {
+            animation: moonlight-bg 18s infinite linear;
+        }
+        @keyframes moonlight-bg {
+            0%, 100% { background-color: rgba(90, 30, 140, 0.15); } /* Subtle purple moonlight over dark body */
+            50% { background-color: rgba(6, 2, 11, 0); } /* Deep dark */
+        }
+
+        /* --- TECH MARQUEE CAROUSEL & HOVER EFFECTS --- */
+        .tech-carousel-pill {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .tech-carousel-pill:hover {
+            transform: scale(1.15) translateY(-8px) rotate(-2deg) !important;
+            box-shadow: 0 15px 35px rgba(179,102,255,0.4), inset 0 0 15px rgba(179,102,255,0.2);
+            border-color: #d8b4fe;
+            background-color: #1a0b2e;
+            z-index: 20;
+        }
+        .tech-carousel-pill i {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s;
+        }
+        .tech-carousel-pill:hover i {
+            transform: rotate(20deg) scale(1.3);
+            color: #ffffff;
+            text-shadow: 0 0 10px #b366ff;
+        }
+        .marquee-track {
+            animation: scroll-left 35s linear infinite;
+        }
+        .marquee-track.reverse {
+            animation: scroll-right 30s linear infinite;
+        }
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-100% - 1.5rem)); }
+        }
+        @keyframes scroll-right {
+            from { transform: translateX(calc(-100% - 1.5rem)); }
+            to { transform: translateX(0); }
+        }
+
+        /* --- CTA PREMIUM & BOILING EFFECT --- */
+        @keyframes boil-rise {
+            0% { transform: translateY(20px) scale(0.5); opacity: 0; }
+            30% { opacity: 1; }
+            100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+        }
+
+        .btn-premium {
+            background: #d8b4fe;
+            color: #2e1065;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s, color 0.3s;
+        }
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #7e22ce, #b366ff);
+            z-index: -1;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .btn-premium:hover {
+            color: white !important;
+            box-shadow: 0 10px 40px rgba(179,102,255,0.8);
+        }
+        .btn-premium:hover::before { transform: translateY(0); }
+        .btn-premium:hover i { color: white !important; }
+
+        .team-avatar {
+            background: linear-gradient(145deg, #2e1065, #1a0b2e);
+            border: 2px solid rgba(179,102,255,0.5);
+            transition: all 0.4s ease;
+        }
+        
+        .stat-card {
+            background: rgba(25, 10, 45, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(179,102,255,0.3);
+        }
+        
+        .tech-badge {
+            background: rgba(126,34,206,0.2);
+            border: 1px solid rgba(179,102,255,0.4);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 15px rgba(126,34,206,0.2);
+            transition: all 0.3s;
+        }
+        
+        .title-glow { text-shadow: 0 0 25px rgba(179,102,255,0.6); }
+
+        /* Velocity Skew Container */
+        #smooth-wrapper { width: 100%; overflow: hidden; perspective: 1000px; }
+        #smooth-content { will-change: transform; }
+        .word-illuminate { color: rgba(233, 213, 255, 0.2); transition: color 0.1s; }
+
+        /* --- GALAXY CTA EFFECTS --- */
+        .galaxy-wrapper {
+            background-color: #020005;
+        }
+        .galaxy-spiral {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 1500px; height: 1500px;
+            margin-top: -750px; margin-left: -750px;
+            background: conic-gradient(from 0deg, transparent 0%, rgba(179,102,255,0.05) 20%, transparent 40%, transparent 50%, rgba(126,34,206,0.05) 70%, transparent 90%);
+            border-radius: 50%;
+            animation: spin 40s linear infinite;
+            filter: blur(50px);
+            pointer-events: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spaceship-panel {
+            background: linear-gradient(160deg, rgba(20, 8, 40, 0.9) 0%, rgba(5, 2, 10, 0.95) 100%);
+            border: 1px solid rgba(179, 102, 255, 0.3);
+            border-top: 2px solid rgba(216, 180, 254, 0.6);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), inset 0 20px 50px rgba(126, 34, 206, 0.15);
+            border-radius: 2.5rem;
+            backdrop-filter: blur(20px);
+        }
+        .ufo-float { animation: ufo-float 6s ease-in-out infinite; }
+        @keyframes ufo-float {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-25px) rotate(-5deg); }
+        }
+        .astronaut-float { animation: astro-float 8s ease-in-out infinite reverse; }
+        @keyframes astro-float {
+            0%, 100% { transform: translateY(0) rotate(-10deg) scale(0.9); }
+            50% { transform: translateY(30px) rotate(10deg) scale(1); }
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(150%); }
+        }
+        .btn-rocket-flame {
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1); opacity: 0.7; }
+            100% { transform: translateX(-50%) scaleY(1.3); opacity: 1; }
+        }
+
+        /* --- ACCESSIBILITY STYLES --- */
+        .a11y-high-contrast {
+            filter: contrast(120%) grayscale(100%) !important;
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+        .a11y-highlight-links a, .a11y-highlight-links button {
+            outline: 2px solid #ffea00 !important;
+            background-color: rgba(255, 234, 0, 0.1) !important;
+            color: #ffea00 !important;
+        }
+        .a11y-pause-animations *, .a11y-pause-animations *::before, .a11y-pause-animations *::after {
+            animation-play-state: paused !important;
+            transition: none !important;
+        }
+        .a11y-menu {
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(10px);
+        }
+        .a11y-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ==========================================
+         NEW ISOLATED HEADER SECTION (BASED ON IMAGE)
+         ========================================== -->
+    <style>
+        .xpera-hdr-wrapper {
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            background-color: #110524; /* Matches the dark navy/purple bg in the image */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 4rem;
+            font-family: 'Heebo', sans-serif !important;
+            border-bottom: 1px solid rgba(179, 102, 255, 0.1);
+        }
+        .xpera-hdr-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .xpera-hdr-img-logo {
+            height: 42px; /* Set an optimal height for the image logo */
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .xpera-hdr-nav {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+        }
+        .xpera-hdr-link {
+            color: #b366ff; /* Match the light purple links in image */
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .xpera-hdr-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(179, 102, 255, 0.8);
+        }
+        .xpera-hdr-mobile-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #b366ff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        @media (max-width: 1024px) {
+            .xpera-hdr-nav {
+                gap: 2rem;
+            }
+            .xpera-hdr-wrapper {
+                padding: 1.25rem 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .xpera-hdr-nav {
+                display: none;
+            }
+            .xpera-hdr-mobile-btn {
+                display: block;
+            }
+            .xpera-hdr-wrapper {
+                padding: 1rem 1.5rem;
+            }
+        }
+    </style>
+
+    <div class="xpera-hdr-wrapper" dir="ltr">
+        <nav class="xpera-hdr-nav">
+            <a href="#contact" class="xpera-hdr-link">Contact</a>
+            <a href="#solution" class="xpera-hdr-link">Solution</a>
+            <a href="#article" class="xpera-hdr-link">Article</a>
+            <a href="#team" class="xpera-hdr-link">Team</a>
+            <a href="#home" class="xpera-hdr-link">Home</a>
+        </nav>
+        <button class="xpera-hdr-mobile-btn" aria-label="Open Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <a href="#" class="xpera-hdr-logo">
+            <img src="C:/Users/teame/Downloads/Mykee/Work Projects/website project/Xperia/Resources/Auth Logo small.png" alt="XPERA Logo" class="xpera-hdr-img-logo">
+        </a>
+    </div>
+    <!-- ========================================== -->
+
+    <!-- Global Moonlight Background -->
+    <div class="fixed inset-0 pointer-events-none z-0 global-moonlight-sync"></div>
+
+    <!-- Global Starry Background -->
+    <div class="fixed inset-0 pointer-events-none z-0" id="warpBg"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- MAIN SCROLL WRAPPER -->
+    <div id="smooth-wrapper" class="relative z-10">
+        <div id="smooth-content" class="skew-elem">
+            
+            <main class="relative">
+                
+                <!-- NEW INNOVATIVE HERO SECTION (FLIPPED RTL) -->
+                <section id="hero-section" class="relative min-h-screen flex flex-col justify-center pt-24 pb-48 md:pb-40 px-4 md:px-6 lg:px-16 overflow-hidden z-10">
+                    
+                    <!-- Ambient Glows (Flipped X) -->
+                    <div class="absolute inset-0 pointer-events-none z-0" id="ambientBg">
+                        <div class="absolute top-1/3 right-0 -translate-y-1/2 w-[500px] md:w-[800px] h-[500px] md:h-[800px] bg-brand-purple/20 rounded-full blur-[140px] mix-blend-screen"></div>
+                        <div class="absolute bottom-1/4 left-1/4 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#b366ff]/10 rounded-full blur-[120px] mix-blend-screen"></div>
+                    </div>
+
+                    <!-- Glowing Moon in Top Left (Flipped) -->
+                    <div class="absolute top-[5%] md:top-[8%] left-[5%] md:left-[8%] w-[80px] md:w-[120px] h-[80px] md:h-[120px] z-0 pointer-events-none moon-glow-sync rounded-full">
+                        <div class="w-full h-full rounded-full bg-gradient-to-tr from-[#7e22ce] via-[#d8b4fe] to-[#ffffff] overflow-hidden relative">
+                            <div class="absolute -top-[10%] -left-[10%] w-[120%] h-[120%] bg-[#06020b] rounded-full moon-phase-shadow"></div>
+                        </div>
+                    </div>
+
+                    <!-- RTL wrapper to ensure absolute right visual anchoring for title -->
+                    <div class="w-full flex justify-start z-20 mb-16 md:mb-24 lg:mb-32" dir="rtl">
+                        
+                        <div class="flex flex-col items-start w-full max-w-[100rem]">
+                            
+                            <!-- Top Badge with AI Eruption Hover -->
+                            <div dir="rtl" class="mb-8 pr-2">
+                                <div class="hero-badge group relative inline-flex items-center px-6 py-2.5 rounded-full border border-brand-light/40 bg-brand-purple/20 backdrop-blur-md badge-transition hover:px-8 hover:bg-[#8b31e3]/40 cursor-default" dir="ltr">
+                                    
+                                    <!-- Left Text (English reads LTR) -->
+                                    <span class="text-xs md:text-sm tracking-[0.2em] text-[#f3e8ff] font-bold uppercase z-10 badge-transition">XPERA</span>
+                                    
+                                    <!-- Expanding Space & AI Eruption Center -->
+                                    <div class="badge-space relative flex items-center justify-center w-5 group-hover:w-16 h-4 badge-transition mx-1.5">
+                                        <span class="badge-dot absolute w-2 h-2 rounded-full bg-[#b366ff] shadow-[0_0_12px_4px_rgba(179,102,255,0.9)] animate-pulse badge-transition group-hover:opacity-0 group-hover:scale-50"></span>
+                                        <div class="badge-icon absolute opacity-0 scale-50 translate-y-3 group-hover:opacity-100 group-hover:scale-125 group-hover:-translate-y-4 badge-transition flex items-center justify-center pointer-events-none z-50">
+                                            <i class="fa-solid fa-brain text-[#e9d5ff] text-[1.6rem] drop-shadow-[0_0_20px_#b366ff]"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Text -->
+                                    <span class="text-xs md:text-sm tracking-[0.2em] text-[#f3e8ff] font-bold uppercase z-10 badge-transition">INTELLIGENCE</span>
+                                    
+                                </div>
+                            </div>
+
+                            <!-- Massive Right-Aligned Title -->
+                            <h1 class="flex flex-col items-start select-none w-full">
+                                <span class="hero-title-main hero-hover inline-block font-black tracking-tighter text-[18vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] text-[#f3e8ff] drop-shadow-[0_0_30px_rgba(179,102,255,0.6)] cursor-default" dir="ltr">
+                                    .XPERA
+                                </span>
+                                <span class="hero-title-sub1 hero-hover inline-block font-bold tracking-normal text-[13vw] md:text-[9vw] lg:text-[7.5vw] leading-[0.9] text-[#d8b4fe] mt-4 md:mt-2 cursor-default drop-shadow-[0_0_15px_rgba(126,34,206,0.3)]" dir="rtl">
+                                    מהנדסים צמיחה
+                                </span>
+                                <span class="hero-title-sub2 hero-hover inline-block font-bold tracking-normal text-[7vw] md:text-[5vw] lg:text-[4.2vw] leading-[1.1] text-[#b366ff] mt-4 md:mt-3 cursor-default drop-shadow-[0_0_15px_rgba(126,34,206,0.3)]" dir="rtl">
+                                    מבוססת דאטה ובינה מלאכותית
+                                </span>
+                            </h1>
+
+                        </div>
+                    </div>
+
+                    <!-- Lowered Bottom Fixed Elements (Flipped) -->
+                    <div class="absolute bottom-2 md:bottom-4 left-4 right-4 md:left-6 md:right-6 lg:left-16 lg:right-16 flex flex-col md:flex-row justify-between items-end gap-10 md:gap-0 z-20 pointer-events-none" dir="rtl">
+                        
+                        <!-- CTA Button: Now right-aligned visually in RTL -->
+                        <div class="pointer-events-auto pb-[80px] md:pb-[100px]">
+                            <a href="#contact-cta" class="btn-premium hero-cta-btn px-8 py-4 md:px-10 md:py-5 rounded-full inline-flex items-center justify-center gap-4 shadow-[0_10px_30px_rgba(126,34,206,0.5)] group min-w-[240px] md:min-w-[280px]">
+                                <span class="font-sans font-bold text-lg md:text-xl text-[#2e1065] group-hover:text-white transition-colors">התחילו פרויקט צמיחה</span>
+                                <i class="fa-solid fa-arrow-left text-[#2e1065] group-hover:text-white text-lg md:text-xl transition-colors"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Bracket Text: Now left-aligned visually in RTL -->
+                        <div class="pointer-events-auto flex items-center gap-2 md:gap-4 group w-full md:max-w-md lg:max-w-xl text-right pb-4 md:pb-8">
+                            <span class="hero-bracket text-[5rem] md:text-[8rem] font-thin text-[#a855f7] group-hover:text-[#d8b4fe] transition-colors duration-500 leading-none h-full flex items-center -translate-y-1">}</span>
+                            <p class="hero-desc-text text-[#e9d5ff]/90 text-sm md:text-lg font-medium leading-relaxed self-center py-2">
+                                אנחנו האדריכלים של התשתית העסקית המודרנית. מחברים מערכות מנותקות, מטמיעים בינה מלאכותית (AI) בלב התהליכים העסקיים, והופכים כאוס למנוע עסקי משומן שעושה Scale אמיתי.
+                            </p>
+                            <span class="hero-bracket text-[5rem] md:text-[8rem] font-thin text-[#a855f7] group-hover:text-[#d8b4fe] transition-colors duration-500 leading-none h-full flex items-center -translate-y-1">{</span>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <!-- WHY XPERA SECTION -->
+                <section class="py-20 md:py-32 px-6 relative z-10" id="why-section">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="text-center mb-12 why-header">
+                            <span class="text-[#b366ff] text-sm uppercase tracking-[0.2em] font-bold">WHY XPERA</span>
+                            <h2 class="text-3xl md:text-5xl font-bold mt-4 text-[#f3e8ff] title-glow why-title-type leading-[1.6] md:leading-[1.4]">למה XPERA? כי "<span class="inline-block transform -rotate-2 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans">אוטומציה</span>" רגילה כבר לא מספקת</h2>
+                        </div>
+                        <div class="glass-panel p-8 md:p-14 rounded-3xl relative overflow-hidden group border border-[#a855f7]/50">
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-purple/0 via-brand-purple/20 to-brand-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                            
+                            <p class="text-xl md:text-3xl leading-snug md:leading-relaxed font-medium" id="illuminate-text">
+                                בעולם של היום, עסק שלא משלב AI בתהליכים שלו נשאר מאחור. רוב העסקים טובעים במידע שמפוזר בין 6 מערכות שונות, אקסלים וקבוצות וואטסאפ. ב-XPERA אנחנו לא רק עושים סדר – אנחנו מביאים אינטליגנציה. המומחיות שלנו היא לקחת תהליכים ידניים מתישים ולהפוך אותם לאוטומציה חכמה שמתקתקת כמו שעון.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TEAM SECTION (Section 3) -->
+                <section id="team-section" class="py-20 md:py-32 px-6 relative z-10 perspective-[2000px]" style="font-family: 'Heebo', sans-serif !important;">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-16 md:mb-24 team-header flex flex-col items-center">
+                            <h2 class="font-sans text-4xl md:text-5xl font-black text-[#f3e8ff] mb-4 tracking-tight" style="font-family: 'Heebo', sans-serif !important;">הנבחרת של XPERA</h2>
+                            <h3 class="font-sans text-xl md:text-2xl text-[#b366ff] font-bold mb-6" style="font-family: 'Heebo', sans-serif !important;">הכוח המשולב של עסקים ו-AI</h3>
+                            <p class="font-sans text-[#e9d5ff]/90 max-w-5xl mx-auto text-base md:text-lg leading-relaxed font-medium" style="font-family: 'Heebo', sans-serif !important;">
+                                אנחנו חיים ונושמים את עולמות ה-
+                                <span class="team-pill inline-block transform -rotate-2 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans mx-1 whitespace-nowrap" dir="ltr" style="font-family: 'Heebo', sans-serif !important;">Generative AI (GenAI)</span>
+                                והאוטומציה המתקדמת. אנחנו משתמשים בכלים המובילים בשוק
+                                <span class="team-pill inline-block transform rotate-1 bg-[#b366ff] text-[#06020b] px-2 md:px-3 py-0.5 rounded-md shadow-[0_0_15px_rgba(179,102,255,0.6)] font-bold font-sans mx-1 mt-2 md:mt-0 leading-tight" dir="ltr" style="font-family: 'Heebo', sans-serif !important;">(OpenAI / GPT-4, Anthropic Claude, Midjourney)</span>
+                                כדי לעבוד מהר יותר עבור עצמנו, וכדי לבנות פתרונות חכמים יותר עבורכם.
+                            </p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10 items-stretch" id="team-cards-container">
+                            
+                            <!-- ILAI (Right Card in Image, First in RTL DOM) -->
+                            <div class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col" style="transform-style: preserve-3d; font-family: 'Heebo', sans-serif !important;">
+                                <div class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative">
+                                    <img src="C:/Users/teame/Downloads/Mykee/Work Projects/website project/Xperia/Resources/ilai.png" onerror="this.src='https://ui-avatars.com/api/?name=Ilai&background=0b0514&color=b366ff'" alt="עילאי" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Heebo', sans-serif !important;">עילאי</h3>
+                                <p class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6" style="font-family: 'Heebo', sans-serif !important;">BUSINESS DEVELOPMENT &<br>INTEGRATION ARCHITECT</p>
+                                <div class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"></div>
+                                <div class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium" style="font-family: 'Heebo', sans-serif !important;">
+                                    מומחה באפיון תהליכים עסקיים והטמעת מערכות CRM. עילאי מוודא שהטכנולוגיה תשרת את היעדים העסקיים שלכם ומייצר את התשתית שמאפשרת צמיחה מהירה מבוססת דאטה.
+                                </div>
+                            </div>
+
+                            <!-- ALEX (Middle Card) -->
+                            <div class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col md:-mt-4 md:mb-4" style="transform-style: preserve-3d; font-family: 'Heebo', sans-serif !important;">
+                                <div class="team-badge font-sans absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#9333ea] to-[#b366ff] text-white text-xs md:text-sm font-bold px-6 py-1.5 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.5)] whitespace-nowrap z-10" style="font-family: 'Heebo', sans-serif !important;">
+                                    AI Mastermind
+                                </div>
+                                <div class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative">
+                                    <img src="C:/Users/teame/Downloads/Mykee/Work Projects/website project/Xperia/Resources/alex.png" onerror="this.src='https://ui-avatars.com/api/?name=Alex&background=0b0514&color=b366ff'" alt="אלכס" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Heebo', sans-serif !important;">אלכס</h3>
+                                <p class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6" style="font-family: 'Heebo', sans-serif !important;">AI & AUTOMATION EXPERT</p>
+                                <div class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"></div>
+                                <div class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium" style="font-family: 'Heebo', sans-serif !important;">
+                                    המוח מאחורי הבינה. אלכס מתמחה בהטמעת מודלי שפה (LLMs), בניית צ'אט-בוטים חכמים ל-WhatsApp ול-Web, וחיבור AI לתהליכי עבודה מורכבים ב-Make/N8N , כדי להפוך נתונים לפעולות אוטומטיות.
+                                </div>
+                            </div>
+
+                            <!-- OREN (Left Card in Image, Last in RTL DOM) -->
+                            <div class="team-card bg-[#0b0514] border border-[#2a1b3d] rounded-[2rem] p-8 md:p-10 text-center relative transition-colors duration-500 hover:border-[#7e22ce] hover:shadow-[0_0_30px_rgba(126,34,206,0.15)] flex flex-col" style="transform-style: preserve-3d; font-family: 'Heebo', sans-serif !important;">
+                                <div class="team-avatar-wrap w-24 h-24 mx-auto rounded-full border border-[#4c1d95]/70 flex items-center justify-center mb-6 bg-[#06020b]/50 overflow-hidden relative">
+                                    <img src="C:/Users/teame/Downloads/Mykee/Work Projects/website project/Xperia/Resources/oren.png" onerror="this.src='https://ui-avatars.com/api/?name=Oren&background=0b0514&color=b366ff'" alt="אורן" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="team-name font-sans text-2xl md:text-3xl font-black text-white mb-2" style="font-family: 'Heebo', sans-serif !important;">אורן</h3>
+                                <p class="team-role font-sans text-[#b366ff] font-bold text-xs md:text-sm uppercase tracking-widest mb-6" style="font-family: 'Heebo', sans-serif !important;">CTO & SOFTWARE DEVELOPER</p>
+                                <div class="team-divider w-full h-px bg-[#2a1b3d] mb-6 origin-center"></div>
+                                <div class="team-desc font-sans text-[#e9d5ff]/80 text-sm md:text-base leading-relaxed font-medium" style="font-family: 'Heebo', sans-serif !important;">
+                                    האיש שמאחורי הקוד והתשתית. אורן מפתח את התוכנות, האפליקציות והפתרונות המותאמים אישית שדרושים כשה-AI צריך פתרון 'תפור' (Tailor-made), ומבטיח שהמערכות שלכם יהיו היציבות והמאובטחות ביותר בשוק.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- NEW: Inline Conversion Hook -->
+                        <div class="mt-16 md:mt-24 text-center relative z-20 team-conversion-hook">
+                            <h4 class="text-2xl md:text-3xl font-bold text-[#f3e8ff] mb-6 font-sans drop-shadow-[0_0_15px_rgba(179,102,255,0.4)]">
+                                הטכנולוגיה שלנו, <span class="text-[#b366ff]">הצמיחה שלכם.</span>
+                            </h4>
+                            <a href="#contact-cta" class="btn-premium inline-flex font-sans font-bold rounded-full px-8 md:px-10 py-4 text-lg items-center gap-3 justify-center shadow-[0_0_25px_rgba(126,34,206,0.5)] border border-[#d8b4fe]/30 group">
+                                <span class="group-hover:text-white transition-colors drop-shadow-md">בואו נדבר על העסק שלכם</span>
+                                <i class="fa-solid fa-rocket transform -rotate-45 group-hover:text-white group-hover:translate-x-[-4px] group-hover:translate-y-[-4px] transition-all drop-shadow-md"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- TECH EXPERTISE (Section 4 - Higher Z-index for overlay effect) -->
+                <section class="py-20 md:py-32 px-4 md:px-6 relative z-30 overflow-hidden perspective-[2000px]" id="tech-section" style="font-family: 'Heebo', sans-serif !important;">
+                    
+                    <div class="tech-card-bg max-w-6xl mx-auto bg-[#0b0514] border border-[#2a1b3d] rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu" style="transform-style: preserve-3d;">
+                        
+                        <!-- 1. Header Group: Badge + Titles (Top) -->
+                        <div class="text-center mb-12 relative z-10 tech-header-group flex flex-col items-center">
+                            
+                            <!-- Tech Badge -->
+                            <div class="tech-pre-badge inline-flex items-center gap-3 px-6 py-2 rounded-full border border-[#b366ff]/40 bg-[#7e22ce]/20 backdrop-blur-md shadow-[0_0_20px_rgba(126,34,206,0.4)] cursor-default transition-transform hover:scale-105 mb-8" style="transform: translateZ(40px);">
+                                <i class="fa-solid fa-layer-group text-[#d8b4fe] animate-pulse text-lg"></i>
+                                <span class="text-[#f3e8ff] text-sm md:text-base font-bold tracking-widest uppercase font-sans">Tech Stack</span>
+                            </div>
+
+                            <!-- Glowing Title -->
+                            <h2 class="tech-main-title font-sans text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight cursor-default transition-transform duration-500 hover:scale-[1.02]" style="font-family: 'Heebo', sans-serif !important; transform: translateZ(50px); text-shadow: 0 0 30px rgba(179,102,255,0.8);">
+                               מומחיות טכנולוגית ואינטגרציית AI
+                            </h2>
+                            
+                            <!-- Highlighted Paragraph -->
+                            <p class="tech-sub-text font-sans text-[#f3e8ff] text-xl md:text-2xl max-w-4xl mx-auto mb-8 font-medium leading-relaxed relative group cursor-default transition-transform duration-300 drop-shadow-md" style="font-family: 'Heebo', sans-serif !important; transform: translateZ(30px);">
+                                אנחנו משלבים את הפלטפורמות המובילות בשוק עם 
+                                <span class="text-white font-bold relative inline-block mx-1 px-2">
+                                    <span class="absolute inset-0 bg-[#7e22ce] opacity-60 rounded-lg -rotate-2 group-hover:rotate-1 group-hover:opacity-80 transition-all duration-300 scale-105 shadow-[0_0_15px_rgba(179,102,255,0.6)]"></span>
+                                    <span class="relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_#ffffff]">יכולות AI מתקדמות</span>
+                                </span>, 
+                                ליצירת סינרגיה מושלמת.
+                            </p>
+                            
+                            <!-- Interactive Dashed Note -->
+                            <div class="tech-note-wrapper relative inline-block group" style="transform: translateZ(20px);">
+                                <p class="tech-note-text font-sans text-[#d8b4fe] text-sm md:text-base font-bold px-6 py-2.5 rounded-xl border border-dashed border-[#7e22ce]/80 bg-[#1a0b2e]/70 backdrop-blur-sm cursor-default transition-transform duration-300 group-hover:bg-[#7e22ce]/30 group-hover:border-[#f3e8ff] group-hover:-translate-y-1 group-hover:text-white group-hover:shadow-[0_8px_25px_rgba(179,102,255,0.5)] flex items-center gap-2 justify-center" style="font-family: 'Heebo', sans-serif !important;">
+                                    <i class="fa-solid fa-code-compare opacity-90 transition-transform group-hover:rotate-180 duration-500"></i>
+                                    <span>(מומחים באינטגרציות מורכבות למערכות ה-SaaS המובילות בעולם.)</span>
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Infinite Carousels -->
+                        <div class="flex flex-col gap-5 relative z-10" dir="ltr" style="transform: translateZ(40px);">
+                            
+                            <!-- ROW 1 (Scrolls Left) -->
+                            <div class="marquee-container w-full overflow-hidden flex gap-6 py-4" style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                                <div class="marquee-track flex gap-6 min-w-full shrink-0 items-center justify-around">
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#FF3D57"><path d="M22.8 14.8c-.5-1.9-2.2-3.3-4.2-3.3-1.6 0-3.1.9-3.8 2.3l-2.4-5.3c-.6-1.3-1.8-2.2-3.3-2.2-2 0-3.6 1.6-3.6 3.6v9c0 2 1.6 3.6 3.6 3.6 1.6 0 2.9-1 3.4-2.4l2.5 5.5c.6 1.3 1.9 2.2 3.4 2.2 2 0 3.6-1.6 3.6-3.6v-9.4zM5.5 10.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9zm8.5 8.9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4l2.6 5.8c.4 1 1.4 1.7 2.6 1.7 1.5 0 2.8-1.2 2.8-2.7v-2.3l-3.8-8.4v15.3zm8.5-4.5c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9.4z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Monday.com</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#18BFFF"><path d="M15.429 5.314H8.571a2.143 2.143 0 100 4.286h6.858a2.143 2.143 0 000-4.286zm-6.858 8.572h4.286a2.143 2.143 0 100-4.286H8.571a2.143 2.143 0 000 4.286zm0 4.285h2.143a2.143 2.143 0 000-4.285H8.571a2.143 2.143 0 000 4.285z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Airtable</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.286A6.286 6.286 0 1112 5.714a6.286 6.286 0 010 12.572z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Make (Integromat)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00AA55"><path d="M16.58 3c-2.3 0-4.22 1.83-4.32 4.1h-4.35C7.8 4.83 5.88 3 3.58 3 1.6 3 0 4.6 0 6.58v10.84C0 19.4 1.6 21 3.58 21c2.3 0 4.22-1.83 4.32-4.1h4.35c.1 2.27 2.02 4.1 4.33 4.1 1.98 0 3.58-1.6 3.58-3.58V6.58C20.16 4.6 18.56 3 16.58 3zM3.58 17.5c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92zm13 0c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Pipedrive</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="url(#fireberry-grad)">
+                                            <defs><linearGradient id="fireberry-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF3366" /><stop offset="100%" stop-color="#FF9933" /></linearGradient></defs>
+                                            <path d="M12 2c0 0-5 4.5-5 10 0 2.8 2.2 5 5 5s5-2.2 5-5c0-5.5-5-10-5-10zm0 13c-1.7 0-3-1.3-3-3 0-2 2-4.5 3-6.5 1 2 3 4.5 3 6.5 0 1.7-1.3 3-3 3z"/>
+                                        </svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Fireberry</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00C4CC"><path d="M2.5 12l4-4v10l-4-6zm4-4l8-4-4 8-4-4zm8-4l7 10-9-2 2-8zm-7 10l6-2-4 6-2-4z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Origamy</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Track 1 Duplicate -->
+                                <div class="marquee-track flex gap-6 min-w-full shrink-0 items-center justify-around" aria-hidden="true">
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#FF3D57"><path d="M22.8 14.8c-.5-1.9-2.2-3.3-4.2-3.3-1.6 0-3.1.9-3.8 2.3l-2.4-5.3c-.6-1.3-1.8-2.2-3.3-2.2-2 0-3.6 1.6-3.6 3.6v9c0 2 1.6 3.6 3.6 3.6 1.6 0 2.9-1 3.4-2.4l2.5 5.5c.6 1.3 1.9 2.2 3.4 2.2 2 0 3.6-1.6 3.6-3.6v-9.4zM5.5 10.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9zm8.5 8.9c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4l2.6 5.8c.4 1 1.4 1.7 2.6 1.7 1.5 0 2.8-1.2 2.8-2.7v-2.3l-3.8-8.4v15.3zm8.5-4.5c0 1.2-.9 2.1-2.1 2.1s-2.1-.9-2.1-2.1v-9.4c0-1.2.9-2.1 2.1-2.1s2.1.9 2.1 2.1v9.4z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Monday.com</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#18BFFF"><path d="M15.429 5.314H8.571a2.143 2.143 0 100 4.286h6.858a2.143 2.143 0 000-4.286zm-6.858 8.572h4.286a2.143 2.143 0 100-4.286H8.571a2.143 2.143 0 000 4.286zm0 4.285h2.143a2.143 2.143 0 000-4.285H8.571a2.143 2.143 0 000 4.285z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Airtable</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.286A6.286 6.286 0 1112 5.714a6.286 6.286 0 010 12.572z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Make (Integromat)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00AA55"><path d="M16.58 3c-2.3 0-4.22 1.83-4.32 4.1h-4.35C7.8 4.83 5.88 3 3.58 3 1.6 3 0 4.6 0 6.58v10.84C0 19.4 1.6 21 3.58 21c2.3 0 4.22-1.83 4.32-4.1h4.35c.1 2.27 2.02 4.1 4.33 4.1 1.98 0 3.58-1.6 3.58-3.58V6.58C20.16 4.6 18.56 3 16.58 3zM3.58 17.5c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92zm13 0c-.5 0-.92-.42-.92-.92V6.58c0-.5.42-.92.92-.92.5 0 .92.42.92.92v10.84c0 .5-.42.92-.92.92z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Pipedrive</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="url(#fireberry-grad)">
+                                            <path d="M12 2c0 0-5 4.5-5 10 0 2.8 2.2 5 5 5s5-2.2 5-5c0-5.5-5-10-5-10zm0 13c-1.7 0-3-1.3-3-3 0-2 2-4.5 3-6.5 1 2 3 4.5 3 6.5 0 1.7-1.3 3-3 3z"/>
+                                        </svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Fireberry</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#00C4CC"><path d="M2.5 12l4-4v10l-4-6zm4-4l8-4-4 8-4-4zm8-4l7 10-9-2 2-8zm-7 10l6-2-4 6-2-4z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Origamy</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ROW 2 (Scrolls Right) -->
+                            <div class="marquee-container w-full overflow-hidden flex gap-6 py-4" style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                                <!-- Track 2 -->
+                                <div class="marquee-track reverse flex gap-6 min-w-full shrink-0 items-center justify-center lg:justify-around">
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">OpenAI (ChatGPT)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff"><path d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Claude (Anthropic)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="#b366ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path><circle cx="12" cy="12" r="1.5" fill="#f3e8ff" stroke="none"></circle><circle cx="16" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><circle cx="8" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><path d="M12 12l4 4M12 12l-4 4"></path>
+                                        </svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">AI Vector Databases</span>
+                                    </div>
+                                    <!-- Repeated implicitly to ensure it spans full width -->
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">OpenAI (ChatGPT)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff"><path d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Claude (Anthropic)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="#b366ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path><circle cx="12" cy="12" r="1.5" fill="#f3e8ff" stroke="none"></circle><circle cx="16" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><circle cx="8" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><path d="M12 12l4 4M12 12l-4 4"></path>
+                                        </svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">AI Vector Databases</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Track 2 Duplicate -->
+                                <div class="marquee-track reverse flex gap-6 min-w-full shrink-0 items-center justify-center lg:justify-around" aria-hidden="true">
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.998-2.9001 6.0557 6.0557 0 0 0-.7478-7.0731zM13.26 22.4303a4.4965 4.4965 0 0 1-2.876-1.0408l.1428-.0814 4.7865-2.7561a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.8344 1.0553v.0305a4.4965 4.4965 0 0 1-4.6715 9.7449zm-8.8373-3.6067a4.4965 4.4965 0 0 1-1.332-2.7523l.145-.084 4.788-2.7547a1.5724 1.5724 0 0 0 .7826-1.3529v-5.7003l1.833 1.0553v.0305a4.4965 4.4965 0 0 1-6.2166 11.5584zm-2.0302-8.583a4.4965 4.4965 0 0 1 1.544-2.6105l.1428.0827 4.785 2.7607a1.5724 1.5724 0 0 0 1.5678 0l4.9354-2.8453-.9185-1.5866-4.934 2.8468a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0568v-.0305a4.4965 4.4965 0 0 1-4.5043-4.5129zm13.1258 5.7388a1.5724 1.5724 0 0 0-1.5678 0l-4.934 2.8453.9184 1.588 4.934-2.8468a1.5724 1.5724 0 0 0 .7838-1.3541v-5.6983l1.833-1.0553v.0305a4.4965 4.4965 0 0 1-1.9674 6.4907zm1.3855-8.232a4.4965 4.4965 0 0 1 1.3333 2.7535l-.145.084-4.7865 2.7548a1.5724 1.5724 0 0 0-.7838 1.3529v5.7003l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 6.2164-11.5597zm-2.955-4.2215l-.1428.0813-4.7865 2.7562a1.5724 1.5724 0 0 0-.7838 1.354v5.6984l-1.8344-1.0553v-.0305a4.4965 4.4965 0 0 1 7.5475-8.8041zm-6.197 6.4422a1.5724 1.5724 0 0 0-1.5677 0l-2.467 1.4234v2.8468l2.467 1.422 2.467-1.422v-2.8468l-2.467-1.4234z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">OpenAI (ChatGPT)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#f3e8ff"><path d="M17.43 19.349H19.5L12 3h-2.106zM8.337 19.349 12 12.395l3.663 6.954h2.247l-5.91-11.135h-2.11L3.98 19.35z"/></svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">Claude (Anthropic)</span>
+                                    </div>
+                                    <div class="tech-carousel-pill flex items-center gap-3 px-6 py-3.5 rounded-full border border-[#2a1b3d] bg-[#11081f] shadow-[0_5px_15px_rgba(0,0,0,0.3)] cursor-default">
+                                        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="#b366ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path><circle cx="12" cy="12" r="1.5" fill="#f3e8ff" stroke="none"></circle><circle cx="16" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><circle cx="8" cy="16" r="1" fill="#f3e8ff" stroke="none"></circle><path d="M12 12l4 4M12 12l-4 4"></path>
+                                        </svg>
+                                        <span class="text-[#e9d5ff] font-bold font-sans text-sm md:text-base whitespace-nowrap" style="font-family: 'Heebo', sans-serif !important;">AI Vector Databases</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FINAL CTA (GALAXY & SPACE THEME) -->
+                <section id="contact-cta" class="py-24 md:py-40 px-6 relative z-10 galaxy-wrapper overflow-hidden">
+                    <!-- Milky Way Core & Spirals -->
+                    <div class="galaxy-spiral"></div>
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-30 pointer-events-none"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-gradient-to-tr from-[#7e22ce]/20 via-[#b366ff]/5 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+                    <!-- Floating Cosmic Elements -->
+                    <div class="absolute top-[10%] left-[5%] md:left-[15%] astronaut-float z-20 opacity-80 drop-shadow-[0_0_15px_#b366ff]">
+                        <i class="fa-solid fa-user-astronaut text-5xl md:text-7xl text-[#d8b4fe]"></i>
+                    </div>
+                    
+                    <div class="absolute bottom-[15%] right-[5%] md:right-[15%] ufo-float z-20 opacity-90 drop-shadow-[0_0_20px_#ffffff]">
+                        <i class="fa-solid fa-shuttle-space text-4xl md:text-6xl text-white transform -rotate-45"></i>
+                        <div class="absolute -bottom-6 -left-6 w-12 h-12 bg-[#ff00e5]/30 blur-xl rounded-full pointer-events-none"></div>
+                    </div>
+
+                    <div class="max-w-5xl mx-auto text-center cta-container relative z-30">
+                        <div class="spaceship-panel p-10 md:p-16 lg:p-20 relative overflow-hidden group">
+                            
+                            <!-- Starry overlay inside panel -->
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8Y2lyY2xlIGN4PSI0IiBjeT0iNCIgcj0iMC41IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4=')] opacity-50 pointer-events-none"></div>
+                            
+                                <div class="relative z-10">
+                                    <i class="fa-solid fa-rocket text-6xl text-[#d8b4fe] mb-6 inline-block animate-bounce drop-shadow-[0_0_15px_#b366ff]" style="animation-duration: 3s;"></i>
+                                    <h2 class="text-3xl md:text-5xl font-bold text-[#f3e8ff] mb-4">מוכנים לצמיחה אוטומטית?</h2>
+                                    <p class="text-[#e9d5ff]/90 mb-10 text-lg">השאירו פרטים, ונחזור אליכם תוך 24 שעות עם אבחון ראשוני חינם.</p>
+                                    
+                                    <form id="growth-lead-form" class="flex flex-col md:flex-row gap-4 justify-center items-stretch max-w-2xl mx-auto">
+                                        <input type="text" name="full_name" placeholder="שם מלא" required class="font-sans bg-[#0e041a]/90 border border-[#7e22ce]/60 rounded-full px-6 py-4 text-white placeholder:text-[#d8b4fe]/50 focus:outline-none focus:border-[#b366ff] focus:shadow-[0_0_20px_rgba(179,102,255,0.5)] transition flex-1 text-right backdrop-blur-md">
+                                        
+                                        <input type="tel" name="phone" placeholder="טלפון" required class="font-sans bg-[#0e041a]/90 border border-[#7e22ce]/60 rounded-full px-6 py-4 text-white placeholder:text-[#d8b4fe]/50 focus:outline-none focus:border-[#b366ff] focus:shadow-[0_0_20px_rgba(179,102,255,0.5)] transition flex-1 text-right backdrop-blur-md">
+                                        
+                                        <button type="submit" class="btn-premium font-sans font-bold rounded-full px-10 py-4 text-lg whitespace-nowrap flex items-center gap-3 justify-center shadow-[0_0_20px_rgba(126,34,206,0.6)]">
+                                            <span class="btn-text">תאמו שיחה</span>
+                                            <i class="fa-solid fa-arrow-left btn-icon"></i>
+                                        </button>
+                                    </form>
+
+                                    <!-- NEW: Trust & Security Badges -->
+                                    <div class="mt-8 flex flex-wrap justify-center gap-5 md:gap-10 text-xs md:text-sm text-[#d8b4fe]/80 font-sans font-medium opacity-90">
+                                        <span class="flex items-center gap-2 bg-[#1a0b2e]/50 px-4 py-1.5 rounded-full border border-[#7e22ce]/30"><i class="fa-solid fa-lock text-[#b366ff]"></i> ניסיון מקצועי</span>
+                                        <span class="flex items-center gap-2 bg-[#1a0b2e]/50 px-4 py-1.5 rounded-full border border-[#7e22ce]/30"><i class="fa-solid fa-gift text-[#b366ff]"></i> אבחון ראשוני חינם</span>
+                                        <span class="flex items-center gap-2 bg-[#1a0b2e]/50 px-4 py-1.5 rounded-full border border-[#7e22ce]/30"><i class="fa-solid fa-handshake text-[#b366ff]"></i> ללא התחייבות מראש</span>
+                                    </div>
+                                </div>
+
+                                <script>
+                                document.getElementById('growth-lead-form').addEventListener('submit', async function(e) {
+                                    e.preventDefault();
+                                    
+                                    const form = this;
+                                    const btn = form.querySelector('button[type="submit"]');
+                                    const btnText = form.querySelector('.btn-text');
+                                    const originalText = btnText.innerText;
+                                    
+                                    // UI Feedback: Loading state
+                                    btn.disabled = true;
+                                    btnText.innerText = 'שולח...';
+
+                                    // Prepare Lead Data
+                                    const formData = new FormData(form);
+                                    const data = Object.fromEntries(formData.entries());
+
+                                    try {
+                                        const response = await fetch("https://hook.eu2.make.com/jzsfva1frhs1ry71bj9hljm28ohaenoz", {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify(data)
+                                        });
+
+                                        if (response.ok) {
+                                            // Success Feedback
+                                            btnText.innerText = 'תודה! נשלח';
+                                            form.reset();
+                                            
+                                            // Revert button after success
+                                            setTimeout(() => {
+                                                btn.disabled = false;
+                                                btnText.innerText = originalText;
+                                            }, 3000);
+                                        } else {
+                                            alert("משהו השתבש. נסה שוב מאוחר יותר.");
+                                            btn.disabled = false;
+                                            btnText.innerText = originalText;
+                                        }
+                                    } catch (error) {
+                                        console.error("Webhook Error:", error);
+                                        alert("שגיאת חיבור. בדוק את האינטרנט שלך.");
+                                        btn.disabled = false;
+                                        btnText.innerText = originalText;
+                                    }
+                                });
+                                </script>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NEW CUSTOM FOOTER (ISOLATED & RTL ADAPTED) -->
+    <!-- ========================================== -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style id="xpera-isolated-footer-css">
+        #xpera-isolated-footer {
+            /* Simulating the rich, velvety draped silk background from the image */
+            background-color: #1a052b;
+            background-image: 
+                linear-gradient(115deg, transparent 20%, rgba(0,0,0,0.2) 25%, rgba(255,255,255,0.03) 30%, transparent 45%),
+                linear-gradient(260deg, transparent 35%, rgba(0,0,0,0.3) 45%, rgba(255,255,255,0.02) 50%, transparent 65%),
+                radial-gradient(circle at 70% 30%, #431273 0%, #1a052b 70%);
+            position: relative;
+            width: 100%;
+            padding: 5rem 5rem 2.5rem 5rem;
+            /* Changed overflow to allow a11y popup upward without cutting, while stopping horiz scroll */
+            overflow-x: clip;
+            overflow-y: visible; 
+            font-family: 'Heebo', sans-serif;
+            z-index: 999999;
+            box-sizing: border-box;
+            color: #d8b4fe;
+            border-top: 1px solid rgba(179, 102, 255, 0.08);
+        }
+        #xpera-isolated-footer * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Section Layout */
+        .xif-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Top Navigation */
+        .xif-main-nav {
+            display: flex;
+            gap: 2.5rem;
+            padding-top: 0.5rem;
+        }
+        .xif-nav-link {
+            color: #e9d5ff;
+            font-size: 17px;
+            font-weight: 300;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .xif-nav-link:hover {
+            color: #ffffff;
+        }
+
+        /* Top Right Typography (Serif) */
+        .xif-contact-block {
+            text-align: right;
+            display: flex;
+            flex-col;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1.5rem;
+        }
+        .xif-serif-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: #d8b4fe;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .xif-email-area {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            align-items: flex-end;
+        }
+        .xif-email-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: #c4a5ff;
+        }
+        .xif-email-link {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: #e9d5ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .xif-email-link:hover {
+            color: #ffffff;
+        }
+
+        /* Giant XPERA Text */
+        .xif-giant-text-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            margin: 1rem 0 3rem 0;
+        }
+        .xif-giant-text {
+            font-size: clamp(80px, 18.5vw, 350px);
+            font-weight: 500;
+            letter-spacing: clamp(10px, 2vw, 40px);
+            line-height: 0.8;
+            margin: 0;
+            /* Replicating the fade-into-background gradient from the image */
+            background: linear-gradient(180deg, #9333ea 0%, #6b21a8 40%, rgba(30, 6, 50, 0.1) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; /* Fallback */
+            user-select: none;
+            padding-left: clamp(10px, 2vw, 40px); /* Balance the letter spacing offset */
+        }
+
+        /* Bottom Section Layout */
+        .xif-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Bottom Social Navigation */
+        .xif-social-nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .xif-social-link {
+            color: #c4a5ff;
+            font-size: 14px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .xif-social-link:hover {
+            color: #ffffff;
+        }
+
+        /* Copyright */
+        .xif-copyright {
+            color: #9333ea;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            #xpera-isolated-footer {
+                padding: 4rem 3rem 2rem 3rem;
+            }
+            .xif-main-nav { gap: 1.5rem; }
+            .xif-serif-heading { font-size: 22px; }
+        }
+
+        @media (max-width: 768px) {
+            #xpera-isolated-footer {
+                padding: 3rem 1.5rem 2rem 1.5rem;
+            }
+            .xif-top {
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+                gap: 3rem;
+            }
+            .xif-contact-block {
+                align-items: center;
+                text-align: center;
+            }
+            .xif-email-area {
+                align-items: center;
+            }
+            .xif-main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.25rem;
+            }
+            .xif-giant-text-container {
+                margin: 2rem 0;
+            }
+            .xif-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .xif-social-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.25rem;
+            }
+        }
+    </style>
+
+    <div id="xpera-isolated-footer" class="xif-wrapper" dir="ltr" role="contentinfo">
+        
+        <div class="xif-top">
+            <nav class="xif-main-nav">
+                <a href="#" class="xif-nav-link">Contact Us</a>
+                <a href="#" class="xif-nav-link">Solution</a>
+                <a href="#" class="xif-nav-link">Article</a>
+                <a href="#" class="xif-nav-link">Team</a>
+                <a href="#" class="xif-nav-link">Home</a>
+            </nav>
+
+            <div class="xif-contact-block">
+                <h3 class="xif-serif-heading">
+                    Interested In Working Us, Try Our<br>
+                    !!!Services Or Simply Learn More
+                </h3>
+                <div class="xif-email-area">
+                    <span class="xif-email-label">:Contact Xpera At</span>
+                    <a href="mailto:Xperaio@Gmail.Com" class="xif-email-link">
+                        <span class="xif-arrow">&larr;</span> Xperaio@Gmail.Com
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="xif-giant-text-container">
+            <h1 class="xif-giant-text">XPERA</h1>
+        </div>
+
+        <div class="xif-bottom">
+            <nav class="xif-social-nav">
+                <a href="#" class="xif-social-link">Instagram</a>
+                <a href="#" class="xif-social-link">Whatsapp</a>
+                <a href="#" class="xif-social-link">Facebook</a>
+                <a href="#" class="xif-social-link">Linkedin</a>
+            </nav>
+
+            <div class="xif-copyright">
+            Xpera. All Rights Reserved 2026 &copy;
+        </div>
+    </div>
+
+    <!-- RELOCATED TAGLINE TEXT -->
+    <div class="mt-16 pt-[100px] pb-6 text-center text-[#d8b4fe]/60 font-medium text-[15px] border-t border-[#7e22ce]/20" dir="rtl" style="font-family: 'Heebo', sans-serif;">
+        XPERA - מייעלים צמיחה עסקית באמצעות אוטומציות מערכות מידע ו AI
+    </div>
+
+    </div>
+    <!-- ========================================== -->
+
+    <!-- FLOATING UTILITIES (Visible across all sections) -->
+    <div class="fixed bottom-6 left-0 w-full px-4 md:px-6 lg:px-16 flex justify-between items-end pointer-events-none z-[999980]">
+        
+        <!-- WhatsApp Button (Left aligned) -->
+        <a href="https://wa.me/972000000000" target="_blank" rel="noopener noreferrer" class="pointer-events-auto flex items-center gap-3 group cursor-pointer bg-[#110524] px-[30px] rounded-full h-[46px] border border-[#7e22ce]/50 hover:shadow-[0_0_25px_rgba(179,102,255,0.7)] hover:border-[#b366ff]/80 transition-all" dir="ltr" aria-label="WhatsApp">
+            <div class="relative flex items-center justify-center w-[28px] h-[28px] bg-brand-purple rounded-full shadow-lg transition-transform group-hover:scale-105">
+                <div class="absolute inset-0 rounded-full bg-brand-purple opacity-40 animate-ping"></div>
+                <i class="fa-brands fa-whatsapp text-white text-[16px] relative z-10"></i>
+            </div>
+            <span class="text-white font-bold text-[14px] whitespace-nowrap drop-shadow-md pr-2" style="font-family: 'Heebo', sans-serif;">דברו איתנו</span>
+        </a>
+
+        <!-- Accessibility & Floating CTA Equivalent (RTL Right Aligned) -->
+        <div class="pointer-events-auto flex items-center gap-3" dir="rtl">
+            <!-- A11y Button & Menu -->
+            <div class="relative flex items-center justify-center">
+                <!-- Accessibility Menu Panel (Opens Upward) -->
+                <div id="a11yMenu" class="a11y-menu absolute bottom-full mb-4 right-0 bg-[#0a0314]/95 border border-[#7e22ce]/50 backdrop-blur-xl rounded-2xl p-4 md:p-5 w-[240px] md:w-72 shadow-[0_15px_40px_rgba(0,0,0,0.8)] z-[9999]">
+                    <div class="flex justify-between items-center mb-4 border-b border-[#7e22ce]/30 pb-2">
+                        <h3 class="text-white font-bold text-base md:text-lg font-sans flex items-center gap-2" style="font-family: 'Heebo', sans-serif;"><i class="fa-solid fa-universal-access text-[#b366ff]"></i> תפריט נגישות</h3>
+                        <button id="closeA11y" class="text-[#e9d5ff]/60 hover:text-white transition cursor-pointer p-1"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="flex flex-col gap-2 font-sans text-sm md:text-base" style="font-family: 'Heebo', sans-serif;">
+                        <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="textSize">
+                            <span>הגדלת טקסט</span><i class="fa-solid fa-magnifying-glass-plus text-[#b366ff]"></i>
+                        </button>
+                        <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="contrast">
+                            <span>ניגודיות גבוהה</span><i class="fa-solid fa-circle-half-stroke text-[#b366ff]"></i>
+                        </button>
+                        <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="highlightLinks">
+                            <span>הדגשת קישורים</span><i class="fa-solid fa-link text-[#b366ff]"></i>
+                        </button>
+                        <button class="a11y-btn flex items-center justify-between w-full bg-[#1a0b2e]/60 hover:bg-[#2a1b3d] border border-[#2a1b3d] hover:border-[#b366ff]/50 rounded-lg px-4 py-2.5 text-[#e9d5ff] transition" data-action="pauseAnimations">
+                            <span>עצירת אנימציות</span><i class="fa-solid fa-pause text-[#b366ff]"></i>
+                        </button>
+                        <button class="a11y-btn flex items-center justify-center w-full bg-[#7e22ce]/20 hover:bg-[#7e22ce]/50 border border-[#7e22ce]/50 rounded-lg px-4 py-2.5 mt-2 text-white font-bold transition shadow-[0_0_10px_rgba(126,34,206,0.2)]" data-action="reset">
+                            איפוס הגדרות
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Toggle Icon Button -->
+                <button id="a11yToggle" class="flex items-center justify-center w-[46px] h-[46px] bg-[#110524] border border-[#7e22ce]/50 rounded-full shadow-[0_0_15px_rgba(126,34,206,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(179,102,255,0.7)] hover:border-[#b366ff]/80 text-white hover:text-[#d8b4fe] cursor-pointer" aria-label="פתח תפריט נגישות" style="backdrop-filter: blur(10px);">
+                    <i class="fa-solid fa-universal-access text-[20px]"></i>
+                </button>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="#contact-cta" class="flex items-center gap-[10px] group cursor-pointer bg-gradient-to-r from-[#1a0b2e] to-[#4c1d95] px-[36px] rounded-full shadow-[0_0_20px_rgba(126,34,206,0.6)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(179,102,255,0.9)] border border-[#b366ff]/40 text-white font-bold font-sans h-[46px]" style="backdrop-filter: blur(10px);">
+                <span class="text-[14px] drop-shadow-md tracking-wide" style="font-family: 'Heebo', sans-serif;">קבעו שיחת ייעוץ</span>
+                <div class="relative flex items-center justify-center w-[28px] h-[28px] bg-[#b366ff] rounded-full text-[#06020b] shadow-[0_0_10px_#b366ff]">
+                    <i class="fa-solid fa-arrow-left text-[12px] transition-transform group-hover:-translate-x-[2px]"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- 1. Text Splitting for Animations & Cursor Anchor ---
+        function splitTextToChars(selector) {
+            const el = document.querySelector(selector);
+            if (!el) return [];
+            const text = el.innerText.trim();
+            el.innerHTML = '';
+            const chars = [];
+            for (let i = 0; i < text.length; i++) {
+                const span = document.createElement('span');
+                span.className = 'inline-block transform-gpu';
+                if (text[i] === ' ') {
+                    span.innerHTML = '&nbsp;';
+                    span.style.width = '0.3em'; // Ensure spaces maintain width
+                } else {
+                    span.innerText = text[i];
+                }
+                el.appendChild(span);
+                chars.push(span);
+            }
+            return chars;
+        }
+
+        const mainChars = splitTextToChars('.hero-title-main');
+        const sub1Chars = splitTextToChars('.hero-title-sub1');
+        const sub2Chars = splitTextToChars('.hero-title-sub2');
+
+        // --- 2. Custom Cursor (Pops out from the "." in .XPERA) ---
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorGlow = document.getElementById('cursorGlow');
+        
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let cursorPopped = false;
+
+        // Hide cursor initially
+        gsap.set([cursorDot, cursorGlow], { scale: 0, opacity: 0 });
+
+        // Calculate initial origin based on the '.' (first character of main title)
+        if (mainChars.length > 0) {
+            const dotRect = mainChars[0].getBoundingClientRect();
+            // Using viewport coordinates to match position: fixed cursor exactly
+            mouseX = dotRect.left + dotRect.width / 2;
+            mouseY = dotRect.top + dotRect.height / 2;
+        }
+        
+        let glowX = mouseX, glowY = mouseY;
+
+        // Snap invisible cursor exactly to the starting dot point immediately
+        cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+        cursorGlow.style.left = `${glowX}px`; cursorGlow.style.top = `${glowY}px`;
+
+        window.addEventListener('mousemove', (e) => {
+            if (!cursorPopped) {
+                cursorPopped = true;
+                // Burst the cursor outwards specifically from the dot's position!
+                gsap.to([cursorDot, cursorGlow], {
+                    scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.5)"
+                });
+            }
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+        });
+
+        gsap.ticker.add(() => {
+            glowX += (mouseX - glowX) * 0.15; glowY += (mouseY - glowY) * 0.15;
+            cursorGlow.style.left = `${glowX}px`; cursorGlow.style.top = `${glowY}px`;
+        });
+
+        const interactables = document.querySelectorAll('a, button, input, .team-card, .tech-badge, .hero-badge, .stat-card');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorGlow.style.width = '100px'; cursorGlow.style.height = '100px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(216,180,254,0.4) 0%, rgba(126,34,206,0) 70%)';
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorGlow.style.width = '60px'; cursorGlow.style.height = '60px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(179,102,255,0.4) 0%, rgba(126,34,206,0) 70%)';
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // --- 3. Boiling Water Effect for Premium Buttons ---
+        document.querySelectorAll('.btn-premium').forEach(btn => {
+            // Elevate the text and icon so they float above the boiling liquid
+            Array.from(btn.children).forEach(child => {
+                child.style.position = 'relative';
+                child.style.zIndex = '10';
+            });
+            
+            // Create the boiling container
+            const boilCont = document.createElement('div');
+            boilCont.className = 'absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 overflow-hidden rounded-full z-0 group-hover:opacity-100';
+            
+            // Generate multiple bubbling elements
+            for(let i=0; i<15; i++) {
+                const bubble = document.createElement('div');
+                const size = 6 + Math.random() * 14;
+                bubble.style.cssText = `
+                    position: absolute;
+                    bottom: -20px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    animation: boil-rise ${0.4 + Math.random() * 0.6}s infinite ease-in ${Math.random() * 0.5}s;
+                `;
+                boilCont.appendChild(bubble);
+            }
+            btn.appendChild(boilCont);
+        });
+
+        // --- Scroll Velocity Skew ---
+        let proxy = { skew: 0 };
+        let skewSetter = gsap.quickSetter(".skew-elem", "skewY", "deg");
+        let clamp = gsap.utils.clamp(-5, 5); 
+        let skewActive = true;
+
+        let skewTrigger = ScrollTrigger.create({
+            onUpdate: (self) => {
+                if (!skewActive) return; 
+                let skew = clamp(self.getVelocity() / -400); 
+                if (Math.abs(skew) > Math.abs(proxy.skew)) {
+                    proxy.skew = skew;
+                    gsap.to(proxy, {
+                        skew: 0, duration: 1, ease: "power3", overwrite: true, 
+                        onUpdate: () => skewSetter(proxy.skew),
+                        onComplete: () => {
+                            if (window.scrollY > window.innerHeight * 0.3) {
+                                skewActive = false; skewTrigger.kill(); 
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // --- INNOVATIVE HERO INTERACTIONS ---
+
+        const dimGlow = "0 0 20px rgba(179,102,255,0.4)"; // Much softer, sophisticated glow
+        const baseGlow = "0 0 15px rgba(126,34,206,0.3)";
+
+        let isHoveringMain = false;
+        let isHoveringSub1 = false;
+        let isHoveringSub2 = false;
+
+        // .XPERA (Sequential 360 Flip)
+        const titleMain = document.querySelector('.hero-title-main');
+        if (titleMain) {
+            gsap.set(titleMain, { perspective: 800 });
+            titleMain.addEventListener('mouseenter', () => {
+                isHoveringMain = true;
+                gsap.to(titleMain, { textShadow: dimGlow, duration: 0.4 });
+                gsap.fromTo(mainChars, 
+                    { rotationX: 0 }, 
+                    { rotationX: 360, duration: 1.5, stagger: 0.12, ease: "power2.out", overwrite: "auto" }
+                );
+            });
+            titleMain.addEventListener('mouseleave', () => {
+                isHoveringMain = false;
+                gsap.to(titleMain, { textShadow: baseGlow, duration: 0.6 });
+            });
+        }
+
+        // Auto-Trigger logic for .XPERA
+        function autoTriggerMain() {
+            if(!titleMain || isHoveringMain) return;
+            gsap.to(titleMain, { textShadow: dimGlow, duration: 0.4 });
+            gsap.fromTo(mainChars, 
+                { rotationX: 0 }, 
+                { 
+                    rotationX: 360, duration: 1.5, stagger: 0.12, ease: "power2.out", overwrite: "auto",
+                    onComplete: () => { if(!isHoveringMain) gsap.to(titleMain, { textShadow: baseGlow, duration: 0.6 }); }
+                }
+            );
+        }
+
+        // Subtitle 1 (Premium Quick Pop-in Wave)
+        const titleSub1 = document.querySelector('.hero-title-sub1');
+        if (titleSub1) {
+            titleSub1.addEventListener('mouseenter', () => {
+                isHoveringSub1 = true;
+                gsap.to(titleSub1, { textShadow: dimGlow, duration: 0.4 });
+                gsap.fromTo(sub1Chars, 
+                    { scale: 1, y: 0, color: "#d8b4fe" },
+                    { scale: 1.25, y: -6, color: "#ffffff", duration: 0.25, stagger: 0.04, yoyo: true, repeat: 1, ease: "power1.inOut", overwrite: "auto" }
+                );
+            });
+            titleSub1.addEventListener('mouseleave', () => {
+                isHoveringSub1 = false;
+                gsap.to(titleSub1, { textShadow: baseGlow, duration: 0.6 });
+            });
+        }
+
+        // Auto-Trigger logic for Subtitle 1
+        function autoTriggerSub1() {
+            if(!titleSub1 || isHoveringSub1) return;
+            gsap.to(titleSub1, { textShadow: dimGlow, duration: 0.4 });
+            gsap.fromTo(sub1Chars, 
+                { scale: 1, y: 0, color: "#d8b4fe" },
+                { 
+                    scale: 1.25, y: -6, color: "#ffffff", duration: 0.25, stagger: 0.04, yoyo: true, repeat: 1, ease: "power1.inOut", overwrite: "auto",
+                    onComplete: () => { if(!isHoveringSub1) gsap.to(titleSub1, { textShadow: baseGlow, duration: 0.6 }); }
+                }
+            );
+        }
+
+        // Subtitle 2 (Skewy Color Change)
+        const titleSub2 = document.querySelector('.hero-title-sub2');
+        if (titleSub2) {
+            titleSub2.addEventListener('mouseenter', () => {
+                isHoveringSub2 = true;
+                gsap.to(titleSub2, { textShadow: dimGlow, duration: 0.4 });
+                gsap.fromTo(sub2Chars, 
+                    { skewX: 0, color: "#b366ff" },
+                    { skewX: -25, color: (i) => i % 2 === 0 ? "#f3e8ff" : "#d8b4fe", duration: 0.2, stagger: 0.03, yoyo: true, repeat: 1, ease: "power1.inOut", overwrite: "auto" }
+                );
+            });
+            titleSub2.addEventListener('mouseleave', () => {
+                isHoveringSub2 = false;
+                gsap.to(titleSub2, { textShadow: baseGlow, duration: 0.6 });
+            });
+        }
+
+        // Auto-Trigger logic for Subtitle 2
+        function autoTriggerSub2() {
+            if(!titleSub2 || isHoveringSub2) return;
+            gsap.to(titleSub2, { textShadow: dimGlow, duration: 0.4 });
+            gsap.fromTo(sub2Chars, 
+                { skewX: 0, color: "#b366ff" },
+                { 
+                    skewX: -25, color: (i) => i % 2 === 0 ? "#f3e8ff" : "#d8b4fe", duration: 0.2, stagger: 0.03, yoyo: true, repeat: 1, ease: "power1.inOut", overwrite: "auto",
+                    onComplete: () => { if(!isHoveringSub2) gsap.to(titleSub2, { textShadow: baseGlow, duration: 0.6 }); }
+                }
+            );
+        }
+
+        // Auto-Trigger logic for Badge
+        const heroBadge = document.querySelector('.hero-badge');
+        let isHoveringBadge = false;
+        if(heroBadge) {
+            heroBadge.addEventListener('mouseenter', () => isHoveringBadge = true);
+            heroBadge.addEventListener('mouseleave', () => isHoveringBadge = false);
+        }
+        function autoTriggerBadge() {
+            if(!heroBadge || isHoveringBadge) return;
+            heroBadge.classList.add('simulate-hover');
+            setTimeout(() => {
+                if(!isHoveringBadge) heroBadge.classList.remove('simulate-hover');
+            }, 2200); // Allow ample time for the premium draggy eruption before retracting
+        }
+
+        // Dedicated, more frequent loop for the Badge
+        function triggerBadgeLoop() {
+            autoTriggerBadge();
+            // Reduced time difference (runs every 3.5 to 5.5 seconds)
+            setTimeout(triggerBadgeLoop, 3500 + Math.random() * 2000);
+        }
+        // Start the badge loop shortly after page load
+        setTimeout(triggerBadgeLoop, 3000);
+
+        // Random Interval Loop for Main Titles
+        function triggerRandomHeroAnimation() {
+            const anims = [autoTriggerMain, autoTriggerSub1, autoTriggerSub2];
+            const randomAnim = anims[Math.floor(Math.random() * anims.length)];
+            randomAnim();
+            
+            // Queue the next random trigger between 2.5 and 5 seconds
+            setTimeout(triggerRandomHeroAnimation, 2500 + Math.random() * 2500);
+        }
+        
+        // Start the random loop after the initial page load animations finish
+        setTimeout(triggerRandomHeroAnimation, 5000);
+
+
+        // Magnetic CTA Button
+        const heroBtn = document.querySelector('.hero-cta-btn');
+        if(heroBtn) {
+            heroBtn.addEventListener('mousemove', (e) => {
+                const rect = heroBtn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(heroBtn, { x: x * 0.2, y: y * 0.2, duration: 0.3, ease: "power2.out" });
+            });
+            heroBtn.addEventListener('mouseleave', () => {
+                gsap.to(heroBtn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+            });
+        }
+
+        // --- Hero Entrance & Word Animations ---
+        const descEl = document.querySelector('.hero-desc-text');
+        const descTextStr = descEl ? descEl.innerText.trim() : "";
+        const descWordsArr = descTextStr.split(' ');
+        const descCharsTyping = [];
+        const descWordsElements = []; // For random word animations
+        const unanimatedWords = []; // Track un-colored words
+        
+        // Prepare bracket text for typing effect & word-level animation
+        if (descEl) {
+            descEl.innerHTML = '';
+            descWordsArr.forEach((wordStr, wIndex) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'inline-block transform-gpu';
+                wordSpan.style.whiteSpace = 'nowrap'; 
+                
+                for(let i = 0; i < wordStr.length; i++) {
+                    const charSpan = document.createElement('span');
+                    charSpan.innerText = wordStr[i];
+                    charSpan.style.opacity = 0;
+                    wordSpan.appendChild(charSpan);
+                    descCharsTyping.push(charSpan);
+                }
+                
+                descEl.appendChild(wordSpan);
+                descWordsElements.push(wordSpan);
+                unanimatedWords.push(wordSpan); // Add to unanimated pool
+
+                if (wIndex < descWordsArr.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    spaceSpan.innerHTML = '&nbsp;';
+                    spaceSpan.style.opacity = 0;
+                    descEl.appendChild(spaceSpan);
+                    descCharsTyping.push(spaceSpan);
+                }
+            });
+        }
+
+        // Random idle animations for words inside brackets
+        function randomWordAnimation() {
+            if (unanimatedWords.length === 0) return; // Stop when all words are permanently colored
+            
+            // Pick a random un-animated word
+            const rIndex = Math.floor(Math.random() * unanimatedWords.length);
+            const word = unanimatedWords[rIndex];
+            unanimatedWords.splice(rIndex, 1); // Remove from pool so it stays consistently glowing
+            
+            const animType = Math.floor(Math.random() * 4); 
+            // Slower, more premium duration (1.5s to 2s)
+            const duration = 1.5 + Math.random() * 0.5; 
+            
+            // Continuous looping bright purple color pulse
+            gsap.to(word.children, { 
+                color: "#d8b4fe", 
+                textShadow: "0 0 15px rgba(216,180,254,0.7)", 
+                duration: 2.5, 
+                repeat: -1, 
+                yoyo: true, 
+                ease: "sine.inOut" 
+            });
+
+            switch(animType) {
+                case 0: // Drop-in (Premium Elastic)
+                    gsap.fromTo(word, { y: -12 }, { y: 0, duration, ease: "elastic.out(1, 0.5)" });
+                    break;
+                case 1: // Pop-in (Premium Elastic)
+                    gsap.fromTo(word, { scale: 0.8 }, { scale: 1, duration, ease: "elastic.out(1, 0.5)" });
+                    break;
+                case 2: // Slide-in
+                    gsap.fromTo(word, { x: 15 }, { x: 0, duration, ease: "power3.out" });
+                    break;
+                case 3: // Roll-in
+                    gsap.fromTo(word, { rotationZ: -15, y: -8 }, { rotationZ: 0, y: 0, duration, ease: "power3.out" });
+                    break;
+            }
+
+            // Schedule next animation. Duration is ~1.5-2.0s, so waiting 2.2s to 2.8s guarantees 
+            // 1 animation at a time with a shorter, more noticeable slight gap.
+            setTimeout(randomWordAnimation, 2200 + Math.random() * 600);
+        }
+
+        // Start random word animations after the typing finishes (~4s)
+        setTimeout(randomWordAnimation, 5000);
+
+        // Hero Main Entrance
+        const tlHero = gsap.timeline();
+        tlHero.from('.hero-badge', { x: -30, opacity: 0, duration: 0.8, ease: "back.out(1.7)" })
+              .from('.hero-title-main', { 
+                  scale: 0.3, opacity: 0, filter: "blur(20px)",
+                  duration: 1.5, ease: "elastic.out(1, 0.6)" 
+              }, "-=0.4")
+              .from('.hero-bracket', { scale: 0.6, opacity: 0, duration: 1, ease: "back.out(1.5)" }, "-=0.8")
+              .from('.hero-cta-btn', { scale: 0.8, opacity: 0, y: 30, duration: 0.8, ease: "back.out(1.5)" }, "-=0.6")
+              .to(descCharsTyping, { opacity: 1, duration: 0.01, stagger: 0.015, ease: "none" }, "-=0.2");
+
+        // Majestic Left and Right Slide Animations
+        gsap.from('.hero-title-sub1', {
+            x: -250, opacity: 0, duration: 1.5, ease: "power4.out",
+            scrollTrigger: { trigger: '.hero-title-sub1', start: "top 95%" }
+        });
+        gsap.from('.hero-title-sub2', {
+            x: 250, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.2,
+            scrollTrigger: { trigger: '.hero-title-sub2', start: "top 95%" }
+        });
+
+        // Milky Way Starry Sky & Downward Asteroid Animation
+        const warpContainer = document.getElementById('warpBg');
+        if(warpContainer) {
+            let activeDots = [];
+            let movingAsteroidDots = []; // Track up to 2 simultaneous asteroids
+            const MAX_STARS = 120; // Increased to create a full galaxy feel across the entire site
+
+            function spawnStar() {
+                if (activeDots.length >= MAX_STARS) return; 
+                
+                const dot = document.createElement('div');
+                
+                // Varied sizes (1px to 3.5px) for depth, and mix of white/purple
+                const size = 1 + Math.random() * 2.5;
+                const isPurple = Math.random() > 0.75;
+                const bgColor = isPurple ? '#d8b4fe' : '#ffffff';
+                const shadowColor = isPurple ? 'rgba(216,180,254,0.8)' : 'rgba(255,255,255,0.8)';
+
+                dot.className = 'absolute rounded-full';
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+                dot.style.backgroundColor = bgColor;
+                dot.style.boxShadow = `0 0 ${size * 4}px ${shadowColor}`;
+                
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100; // Spread across the entire hero sky
+                
+                dot.style.left = `${startX}%`;
+                dot.style.top = `${startY}%`;
+                dot.style.opacity = 0;
+                warpContainer.appendChild(dot);
+                
+                const dotObj = { el: dot };
+                activeDots.push(dotObj);
+
+                // Twinkle effect (noticeable and dynamic)
+                gsap.to(dot, {
+                    opacity: 0.3 + Math.random() * 0.7,
+                    scale: 1 + Math.random() * 0.5,
+                    duration: 1.5 + Math.random() * 3,
+                    yoyo: true,
+                    repeat: -1,
+                    ease: "sine.inOut",
+                    delay: Math.random() * 2 // Randomize when they start twinkling
+                });
+            }
+
+            // Initialize the starry background
+            for(let i=0; i<MAX_STARS; i++) spawnStar(); 
+
+            function shootAsteroid() {
+                if (movingAsteroidDots.length >= 2 || activeDots.length === 0) {
+                    setTimeout(shootAsteroid, 500); 
+                    return;
+                }
+                
+                let selectedIndex = -1;
+                // Pick a star that is far from current asteroids and high enough to fall
+                for (let attempts = 0; attempts < 20; attempts++) {
+                    let i = Math.floor(Math.random() * activeDots.length);
+                    const candidate = activeDots[i].el;
+                    const cx = parseFloat(candidate.style.left);
+                    const cy = parseFloat(candidate.style.top);
+                    
+                    let isFarEnough = true;
+                    for (const movingDot of movingAsteroidDots) {
+                        const mx = parseFloat(movingDot.dataset.startX);
+                        const my = parseFloat(movingDot.dataset.startY);
+                        const dist = Math.sqrt(Math.pow(cx - mx, 2) + Math.pow(cy - my, 2));
+                        if (dist < 30) { 
+                            isFarEnough = false;
+                            break;
+                        }
+                    }
+                    
+                    // cy < 80 ensures the asteroid has vertical room to visually shoot downwards
+                    if (isFarEnough && cy < 80) {
+                        selectedIndex = i;
+                        break;
+                    }
+                }
+
+                if (selectedIndex === -1) {
+                    setTimeout(shootAsteroid, 500);
+                    return;
+                }
+                
+                const dotObj = activeDots[selectedIndex];
+                const dot = dotObj.el;
+                dot.isAsteroid = true;
+                
+                dot.dataset.startX = dot.style.left;
+                dot.dataset.startY = dot.style.top;
+                
+                activeDots.splice(selectedIndex, 1); 
+                movingAsteroidDots.push(dot); 
+
+                const isRight = Math.random() > 0.5;
+                const angle = isRight ? 45 + Math.random() * 35 : 100 + Math.random() * 35; 
+                const radians = angle * (Math.PI / 180);
+                const distance = 1000 + Math.random() * 800;
+                
+                gsap.killTweensOf(dot); 
+                
+                dot.className = 'absolute bg-gradient-to-r from-transparent via-[#a855f7] to-[#ffffff] rounded-full';
+                
+                gsap.set(dot, {
+                    width: `${40 + Math.random() * 60}px`,
+                    height: '2px',
+                    rotation: angle,
+                    opacity: 0.9,
+                    boxShadow: "0 0 15px rgba(179,102,255,0.9)",
+                    backgroundColor: 'transparent' // Override star color for beam
+                });
+
+                gsap.to(dot, {
+                    x: `+=${Math.cos(radians) * distance}`,
+                    y: `+=${Math.sin(radians) * distance}`,
+                    duration: 1 + Math.random() * 1.5,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        if (warpContainer.contains(dot)) dot.remove();
+                        movingAsteroidDots = movingAsteroidDots.filter(d => d !== dot); 
+                        spawnStar(); // Immediately replenish the galaxy with a new star
+                        setTimeout(shootAsteroid, 1000 + Math.random() * 2000);
+                    }
+                });
+            }
+
+            setTimeout(shootAsteroid, 1500); 
+            setTimeout(shootAsteroid, 2500); 
+        }
+
+        // Hero Planet Fold Animation
+        gsap.set("#hero-section", { clipPath: "circle(100% at 50% 50%)", transformOrigin: "center center" });
+        gsap.to("#hero-section", {
+            clipPath: "circle(0% at 50% 50%)",
+            scale: 0.4,
+            rotation: 30,
+            opacity: 0,
+            scrollTrigger: {
+                trigger: "#hero-section",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1.5,
+            }
+        });
+
+        // --- Kinetic Text Illumination (Why XPERA) ---
+        const illumText = document.getElementById('illuminate-text');
+        const words = illumText.innerText.split(' ');
+        illumText.innerHTML = '';
+        words.forEach(word => {
+            const span = document.createElement('span');
+            span.innerText = word + ' ';
+            span.className = 'word-illuminate';
+            illumText.appendChild(span);
+        });
+
+        gsap.to('.word-illuminate', {
+            color: '#f3e8ff',
+            textShadow: '0 0 20px rgba(179,102,255,0.9)',
+            stagger: 0.1,
+            scrollTrigger: {
+                trigger: '#why-section',
+                start: 'top 60%', end: 'bottom 70%', scrub: 1, 
+            }
+        });
+
+        // --- NEW: Why XPERA Title Typewriter Reveal & Pill Style ---
+        function splitHTMLForTyping(selector) {
+            const el = document.querySelector(selector);
+            if (!el) return [];
+            
+            const nodes = Array.from(el.childNodes);
+            el.innerHTML = '';
+            const animElements = [];
+            
+            nodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const words = node.nodeValue.split(/(\s+)/);
+                    words.forEach(word => {
+                        if (word === '') return;
+                        if (word.trim() === '') {
+                            const span = document.createElement('span');
+                            span.innerHTML = word.replace(/ /g, '&nbsp;'); // Preserve exact spaces
+                            el.appendChild(span);
+                        } else {
+                            const wordSpan = document.createElement('span');
+                            wordSpan.className = 'inline-block';
+                            wordSpan.dir = 'auto'; // Fixes BIDI scrambling for mixed text
+                            
+                            for (let i = 0; i < word.length; i++) {
+                                const charSpan = document.createElement('span');
+                                charSpan.className = 'opacity-0'; 
+                                charSpan.innerText = word[i];
+                                wordSpan.appendChild(charSpan);
+                                animElements.push(charSpan);
+                            }
+                            el.appendChild(wordSpan);
+                        }
+                    });
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const wrapper = document.createElement('span');
+                    wrapper.className = 'inline-block opacity-0 align-middle mx-1';
+                    wrapper.appendChild(node);
+                    el.appendChild(wrapper);
+                    animElements.push(wrapper);
+                }
+            });
+            
+            return animElements;
+        }
+
+        const whyTitleEls = splitHTMLForTyping('.why-title-type');
+        if (whyTitleEls.length > 0) {
+            const typeStagger = 0.05;
+            
+            // Base typing effect for all characters & elements
+            gsap.to(whyTitleEls, {
+                opacity: 1,
+                duration: 0.1,
+                stagger: typeStagger,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: '.why-header',
+                    start: 'top 85%',
+                }
+            });
+            
+            // Add a synced, premium "Pop" scale effect exclusively for the pill wrapper
+            const pillIndex = whyTitleEls.findIndex(el => el.childNodes.length > 0 && el.childNodes[0].nodeType === 1);
+            if (pillIndex !== -1) {
+                gsap.fromTo(whyTitleEls[pillIndex], 
+                    { scale: 0 }, 
+                    { 
+                        scale: 1, 
+                        duration: 0.6, 
+                        ease: "back.out(2)", 
+                        delay: pillIndex * typeStagger,
+                        scrollTrigger: {
+                            trigger: '.why-header',
+                            start: 'top 85%',
+                        }
+                    }
+                );
+            }
+        }
+
+        // --- Extravagant Team Section On-Scroll Sequence ---
+        const teamTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#team-section',
+                start: 'top 75%',
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // 1. Headers fly in with advanced elasticity
+        teamTl.from('.team-header h2', { y: 60, scale: 0.8, opacity: 0, duration: 1, ease: "elastic.out(1, 0.5)" })
+              .from('.team-header h3', { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.7")
+              .from('.team-header p', { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+              // 2. Animate the new english pill badges specifically
+              .from('.team-pill', { scale: 0, rotationZ: 15, opacity: 0, duration: 0.7, stagger: 0.2, ease: "back.out(2)" }, "-=0.4")
+              // 3. Cards mind-blowing 3D cascade sweep
+              .from('.team-card', { 
+                  y: 150, z: -400, rotationX: 25, rotationY: -15, opacity: 0, 
+                  duration: 1.2, stagger: 0.15, ease: "expo.out"
+              }, "-=0.3")
+              // 4. Inner elements explode and sequence beautifully
+              .from('.team-avatar-wrap', { scale: 0, rotationZ: -180, opacity: 0, duration: 0.8, stagger: 0.1, ease: "back.out(1.5)" }, "-=0.8")
+              .from('.team-badge', { scale: 0, y: 30, opacity: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" }, "-=0.6")
+              .from('.team-name', { x: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power2.out" }, "-=0.6") // RTL slide-in
+              .from('.team-role', { x: -30, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power2.out" }, "-=0.5")
+              .from('.team-divider', { scaleX: 0, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power2.inOut" }, "-=0.5")
+              .from('.team-desc', { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" }, "-=0.5")
+              // 5. Reveal the Inline Conversion Hook dynamically
+              .from('.team-conversion-hook', { y: 40, scale: 0.9, opacity: 0, duration: 0.8, ease: "back.out(1.5)" }, "-=0.2");
+              
+        // --- Continuous Mind-Blowing Cosmic Pulse to the Avatars (Non-conflicting) ---
+        teamTl.eventCallback("onComplete", () => {
+            gsap.to('.team-avatar-wrap', {
+                boxShadow: "0 0 25px 8px rgba(179,102,255,0.4), inset 0 0 15px rgba(179,102,255,0.3)",
+                borderColor: "rgba(216, 180, 254, 0.8)",
+                duration: 1.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                stagger: 0.4
+            });
+        });
+
+
+        // --- SECTION 4: Scrubbed Entrance (Slide from Right) ---
+        gsap.from('.tech-card-bg', {
+            x: "100vw", // Start off-screen to the right
+            rotationY: -15, // Slight 3D rotation during slide
+            opacity: 0,
+            ease: "none", // Linear scrub mapped exactly to your mouse scroll
+            scrollTrigger: {
+                trigger: '#tech-section',
+                start: 'top 90%', // Starts when section enters view
+                end: 'top 20%', // Completes when section is near top of screen
+                scrub: 1 // Buttery smooth 1-second delay catch-up
+            }
+        });
+
+        // Extravagant inner elements for Section 4 (trigger normally when in view)
+        const techTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#tech-section',
+                start: 'top 50%',
+                toggleActions: "play none none reverse"
+            }
+        });
+        
+        techTl.from('.tech-pre-badge', { y: -20, opacity: 0, scale: 0.5, duration: 0.6, ease: "back.out(2)" })
+              .from('.tech-main-title', { y: 40, opacity: 0, rotationX: -30, duration: 1, ease: 'back.out(1.2)' }, "-=0.4")
+              .from('.tech-sub-text', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
+              .from('.tech-note-wrapper', { y: 20, opacity: 0, scale: 0.9, duration: 0.6, ease: 'elastic.out(1, 0.5)' }, "-=0.6")
+              .from('.marquee-container', { x: (i) => i % 2 === 0 ? 100 : -100, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.4");
+
+        // 3D Tilt Hover Effect for the entire Tech Card
+        const techCard = document.querySelector('.tech-card-bg');
+        if (techCard) {
+            techCard.addEventListener('mousemove', (e) => {
+                const rect = techCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                gsap.to(techCard, {
+                    transform: `perspective(1200px) rotateX(${(centerY - y) / 40}deg) rotateY(${(x - centerX) / 40}deg)`,
+                    duration: 0.5, 
+                    ease: "power2.out", 
+                    boxShadow: "0 30px 60px rgba(126,34,206,0.3)"
+                });
+            });
+            techCard.addEventListener('mouseleave', () => {
+                gsap.to(techCard, {
+                    transform: `perspective(1200px) rotateX(0deg) rotateY(0deg)`,
+                    duration: 0.8, 
+                    ease: "elastic.out(1, 0.5)", 
+                    boxShadow: "0 20px 50px rgba(0,0,0,0.5)"
+                });
+            });
+        }
+
+
+        const cards = gsap.utils.toArray('.team-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                const centerX = rect.width/2, centerY = rect.height/2;
+                gsap.to(card, {
+                    transform: `perspective(1000px) rotateX(${(y - centerY) / 15}deg) rotateY(${(centerX - x) / 15}deg) scale(1.05)`,
+                    duration: 0.4, ease: "power2.out", boxShadow: "0 20px 40px rgba(179,102,255,0.5)"
+                });
+            });
+            card.addEventListener('mouseleave', () => {
+                const dancingEl = card.querySelector('.stat-dance');
+                if(dancingEl) {
+                    gsap.to(dancingEl, { y: 0, scale: 1, rotationZ: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
+                }
+            });
+        });
+
+        // --- Extravagant Galactic CTA Sequence ---
+        // Deep space 3D tumble reveal
+        gsap.from('.cta-container', {
+            scale: 0.8, opacity: 0, y: 100, duration: 1.2, ease: "back.out(1.2)",
+            scrollTrigger: { trigger: '#contact-cta', start: 'top 80%' }
+        });
+
+        // --- ACCESSIBILITY LOGIC ---
+        const a11yToggle = document.getElementById('a11yToggle');
+        const a11yMenu = document.getElementById('a11yMenu');
+        const closeA11y = document.getElementById('closeA11y');
+        
+        let a11yState = {
+            textSize: 100,
+            contrast: false,
+            links: false,
+            animationsPaused: false
+        };
+
+        function toggleA11yMenu() {
+            a11yMenu.classList.toggle('active');
+        }
+
+        a11yToggle.addEventListener('click', toggleA11yMenu);
+        closeA11y.addEventListener('click', toggleA11yMenu);
+
+        document.querySelectorAll('.a11y-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const action = e.currentTarget.dataset.action;
+                switch(action) {
+                    case 'textSize':
+                        // Cycle through 100% -> 120% -> 140% -> back to 100%
+                        a11yState.textSize = a11yState.textSize >= 140 ? 100 : a11yState.textSize + 20;
+                        document.documentElement.style.fontSize = `${a11yState.textSize}%`;
+                        // Trigger ScrollTrigger refresh in case resizing breaks layout triggers
+                        setTimeout(() => ScrollTrigger.refresh(), 200);
+                        break;
+                    case 'contrast':
+                        a11yState.contrast = !a11yState.contrast;
+                        document.body.classList.toggle('a11y-high-contrast', a11yState.contrast);
+                        break;
+                    case 'highlightLinks':
+                        a11yState.links = !a11yState.links;
+                        document.body.classList.toggle('a11y-highlight-links', a11yState.links);
+                        break;
+                    case 'pauseAnimations':
+                        a11yState.animationsPaused = !a11yState.animationsPaused;
+                        document.body.classList.toggle('a11y-pause-animations', a11yState.animationsPaused);
+                        // Pause/Play global GSAP timelines
+                        if(a11yState.animationsPaused) {
+                            gsap.globalTimeline.pause();
+                        } else {
+                            gsap.globalTimeline.play();
+                        }
+                        break;
+                    case 'reset':
+                        a11yState = { textSize: 100, contrast: false, links: false, animationsPaused: false };
+                        document.documentElement.style.fontSize = '100%';
+                        document.body.classList.remove('a11y-high-contrast', 'a11y-highlight-links', 'a11y-pause-animations');
+                        gsap.globalTimeline.play();
+                        setTimeout(() => ScrollTrigger.refresh(), 200);
+                        break;
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

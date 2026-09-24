@@ -1,0 +1,136 @@
+        .apple-btn-hover {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .apple-btn-hover:hover {
+            transform: scale(1.1);
+            background-color: #7e22ce;
+            box-shadow: 0 10px 20px -5px rgba(126, 34, 206, 0.5), 0 0 15px rgba(126, 34, 206, 0.3);
+            border-color: transparent;
+        }
+        .apple-btn-hover svg {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .apple-btn-hover:hover svg {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .shiny-purple-sweep {
+            background: #e9d5ff;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .shiny-purple-sweep:hover {
+            background: linear-gradient(
+                to right,
+                #e9d5ff 10%,
+                #e9d5ff 35%,
+                #b366ff 45%,
+                #7e22ce 50%,
+                #b366ff 55%,
+                #e9d5ff 65%,
+                #e9d5ff 90%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shinySweep 1.2s linear infinite;
+        }
+        @keyframes shinySweep {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        .breathing-arrow {
+            animation: breathe 2s infinite ease-in-out;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(15px); opacity: 1; }
+        }
+
+        .bg-polka-dots {
+            background-image: radial-gradient(rgba(126, 34, 206, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: moveDots 20s linear infinite;
+        }
+        @keyframes moveDots {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        .btn-light-purple {
+            background-color: #e9d5ff;
+            color: #2e1065;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, color 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-light-purple::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #7e22ce, #b366ff);
+            z-index: -1;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-light-purple:hover {
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.6);
+            transform: scale(1.05);
+        }
+        .btn-light-purple:hover::before {
+            transform: translateY(0);
+        }
+
+        .btn-premium-submit {
+            background: linear-gradient(135deg, #3b0764, #2e1065);
+            color: #d8b4fe;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            border: 1px solid rgba(168,85,247,0.2);
+        }
+        .btn-premium-submit::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+        .btn-premium-submit:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(126, 34, 206, 0.6), 0 0 25px rgba(179, 102, 255, 0.4);
+            background: linear-gradient(135deg, #b366ff, #a855f7);
+            color: #06020b;
+            border-color: #d8b4fe;
+        }
+        .btn-premium-submit:hover::before {
+            left: 150%;
+        }
+        .btn-premium-submit .arrow-icon {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-premium-submit:hover .arrow-icon {
+            transform: translateX(-6px);
+        }
+
+        @keyframes diamondBreathe {
+            0%, 100% { transform: rotate(45deg) scale(1); box-shadow: 0 0 5px rgba(126, 34, 206, 0.4); opacity: 0.6; }
+            50% { transform: rotate(45deg) scale(1.5); box-shadow: 0 0 15px rgba(179, 102, 255, 0.9), 0 0 5px rgba(255,255,255,0.4); opacity: 1; background-color: #d8b4fe; }
+        }
+        .diamond-breathe {
+            animation: diamondBreathe 3s ease-in-out infinite;
+        }
+        .delay-1 { animation-delay: 0.75s; }
+        .delay-2 { animation-delay: 1.5s; }
+        .delay-3 { animation-delay: 2.25s; }

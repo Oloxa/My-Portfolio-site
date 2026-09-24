@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fetch Setter Polyfill/Safeguard for iframe Sandbox Environments -->
+    <script>
+        (function() {
+            try {
+                var _currentFetch = window.fetch;
+                if (typeof Window !== 'undefined' && Window.prototype) {
+                    try {
+                        var protoDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+                        if (!protoDesc || !protoDesc.set || !protoDesc.writable) {
+                            Object.defineProperty(Window.prototype, 'fetch', {
+                                get: function() { return _currentFetch; },
+                                set: function(fn) { _currentFetch = fn; },
+                                configurable: true,
+                                enumerable: true
+                            });
+                        }
+                    } catch (err) {}
+                }
+                try {
+                    var winDesc = Object.getOwnPropertyDescriptor(window, 'fetch');
+                    if (!winDesc || !winDesc.set || !winDesc.writable) {
+                        Object.defineProperty(window, 'fetch', {
+                            get: function() { return _currentFetch; },
+                            set: function(fn) { _currentFetch = fn; },
+                            configurable: true,
+                            enumerable: true
+                        });
+                    }
+                } catch (err) {}
+            } catch (e) {}
+        })();
+    </script>
+    <title>H.O. Damilare Michael - Multidisciplinary Portfolio</title>
+    <meta name="description" content="Portfolio of H.O. Damilare Michael (HODM) - Full-Stack Web Architecture, Generative AI Video Direction, Leadership, Business & Holistic Vitality">
+    <meta property="og:title" content="H.O. Damilare Michael - Multidisciplinary Portfolio">
+    <meta property="og:description" content="Full-Stack Web Architecture, Generative AI Video Direction, Leadership, Business & Holistic Vitality">
+    <meta name="theme-color" content="#0D0F12">
+
+    <!-- High-End Typography: Plus Jakarta Sans, Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN with Custom Palette Configuration) -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0D0F12',
+                        surface: '#12161A',
+                        card: 'rgba(22, 27, 34, 0.65)',
+                        cream: '#F5E6C8',
+                        custard: '#E6C280',
+                        lightCustard: '#FFF3CD',
+                        gold: '#F0C05A'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                        display: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP for Smooth Choreography -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page-theme="about" class="bg-[#0D0F12] text-[#C9D1D9] antialiased selection:bg-[#E6C280] selection:text-[#0D0F12]">
+
+    <!-- SCROLL PROGRESS INDICATOR -->
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+
+    <!-- PAGE-SPECIFIC ANIMATED BACKGROUND: NARRATIVE STREAM FLOW -->
+    <div class="narrative-stream-ambient" aria-hidden="true"></div>
+    <canvas id="narrativeCanvas" class="canvas-bg-layer" aria-hidden="true"></canvas>
+
+    <!-- INTERACTIVE CURSOR AMBIENT GLOW -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- PRELOADER / LOADING SCREEN -->
+    <div id="preloader" aria-hidden="true">
+        <div class="loader-brand">H.O. <span>DAMILARE MICHAEL</span></div>
+        <div class="loader-bar-wrap">
+            <div class="loader-bar-progress"></div>
+        </div>
+        <div class="loader-percentage">0%</div>
+    </div>
+
+    <!-- GLOBAL FLOATING LEFT CONTACT BAR (Fixed, Vertically Centered) -->
+    <aside class="global-contact-sidebar" aria-label="Social and Direct Contact Profiles">
+        <!-- 1. TikTok -->
+        <a href="https://tiktok.com/@hodm_michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="TikTok">
+            <i class="fab fa-tiktok"></i>
+            <span class="sidebar-tooltip">TikTok</span>
+        </a>
+        <!-- 2. YouTube -->
+        <a href="https://youtube.com/@hodm_michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+            <span class="sidebar-tooltip">YouTube</span>
+        </a>
+        <!-- 3. WhatsApp -->
+        <a href="https://wa.me/2348000000000?text=Hello%20H.O.%20Damilare%20Michael%2C%20I%20am%20interested%20in%20connecting%20with%20you." target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+            <span class="sidebar-tooltip">WhatsApp</span>
+        </a>
+        <!-- 4. Upwork -->
+        <a href="https://upwork.com/freelancers/~hodm" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Upwork">
+            <svg viewBox="0 0 24 24"><path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-3.799 0-5.466 2.97-5.918 4.706C11.516 7.42 9.458 4.755 7.643 4.755c-2.484 0-4.5 2.016-4.5 4.5 0 2.485 2.016 4.501 4.5 4.501.996 0 1.918-.328 2.67-.881l-1.348 6.368h2.834l1.378-6.505c.829.588 1.777.957 2.822.957 3.799 0 6.643-2.88 6.643-6.702.001-3.82-2.843-6.697-6.642-6.697z"/></svg>
+            <span class="sidebar-tooltip">Upwork</span>
+        </a>
+        <!-- 5. Fiverr -->
+        <a href="https://fiverr.com/hodm_studio" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Fiverr">
+            <svg viewBox="0 0 24 24"><path d="M16.25 16.25v-8.5h-2.5v1.8c-.6-.9-1.5-1.8-3-1.8-2.6 0-4.5 2.1-4.5 4.7s1.9 4.7 4.5 4.7c1.5 0 2.4-.8 3-1.8v1.7h2.5zm-5-1.9c-1.4 0-2.3-1.1-2.3-2.3 0-1.3.9-2.3 2.3-2.3s2.3 1.1 2.3 2.3c0 1.3-.9 2.3-2.3 2.3z"/></svg>
+            <span class="sidebar-tooltip">Fiverr</span>
+        </a>
+        <!-- 6. Behance -->
+        <a href="https://behance.net/hodm_michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+            <span class="sidebar-tooltip">Behance</span>
+        </a>
+        <!-- 7. LinkedIn -->
+        <a href="https://linkedin.com/in/hodm-michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+            <span class="sidebar-tooltip">LinkedIn</span>
+        </a>
+        <!-- 8. Instagram -->
+        <a href="https://instagram.com/hodm_michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+            <span class="sidebar-tooltip">Instagram</span>
+        </a>
+        <!-- 9. Facebook -->
+        <a href="https://facebook.com/hodm.michael" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+            <span class="sidebar-tooltip">Facebook</span>
+        </a>
+        <!-- 10. Contra -->
+        <a href="https://contra.com/hodm" target="_blank" rel="noopener noreferrer" class="contact-sidebar-item" aria-label="Contra">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M15 9a4.5 4.5 0 0 0-6 3.5 4.5 4.5 0 0 0 6 3.5"/></svg>
+            <span class="sidebar-tooltip">Contra</span>
+        </a>
+        <!-- 11. Email -->
+        <a href="mailto:reel3dlab@gmail.com" class="contact-sidebar-item" aria-label="Email Direct">
+            <i class="fas fa-envelope"></i>
+            <span class="sidebar-tooltip">reel3dlab@gmail.com</span>
+        </a>
+    </aside>
+
+    <!-- Mobile Floating Contact Drawer Toggle -->
+    <button id="mobileContactToggle" type="button" class="mobile-contact-pill-toggle" aria-label="Toggle Contact Links" aria-expanded="false">
+        <i class="fas fa-address-book"></i>
+    </button>
+
+    <!-- FLOATING ISLAND NAVIGATION -->
+    <header class="mho-nav-pill-wrapper" role="banner">
+        <div class="mho-nav-pill">
+            <!-- Zone 1: Brand Wordmark -->
+            <a href="index.html" class="mho-brand-mark">
+                HODM <span class="brand-sub hidden sm:inline">· H.O. Damilare Michael</span>
+            </a>
+
+            <!-- Zone 2: Navigation Links -->
+            <nav class="mho-nav-links" aria-label="Main Navigation">
+                <!-- 01: Home & Bio -->
+                <div class="mho-nav-item">
+                    <a href="index.html" class="mho-nav-link active" aria-haspopup="true">
+                        <span>Home &amp; Bio</span>
+                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+                    </a>
+                    <div class="mho-nav-submenu" role="menu">
+                        <div class="mho-submenu-header">
+                            <span>01 // Home Navigation</span>
+                            <i class="fas fa-compass text-[10px] text-[#E6C280]"></i>
+                        </div>
+                        <a href="index.html#hero" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-user-tie"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Executive Bio &amp; Vision</span>
+                                <span class="mho-submenu-desc">Multidisciplinary Profile &amp; Bio</span>
+                            </div>
+                        </a>
+                        <a href="index.html#intro-video" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Director Statement</span>
+                                <span class="mho-submenu-desc">Personal Intro Video Briefing</span>
+                            </div>
+                        </a>
+                        <a href="index.html#metrics" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-chart-line"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Impact &amp; Metrics</span>
+                                <span class="mho-submenu-desc">Enterprise Telemetry &amp; Velocity</span>
+                            </div>
+                        </a>
+                        <a href="index.html#philosophy" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-lightbulb"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Core Philosophy</span>
+                                <span class="mho-submenu-desc">Foundational Operating Pillars</span>
+                            </div>
+                        </a>
+                        <a href="index.html#timeline" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-history"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Career Milestones</span>
+                                <span class="mho-submenu-desc">Key Career Trajectory</span>
+                            </div>
+                        </a>
+                        <a href="index.html#contact" class="mho-submenu-item highlight" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-paper-plane"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Direct Connect</span>
+                                <span class="mho-submenu-desc">Confidential Consultation Form</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 02: Web Architecture -->
+                <div class="mho-nav-item">
+                    <a href="web-services.html" class="mho-nav-link" aria-haspopup="true">
+                        <span>Web Architecture</span>
+                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+                    </a>
+                    <div class="mho-nav-submenu" role="menu">
+                        <div class="mho-submenu-header">
+                            <span>02 // Web Engineering</span>
+                            <i class="fas fa-code text-[10px] text-[#E6C280]"></i>
+                        </div>
+                        <a href="web-services.html#intro-video" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Engineering Philosophy</span>
+                                <span class="mho-submenu-desc">Architecture Overview Video</span>
+                            </div>
+                        </a>
+                        <a href="web-services.html#dual-carousels" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-layer-group"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Dual Motion Showcase</span>
+                                <span class="mho-submenu-desc">Bi-Directional Interactive Stream</span>
+                            </div>
+                        </a>
+                        <a href="web-services.html#paginated-portfolio" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-th"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Systems Portfolio</span>
+                                <span class="mho-submenu-desc">7-Project Paginated Grid &amp; Modals</span>
+                            </div>
+                        </a>
+                        <a href="web-services.html#services-matrix" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-cubes"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Core Capabilities</span>
+                                <span class="mho-submenu-desc">Full-Stack, UI/UX &amp; Engineering</span>
+                            </div>
+                        </a>
+                        <a href="web-services.html#contact-tech" class="mho-submenu-item highlight" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-terminal"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Engineering Inquiry</span>
+                                <span class="mho-submenu-desc">Commission Custom Web Systems</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 03: Creative AI Space -->
+                <div class="mho-nav-item">
+                    <a href="creative-space.html" class="mho-nav-link" aria-haspopup="true">
+                        <span>Creative AI Space</span>
+                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+                    </a>
+                    <div class="mho-nav-submenu" role="menu">
+                        <div class="mho-submenu-header">
+                            <span>03 // AI &amp; 3D Video</span>
+                            <i class="fas fa-film text-[10px] text-[#E6C280]"></i>
+                        </div>
+                        <a href="creative-space.html#intro-video" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Creative Director Reel</span>
+                                <span class="mho-submenu-desc">Personal Production Statement</span>
+                            </div>
+                        </a>
+                        <a href="creative-space.html#creative-sectors" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-vr-cardboard"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Production Disciplines</span>
+                                <span class="mho-submenu-desc">UGC, 3D Commercials &amp; SaaS Ads</span>
+                            </div>
+                        </a>
+                        <a href="creative-space.html#video-grid" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-video"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Streaming Showcase</span>
+                                <span class="mho-submenu-desc">Interactive Modal Video Library</span>
+                            </div>
+                        </a>
+                        <a href="creative-space.html#workflow-stack" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-wand-magic-sparkles"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Pipeline &amp; Tooling</span>
+                                <span class="mho-submenu-desc">Veo, Kling, Midjourney &amp; Compositing</span>
+                            </div>
+                        </a>
+                        <a href="creative-space.html#contact-creative" class="mho-submenu-item highlight" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-clapperboard"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Commission AI Video</span>
+                                <span class="mho-submenu-desc">Initiate Campaign Briefing</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 04: Leadership & Health -->
+                <div class="mho-nav-item">
+                    <a href="leadership-business.html" class="mho-nav-link" aria-haspopup="true">
+                        <span>Leadership &amp; Health</span>
+                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+                    </a>
+                    <div class="mho-nav-submenu" role="menu">
+                        <div class="mho-submenu-header">
+                            <span>04 // Leadership &amp; Vitality</span>
+                            <i class="fas fa-heartbeat text-[10px] text-[#E6C280]"></i>
+                        </div>
+                        <a href="leadership-business.html#intro-video" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Executive Briefing</span>
+                                <span class="mho-submenu-desc">Leadership &amp; Vitality Video</span>
+                            </div>
+                        </a>
+                        <a href="leadership-business.html#leadership-pillars" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-sitemap"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Duplication Architecture</span>
+                                <span class="mho-submenu-desc">Scalable Network Leadership Systems</span>
+                            </div>
+                        </a>
+                        <a href="leadership-business.html#supplements" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-capsules"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Cellular Health &amp; NAD+</span>
+                                <span class="mho-submenu-desc">Mitochondrial Longevity Protocols</span>
+                            </div>
+                        </a>
+                        <a href="leadership-business.html#ecosystem-model" class="mho-submenu-item" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-project-diagram"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Strategic Growth Model</span>
+                                <span class="mho-submenu-desc">Distributor Scaling Blueprint</span>
+                            </div>
+                        </a>
+                        <a href="leadership-business.html#contact-leadership" class="mho-submenu-item highlight" role="menuitem">
+                            <span class="mho-submenu-icon"><i class="fas fa-handshake"></i></span>
+                            <div class="mho-submenu-text">
+                                <span class="mho-submenu-title">Executive Consultation</span>
+                                <span class="mho-submenu-desc">Mentorship &amp; Health Inquiries</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Zone 3: Primary Action & Mobile Trigger -->
+            <div class="flex items-center gap-2.5">
+                <a href="#contact" class="mho-nav-cta">
+                    Direct Inquiry
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <button class="mho-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mho-mobile-drawer" role="dialog" aria-label="Mobile Menu">
+        <a href="index.html" class="active">01 // Home &amp; Biography</a>
+        <a href="web-services.html">02 // Web Architecture</a>
+        <a href="creative-space.html">03 // Creative AI Space</a>
+        <a href="leadership-business.html">04 // Leadership &amp; Health</a>
+        <div class="pt-2">
+            <a href="#contact" class="mho-nav-cta justify-center w-full">
+                Direct Inquiry &nbsp;<i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- CINEMATIC SNAP PAGINATION NAVIGATOR -->
+    <nav class="cinematic-snap-nav" aria-label="Section Quick Navigation" id="snapNav">
+        <button class="snap-nav-dot active" data-target="#hero" aria-label="Go to Hero section">
+            <span class="dot-tooltip">01 // Hero &amp; Vision</span>
+        </button>
+        <button class="snap-nav-dot" data-target="#intro-video" aria-label="Go to Personal Intro Video">
+            <span class="dot-tooltip">02 // Intro Video</span>
+        </button>
+        <button class="snap-nav-dot" data-target="#metrics" aria-label="Go to Impact &amp; Velocity section">
+            <span class="dot-tooltip">03 // Scale &amp; Velocity</span>
+        </button>
+        <button class="snap-nav-dot" data-target="#biography" aria-label="Go to Story &amp; Philosophy section">
+            <span class="dot-tooltip">04 // Story &amp; Philosophy</span>
+        </button>
+        <button class="snap-nav-dot" data-target="#capabilities" aria-label="Go to Core Triad Capabilities section">
+            <span class="dot-tooltip">05 // Core Triad</span>
+        </button>
+        <button class="snap-nav-dot" data-target="#contact" aria-label="Go to Direct Inquiries section">
+            <span class="dot-tooltip">06 // Direct Inquiries</span>
+        </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow relative z-10">
+
+        <!-- 1. HERO SECTION: ADVENTURE & STORYTELLING -->
+        <section id="hero" class="snap-section relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+            <!-- Glowing Celestial Moon with Phase Shadow -->
+            <div class="celestial-moon-wrap pointer-events-none" aria-hidden="true">
+                <div class="celestial-moon-body">
+                    <div class="moon-phase-shadow"></div>
+                </div>
+            </div>
+
+            <!-- Background Ambient Glows -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-b from-[#E6C280]/15 via-[#FFF3CD]/5 to-transparent rounded-full blur-[140px] pointer-events-none" aria-hidden="true"></div>
+
+            <div class="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Column: Narrative Headline & Vision -->
+                <div class="lg:col-span-7 hero-fade-in">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12161A]/80 border border-[#E6C280]/20 text-xs font-mono text-[#F5E6C8] mb-6 backdrop-blur-md">
+                        <span class="w-2 h-2 rounded-full dot-green"></span>
+                        <span>MULTI-DISCIPLINARY ARCHITECT // PRODUCTION READY</span>
+                    </div>
+
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#F5E6C8] leading-[1.08] mb-6">
+                        Architecting Code, <br>
+                        Directing Neural Cinema, <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E6C280] via-[#FFF3CD] to-[#F5E6C8]">Empowering Human Scale.</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-[#A0AEC0] max-w-xl leading-relaxed mb-8">
+                        I am <span class="text-[#F5E6C8] font-semibold">H.O. Damilare Michael</span>. A senior web architect, generative AI video director, and network growth strategist combining distributed technical precision with cinematic visual narrative.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap items-center gap-4 mb-10">
+                        <a href="web-services.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#E6C280] text-[#0D0F12] font-bold text-sm hover:bg-[#FFF3CD] hover:shadow-[0_0_25px_rgba(230,194,128,0.4)] transition-all transform hover:-translate-y-0.5">
+                            <span>Explore Web Solutions</span>
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                        <a href="creative-space.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#161B22]/80 hover:bg-[#1C2128] border border-[rgba(245,230,200,0.15)] hover:border-[#E6C280]/40 text-[#F5E6C8] font-semibold text-sm transition-all">
+                            <i class="fas fa-film text-[#E6C280]"></i>
+                            <span>AI Video &amp; Visual Studio</span>
+                        </a>
+                    </div>
+
+                    <!-- Micro Social Links -->
+                    <div class="flex items-center gap-4 text-sm text-[#8B949E]">
+                        <span>Connect on:</span>
+                        <div class="flex items-center gap-3">
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#E6C280] transition-colors" title="LinkedIn"><i class="fab fa-linkedin text-base"></i></a>
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#E6C280] transition-colors" title="GitHub"><i class="fab fa-github text-base"></i></a>
+                            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="hover:text-[#E6C280] transition-colors" title="Behance"><i class="fab fa-behance text-base"></i></a>
+                            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#E6C280] transition-colors" title="TikTok"><i class="fab fa-tiktok text-base"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Visual Portrait & Proof Badges -->
+                <div class="lg:col-span-5 relative hero-fade-in flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -inset-1.5 rounded-[28px] bg-gradient-to-tr from-[#E6C280]/30 via-transparent to-[#FFF3CD]/20 blur-md"></div>
+                        
+                        <div class="relative rounded-[24px] overflow-hidden glass-container p-2.5">
+                            <div class="relative aspect-[3/4] rounded-[20px] overflow-hidden bg-[#161B22]">
+                                <img 
+                                    src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" 
+                                    alt="H.O. Damilare Michael - Multidisciplinary Web Architect & AI Video Creator" 
+                                    class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                                    loading="eager"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12]/85 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#0D0F12]/70 backdrop-blur-md border border-[rgba(245,230,200,0.12)]">
+                                    <div class="text-xs uppercase tracking-wider text-[#E6C280] font-semibold">Visionary Technologist &amp; Director</div>
+                                    <div class="text-sm font-bold text-[#F5E6C8]">H.O. Damilare Michael</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Proof Badges -->
+                        <div class="absolute -bottom-5 -left-5 bg-[#12161A]/90 backdrop-blur-md border border-[#E6C280]/30 rounded-2xl p-3.5 shadow-2xl hidden sm:flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280]">
+                                <i class="fas fa-code text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-lg font-extrabold text-[#F5E6C8] font-mono tabular-nums">120+</div>
+                                <div class="text-xs text-[#8B949E]">Platforms &amp; Systems Shipped</div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -top-4 -right-4 bg-[#12161A]/90 backdrop-blur-md border border-[#E6C280]/30 rounded-2xl p-3.5 shadow-2xl hidden sm:flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280]">
+                                <i class="fas fa-users text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-lg font-extrabold text-[#F5E6C8] font-mono tabular-nums">45K+</div>
+                                <div class="text-xs text-[#8B949E]">Leaders &amp; Community Coached</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLOBAL INTRO VIDEO SECTION -->
+        <section id="intro-video" class="snap-section relative min-h-screen flex flex-col justify-center max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#12161A]/85 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3">
+                    <i class="fas fa-play-circle text-[#FFF3CD]"></i>
+                    <span>DIRECT INTRODUCTORY BRIEFING</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-[#F5E6C8]">
+                    A Direct Message from H.O. Damilare Michael
+                </h2>
+                <p class="text-sm text-[#A0AEC0] mt-2">
+                    Watch a walkthrough of my multidisciplinary methodology across scalable engineering, generative AI cinema, and entrepreneurial execution.
+                </p>
+            </div>
+
+            <div class="mho-intro-video-container relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[#E6C280]/30 shadow-2xl group">
+                <div class="video-glow-ambient pointer-events-none" aria-hidden="true"></div>
+
+                <!-- NOTE: Replace the src below with your actual YouTube/Vimeo/MP4 video URL -->
+                <iframe 
+                    id="pageIntroVideoIframe"
+                    class="w-full h-full object-cover" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&amp;rel=0" 
+                    title="Personal Intro Video - H.O. Damilare Michael" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+
+                <div class="absolute top-4 left-4 z-10 flex items-center gap-2 pointer-events-none">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 backdrop-blur-md">
+                        4K UHD // 60 FPS
+                    </span>
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#12161A]/85 text-[#F5E6C8] border border-[#F5E6C8]/20 backdrop-blur-md">
+                        02:45 min
+                    </span>
+                </div>
+
+                <button 
+                    type="button"
+                    class="video-play-pulse-btn trigger-intro-video" 
+                    data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                    data-video-title="Personal Introduction &amp; Creative Philosophy · H.O. Damilare Michael"
+                    aria-label="Play Full-Screen Intro Video">
+                    <i class="fas fa-play ml-1"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. HIGH-IMPACT QUANTITATIVE BANNER & 3D TECH MARQUEE -->
+        <section id="metrics" class="snap-section relative min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+            <div class="max-w-6xl mx-auto w-full mb-10 text-center">
+                <span class="text-xs font-bold tracking-widest text-[#E6C280] uppercase">Proven Scale &amp; Velocity</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8] mt-2">
+                    Engineering Precision Measured in Real-World Impact
+                </h2>
+                <div class="w-16 h-1 bg-[#E6C280] mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Quantitative Counter Grid -->
+            <div class="max-w-6xl mx-auto w-full mb-12">
+                <div class="glass-container tilt-card p-8 sm:p-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-[rgba(245,230,200,0.08)]">
+                    <div class="pt-4 md:pt-0">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-[#E6C280] font-mono counter-val" data-target="10" data-suffix="+">0+</div>
+                        <div class="text-xs uppercase tracking-wider text-[#A0AEC0] mt-2 font-medium">Years in Technology</div>
+                    </div>
+                    <div class="pt-4 md:pt-0">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-[#FFF3CD] font-mono counter-val" data-target="120" data-suffix="+">0+</div>
+                        <div class="text-xs uppercase tracking-wider text-[#A0AEC0] mt-2 font-medium">Enterprise &amp; Web Apps</div>
+                    </div>
+                    <div class="pt-4 md:pt-0">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-[#E6C280] font-mono counter-val" data-target="99.4" data-suffix="%">0%</div>
+                        <div class="text-xs uppercase tracking-wider text-[#A0AEC0] mt-2 font-medium">Project Delivery Rate</div>
+                    </div>
+                    <div class="pt-4 md:pt-0">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-[#FFF3CD] font-mono counter-val" data-target="500" data-suffix="K+">0K+</div>
+                        <div class="text-xs uppercase tracking-wider text-[#A0AEC0] mt-2 font-medium">Gen-AI Video Views</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Capabilities Marquee -->
+            <div class="w-full overflow-hidden" aria-label="Technology and Core Capabilities Ticker">
+                <div class="tech-marquee-wrapper py-2">
+                    <div class="tech-marquee-track">
+                        <div class="tech-pill"><i class="fas fa-layer-group"></i><span>Full-Stack Web Architecture</span></div>
+                        <div class="tech-pill"><i class="fas fa-brain"></i><span>Generative AI Visual Pipelines</span></div>
+                        <div class="tech-pill"><i class="fas fa-users-cog"></i><span>Executive Team Coaching</span></div>
+                        <div class="tech-pill"><i class="fas fa-heartbeat"></i><span>Cellular Wellness &amp; Longevity</span></div>
+                        <div class="tech-pill"><i class="fab fa-react"></i><span>React &amp; Next.js Platforms</span></div>
+                        <div class="tech-pill"><i class="fas fa-film"></i><span>Cinematic AI Storyboarding</span></div>
+                        <div class="tech-pill"><i class="fas fa-chart-line"></i><span>Network Marketing Duplication</span></div>
+                        <div class="tech-pill"><i class="fas fa-bolt"></i><span>High-Throughput Automations</span></div>
+                        <div class="tech-pill"><i class="fas fa-shield-alt"></i><span>Enterprise Scalability</span></div>
+                        <!-- Seamless Marquee Repeat -->
+                        <div class="tech-pill"><i class="fas fa-layer-group"></i><span>Full-Stack Web Architecture</span></div>
+                        <div class="tech-pill"><i class="fas fa-brain"></i><span>Generative AI Visual Pipelines</span></div>
+                        <div class="tech-pill"><i class="fas fa-users-cog"></i><span>Executive Team Coaching</span></div>
+                        <div class="tech-pill"><i class="fas fa-heartbeat"></i><span>Cellular Wellness &amp; Longevity</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EXTENSIVE "ABOUT ME" & PERSONAL STORY SECTION -->
+        <section id="biography" class="snap-section relative min-h-screen flex flex-col justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold tracking-widest text-[#E6C280] uppercase">The Journey &amp; Philosophy</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8] mt-2">
+                    Where Technical Rigor Meets Visionary Creativity
+                </h2>
+                <div class="w-16 h-1 bg-[#E6C280] mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <div class="lg:col-span-7 space-y-6 text-[#C9D1D9] leading-relaxed text-base">
+                    <div class="glass-container p-6 sm:p-8 story-block">
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3 flex items-center gap-3">
+                            <span class="text-[#E6C280] font-mono text-sm">01.</span>
+                            The Architectural Foundation
+                        </h3>
+                        <p>
+                            My path in software engineering began with a fixation on fundamental mechanics: how resilient distributed systems communicate, how intuitive interfaces diminish cognitive friction, and how scalable web applications can elevate enterprises from local players to global powerhouses. Over the last decade, I have engineered custom cloud web applications, marketplace engines, enterprise CMS ecosystems, and automated marketing pipelines that process mission-critical business transactions.
+                        </p>
+                    </div>
+
+                    <div class="glass-container p-6 sm:p-8 story-block">
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3 flex items-center gap-3">
+                            <span class="text-[#E6C280] font-mono text-sm">02.</span>
+                            The Generative AI Frontier
+                        </h3>
+                        <p>
+                            As neural networks and diffusion architectures matured, I recognized that code and narrative visuals were converging. I established a specialized generative AI production methodology—combining prompt orchestration, multimodal latent space models, custom ComfyUI workflows, and neural voice synthesis to craft cinematic brand films, concept storyboards, and hyper-realistic visual worlds at a fraction of traditional studio lead times.
+                        </p>
+                    </div>
+
+                    <div class="glass-container p-6 sm:p-8 story-block">
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3 flex items-center gap-3">
+                            <span class="text-[#E6C280] font-mono text-sm">03.</span>
+                            Human Leadership, Growth &amp; Wellness
+                        </h3>
+                        <p>
+                            High performance is meaningless if the human engine fails. Alongside technology, I have dedicated substantial energy to network marketing leadership, distributor mentorship, and holistic health supplement distribution. I coach entrepreneurial leaders on mindset resilience, sales duplication frameworks, and targeted nutritional protocols so that ambition is backed by physical endurance.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-container p-6 sm:p-8">
+                        <h4 class="text-base font-bold text-[#F5E6C8] mb-4 flex items-center gap-2">
+                            <i class="fas fa-compass text-[#E6C280]"></i> Core Operating Principles
+                        </h4>
+                        <div class="space-y-4 text-xs text-[#A0AEC0]">
+                            <div class="p-3 rounded-xl bg-[#0D0F12]/60 border border-[rgba(245,230,200,0.08)]">
+                                <div class="font-bold text-[#F5E6C8] text-sm mb-1">Architecture Over Band-Aids</div>
+                                <p>Write code and design workflows that require zero rewrites as user volume expands 100x.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-[#0D0F12]/60 border border-[rgba(245,230,200,0.08)]">
+                                <div class="font-bold text-[#F5E6C8] text-sm mb-1">Visual Continuity &amp; Rhythm</div>
+                                <p>Generative visuals must feel like intentional, coherent productions—not random AI snippets.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-[#0D0F12]/60 border border-[rgba(245,230,200,0.08)]">
+                                <div class="font-bold text-[#F5E6C8] text-sm mb-1">Holistic Endurance</div>
+                                <p>Sustainable business triumphs stem from sharp cognitive focus, clean nutrition, and authentic empathy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CORE TRIAD CAPABILITIES -->
+        <section id="capabilities" class="snap-section relative min-h-screen flex flex-col justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold tracking-widest text-[#E6C280] uppercase">Multidisciplinary Practice</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8] mt-2">
+                    Three Pillars of Modern Execution
+                </h2>
+                <div class="w-16 h-1 bg-[#E6C280] mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-container tilt-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="text-xs font-mono text-[#E6C280] mb-1">PILLAR 01 // ENGINEERING</div>
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3">Full-Stack Web Architecture</h3>
+                        <p class="text-xs text-[#A0AEC0] leading-relaxed mb-6">
+                            Scalable cloud apps, multi-vendor marketplaces, headless CMS builds, and automated webhook pipelines engineered for sub-second load times.
+                        </p>
+                    </div>
+                    <a href="web-services.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#E6C280] hover:text-[#FFF3CD] transition-colors">
+                        <span>Explore Web Architecture</span>
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-container tilt-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="text-xs font-mono text-[#E6C280] mb-1">PILLAR 02 // CREATIVE AI</div>
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3">Generative AI Video &amp; Cinema</h3>
+                        <p class="text-xs text-[#A0AEC0] leading-relaxed mb-6">
+                            AI UGC ads, product commercials, SaaS explainers, and cinematic visual stories combining 3D spatial thinking, neural diffusion, and After Effects compositing.
+                        </p>
+                    </div>
+                    <a href="creative-space.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#E6C280] hover:text-[#FFF3CD] transition-colors">
+                        <span>Explore AI Video Studio</span>
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-container tilt-card p-8 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="text-xs font-mono text-[#E6C280] mb-1">PILLAR 03 // VITALITY &amp; LEADERSHIP</div>
+                        <h3 class="text-xl font-bold text-[#F5E6C8] mb-3">Leadership &amp; Health Solutions</h3>
+                        <p class="text-xs text-[#A0AEC0] leading-relaxed mb-6">
+                            Executive sales duplication, entrepreneurial team coaching, and cellular health supplement distribution designed for sustained founder performance.
+                        </p>
+                    </div>
+                    <a href="leadership-business.html" class="inline-flex items-center gap-2 text-xs font-bold text-[#E6C280] hover:text-[#FFF3CD] transition-colors">
+                        <span>Explore Vitality &amp; Leadership</span>
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT & COLLABORATION FORM -->
+        <section id="contact" class="snap-section relative min-h-screen flex flex-col justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="glass-container p-8 sm:p-12 relative overflow-hidden">
+                <div class="absolute -top-32 -right-32 w-80 h-80 bg-[#E6C280]/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <span class="text-xs font-bold tracking-widest text-[#E6C280] uppercase">Direct Inquiries</span>
+                    <h2 class="text-3xl font-bold font-display text-[#F5E6C8] mt-2">
+                        Let's Create Something Extraordinary
+                    </h2>
+                    <p class="text-sm text-[#A0AEC0] mt-2">
+                        Whether you need enterprise web architecture, high-concept generative AI visuals, or executive business mentorship, let's connect.
+                    </p>
+                </div>
+
+                <form data-mho-form class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-[#C9D1D9] mb-2" for="lead-name">Your Full Name *</label>
+                            <input id="lead-name" type="text" name="name" required class="mho-input" placeholder="e.g. Alexander Vance">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-[#C9D1D9] mb-2" for="lead-email">Email Address *</label>
+                            <input id="lead-email" type="email" name="email" required class="mho-input" placeholder="alex@enterprise.com">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-[#C9D1D9] mb-2" for="lead-phone">Phone / WhatsApp (Optional)</label>
+                            <input id="lead-phone" type="tel" name="phone" class="mho-input" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-[#C9D1D9] mb-2" for="lead-interest">Area of Interest *</label>
+                            <select id="lead-interest" name="interest" required class="mho-input bg-[#0D0F12]">
+                                <option value="Web Architecture & Custom Apps">Web Architecture & Custom Apps</option>
+                                <option value="Generative AI Video & Visual Production">Generative AI Video & Visual Production</option>
+                                <option value="CMS / Marketplace / E-Commerce">CMS / Marketplace / E-Commerce</option>
+                                <option value="Leadership & Business Coaching">Leadership & Business Coaching</option>
+                                <option value="Health Supplement Distribution">Health Supplement Distribution</option>
+                                <option value="Other Strategic Inquiries">Other Strategic Inquiries</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-[#C9D1D9] mb-2" for="lead-message">Project Scope or Message *</label>
+                        <textarea id="lead-message" name="message" rows="4" required class="mho-input" placeholder="Tell me about your goals, timeline, and current requirements..."></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                        <div class="text-xs text-[#8B949E] text-center sm:text-left">
+                            <i class="fas fa-lock text-[#E6C280] mr-1"></i> Strictly confidential. Direct response from H.O. Damilare Michael.
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#E6C280] text-[#0D0F12] font-bold text-sm hover:bg-[#FFF3CD] hover:shadow-[0_0_20px_rgba(230,194,128,0.4)] transition-all flex items-center justify-center gap-2">
+                            <span>Send Inquiry</span>
+                            <i class="fas fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- COMPREHENSIVE UNIFIED FOOTER ARCHITECTURE -->
+    <footer class="mho-footer relative z-20 border-t border-[rgba(245,230,200,0.1)] bg-[#0A0D10]/95 pt-12 pb-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between pb-8 border-b border-[rgba(245,230,200,0.08)]">
+                <!-- Brand & Identity -->
+                <div class="md:col-span-4 text-center md:text-left">
+                    <a href="index.html" class="inline-flex items-center gap-2 text-lg font-extrabold text-[#F5E6C8] hover:text-[#FFF3CD] transition-colors">
+                        HODM <span class="text-xs font-semibold text-[#E6C280] uppercase tracking-wider">· H.O. Damilare Michael</span>
+                    </a>
+                    <p class="text-xs text-[#8B949E] mt-1.5 leading-relaxed">
+                        Full-Stack Web Architect · Generative AI Video Director · Executive Growth Strategist
+                    </p>
+                </div>
+
+                <!-- Center Section: Quick Links & Contact -->
+                <div class="md:col-span-5 text-center flex flex-col items-center justify-center gap-2 text-xs text-[#A0AEC0]">
+                    <div class="flex items-center justify-center gap-4 flex-wrap">
+                        <a href="privacy-policy.html" class="hover:text-[#E6C280] transition-colors underline-offset-4 hover:underline">Privacy Policy</a>
+                        <span class="text-[rgba(245,230,200,0.2)]">|</span>
+                        <a href="mailto:reel3dlab@gmail.com" class="hover:text-[#E6C280] transition-colors flex items-center gap-1.5">
+                            <i class="fas fa-envelope text-[#E6C280]"></i> reel3dlab@gmail.com
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-3 pt-1">
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Bottom Left: Accessibility Menu Trigger -->
+                <div class="md:col-span-3 flex justify-center md:justify-end">
+                    <button type="button" class="footer-accessibility-btn trigger-accessibility-modal" aria-label="Open Accessibility Menu">
+                        <i class="fas fa-universal-access text-[#E6C280]"></i>
+                        <span>Accessibility Options</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Center Bottom: Footer Navigation Sequence Bar (< ^ >) -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-xs text-[#8B949E]">
+                <div class="text-center sm:text-left">
+                    © 2026 H.O. Damilare Michael (HODM). All rights reserved.
+                </div>
+
+                <!-- Sequence Bar: Boundary logic handled via JS (Page 1 has Prev disabled) -->
+                <div class="footer-nav-sequence-bar" role="navigation" aria-label="Sequential Page Navigation">
+                    <a id="footerSeqPrevBtn" class="footer-nav-seq-btn disabled" title="Previous Page" aria-label="Previous Page">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <button id="footerSeqTopBtn" type="button" class="footer-scroll-top-btn" title="Scroll to Top Header" aria-label="Scroll to Top Header">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Top</span>
+                    </button>
+                    <a id="footerSeqNextBtn" href="web-services.html" class="footer-nav-seq-btn" title="Next Page: Web Architecture" aria-label="Next Page">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+
+                <div class="text-center sm:text-right font-mono text-[11px] text-[#A0AEC0]">
+                    PAGE 01 // BIOGRAPHY &amp; VISION
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Right: Floating Quick-Chat WhatsApp Button -->
+    <a href="https://wa.me/2348000000000?text=Hello%20H.O.%20Damilare%20Michael%2C%20I%20am%20interested%20in%20collaborating%20with%20you." target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" aria-label="Quick Chat on WhatsApp">
+        <span class="whatsapp-pulse-dot" aria-hidden="true"></span>
+        <i class="fab fa-whatsapp text-lg"></i>
+        <span>Quick WhatsApp</span>
+    </a>
+
+    <!-- Accessibility Configuration Modal -->
+    <div id="mhoAccessibilityModal" class="mho-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="a11yModalTitle">
+        <div class="mho-modal-card p-6 sm:p-8 max-w-md relative">
+            <button id="closeA11yModalBtn" type="button" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#1A2026] text-[#F5E6C8] hover:text-[#FFF3CD] flex items-center justify-center transition-colors" aria-label="Close Accessibility Menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-[#E6C280]/20 text-[#E6C280] flex items-center justify-center text-lg">
+                    <i class="fas fa-universal-access"></i>
+                </div>
+                <div>
+                    <h3 id="a11yModalTitle" class="text-lg font-bold text-[#F5E6C8]">Accessibility Controls</h3>
+                    <p class="text-xs text-[#8B949E]">Customize visual rendering for enhanced comfort</p>
+                </div>
+            </div>
+            <div class="space-y-3 mb-6">
+                <button id="a11yToggleContrast" type="button" class="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D0F12] border border-[#F5E6C8]/15 hover:border-[#E6C280] text-[#F5E6C8] text-xs font-semibold transition-all">
+                    <span class="flex items-center gap-2.5"><i class="fas fa-adjust text-[#E6C280]"></i> High Contrast Mode</span>
+                    <span class="text-[11px] text-[#A0AEC0] font-mono">Toggle</span>
+                </button>
+                <button id="a11yToggleText" type="button" class="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D0F12] border border-[#F5E6C8]/15 hover:border-[#E6C280] text-[#F5E6C8] text-xs font-semibold transition-all">
+                    <span class="flex items-center gap-2.5"><i class="fas fa-font text-[#E6C280]"></i> Larger Typography (+10%)</span>
+                    <span class="text-[11px] text-[#A0AEC0] font-mono">Toggle</span>
+                </button>
+                <button id="a11yToggleMotion" type="button" class="w-full flex items-center justify-between p-3 rounded-xl bg-[#0D0F12] border border-[#F5E6C8]/15 hover:border-[#E6C280] text-[#F5E6C8] text-xs font-semibold transition-all">
+                    <span class="flex items-center gap-2.5"><i class="fas fa-pause text-[#E6C280]"></i> Reduce Motion &amp; Animations</span>
+                    <span class="text-[11px] text-[#A0AEC0] font-mono">Toggle</span>
+                </button>
+            </div>
+            <div class="pt-3 border-t border-[rgba(245,230,200,0.1)] flex items-center justify-between">
+                <button id="a11yResetBtn" type="button" class="text-xs text-[#8B949E] hover:text-[#E6C280] transition-colors">
+                    Reset to Defaults
+                </button>
+                <span class="text-[10px] text-[#A0AEC0] font-mono">WCAG 2.1 AA Compliant</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="mho-toast" class="hidden"></div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
