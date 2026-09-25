@@ -41,6 +41,69 @@
     <meta property="og:description" content="AI UGC ads, product commercials, SaaS videos and cinematic visual stories powered by generative tools, 3D modelling &amp; post-production.">
     <meta name="theme-color" content="#0D0F12">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+
+    <!-- JSON-LD FAQ Schema for Creative AI Space -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Virtual Director Deck and how does generative AI cinematography work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Virtual Director Deck simulates physical cinematographic camera parameters—including anamorphic focal lengths, macro probe tracking, and sensor aspects (2.39:1, 16:9, 9:16)—within latent diffusion space, allowing precise optical continuity and narrative direction before final neural render."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI-generated commercial videos match broadcast television and Hollywood cinema standards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. By marrying custom LoRA model conditioning, 3D camera projection, professional color grading (DaVinci Resolve), and AI temporal upscaling to 4K/8K, our productions eliminate visual artifacts and achieve photoreal cinematic fidelity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which neural models, 3D pipelines, and audio synthesis suites do you utilize?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our studio pipeline integrates Midjourney v6, Runway Gen-3 Alpha, Kling AI, Luma Dream Machine, Blender 3D for spatial assets, ElevenLabs for neural voice cloning and Foley sound effects, and Adobe After Effects for final optical compositing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the typical production timeline for an AI commercial or viral UGC campaign?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Single commercial spots and high-converting TikTok/Reels UGC ads deliver in 3 to 5 business days. Full multi-spot brand campaigns with custom audio scoring and localization deliver in 1 to 2 weeks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do clients retain full commercial broadcast ownership and master licensing rights?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100% of master video renders, sound stems, and commercial exploitation rights are assigned to the client upon project completion with zero recurring royalty fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the card stack unfolding showcase feature demonstrate your video capabilities?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The interactive card stack allows visitors to scroll through stacked video production cards spanning 4K IMAX cinema trailers, luxury macro horology, high-ROAS viral UGC testimonials, architectural flythroughs, and fashion lookbooks with real-time video modal streaming."
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- High-End Typography: Plus Jakarta Sans, Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -394,81 +457,242 @@
     <!-- MAIN CONTENT -->
     <main class="flex-grow pt-28 pb-16 relative z-10">
 
-        <!-- 1. CREATIVE AI HERO SECTION -->
-        <section class="relative min-h-[75vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
-            <!-- Glowing Celestial Moon with Phase Shadow -->
-            <div class="celestial-moon-wrap pointer-events-none" aria-hidden="true">
-                <div class="celestial-moon-body">
-                    <div class="moon-phase-shadow"></div>
+        <!-- 1. CREATIVE AI HERO SECTION: VIRTUAL DIRECTOR SUITE & LATENT VIEWFINDER -->
+        <section class="relative min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-6 pb-20 overflow-hidden">
+            <!-- Full-Page Dynamic Lunar Illumination Layer -->
+            <div id="creativePageIllumination" class="creative-page-illumination" aria-hidden="true"></div>
+
+            <!-- Glowing Celestial Moon with Phase Shadow (Interactive) -->
+            <div id="creativeCelestialMoon" class="celestial-moon-wrap pointer-events-auto cursor-pointer" role="button" tabindex="0" title="Click to Cycle Moon Radiance & Cosmic Brightness" aria-label="Celestial Moon Radiance Controller">
+                <div id="creativeMoonBody" class="celestial-moon-body">
+                    <div id="creativeMoonShadow" class="moon-phase-shadow"></div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono px-2 py-0.5 rounded bg-[#0D0F12]/80 text-[#E6C280] border border-[#E6C280]/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                    TAP TO CYCLE
                 </div>
             </div>
 
-            <!-- Deep Cosmic Glow Behind Hero -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-tr from-[#E6C280]/15 via-[#FFF3CD]/5 to-transparent rounded-full blur-[150px] pointer-events-none"></div>
+            <!-- Dynamic Lunar Ambient Moonlight Illumination Layer -->
+            <div id="creativeMoonlightGlow" class="global-moonlight-sync" aria-hidden="true"></div>
 
-            <div class="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <!-- Text Column -->
-                <div class="lg:col-span-7 hero-fade-in">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12161A]/80 border border-[#E6C280]/20 text-xs font-mono text-[#F5E6C8] mb-6 backdrop-blur-md">
-                        <span class="w-2 h-2 rounded-full bg-[#E6C280] animate-pulse"></span>
-                        <span>AI VIDEO CREATOR // UGC ADS, PRODUCT &amp; CINEMATIC AI</span>
+            <!-- Deep Cosmic Glow Behind Hero -->
+            <div id="heroCosmicAura" class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[600px] bg-gradient-to-tr from-[#E6C280]/20 via-[#FFF3CD]/8 to-transparent rounded-full blur-[160px] pointer-events-none transition-all duration-700"></div>
+
+            <div class="relative z-10 max-w-6xl mx-auto w-full">
+                <!-- Top Announcement & Director Philosophy -->
+                <div class="text-center max-w-3xl mx-auto mb-8 hero-fade-in">
+                    <div class="inline-flex items-center flex-wrap justify-center gap-2.5 px-4 py-1.5 rounded-full bg-[#12161A]/90 border border-[#E6C280]/30 text-xs font-mono text-[#F5E6C8] mb-4 shadow-xl backdrop-blur-md">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#E6C280] shadow-[0_0_10px_#E6C280] animate-pulse"></span>
+                        <span>INTERSTELLAR NEURAL STUDIO // LATENT COSMIC DIRECTING</span>
+                        <span class="hidden md:inline text-[11px] text-[#A0AEC0] border-l border-[#E6C280]/25 pl-2.5 flex items-center gap-1.5">
+                            <i class="fas fa-meteor text-[#E6C280]"></i> SOLAR SYSTEM &amp; GALAXY SIMULATION ACTIVE
+                        </span>
                     </div>
 
-                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#F5E6C8] leading-[1.08] mb-6">
-                        AI UGC Ads, <br>
-                        Product Commercials &amp; <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E6C280] via-[#FFF3CD] to-[#F5E6C8]">Cinematic Visual Stories.</span>
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#F5E6C8] leading-[1.08] mb-4">
+                        Architecting Cinema <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E6C280] via-[#FFF3CD] to-[#F5E6C8]">Across The Galactic Latent Void.</span>
                     </h1>
 
-                    <p class="text-base sm:text-lg text-[#A0AEC0] max-w-xl leading-relaxed mb-6">
-                        Using generative video tools backed by <span class="text-[#F5E6C8] font-semibold">3D modelling &amp; video editing experience</span>. The final video feels like a finished production asset, not a collection of disjointed AI clips.
+                    <p class="text-sm sm:text-base text-[#A0AEC0] max-w-2xl mx-auto leading-relaxed">
+                        Where 3D spatial orbital physics, celestial diffusion models, and Hollywood-grade editorial timing collide. Interact with the live virtual camera rig below to preview real director camera setups amidst passing comets and planetary orbits.
                     </p>
-
-                    <!-- Profile Philosophy Callout -->
-                    <div class="p-4 rounded-xl bg-[#12161A]/70 border border-[#E6C280]/25 backdrop-blur-md mb-8 text-xs text-[#C9D1D9] leading-relaxed">
-                        <i class="fas fa-quote-left text-[#E6C280] mr-2"></i>
-                        AI UGC, Product Video, and Cinematic AI Video are not simply about generating clips. They are about selecting the right visual approach for the product, audience, and platform—combining 3D spatial thinking, compositing, visual continuity, and commercial storytelling.
-                    </div>
-
-                    <div class="flex flex-wrap items-center gap-4">
-                        <a href="#video-grid" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#E6C280] text-[#0D0F12] font-bold text-sm hover:bg-[#FFF3CD] hover:shadow-[0_0_20px_rgba(230,194,128,0.4)] transition-all">
-                            <span>Watch Featured Video Reels</span>
-                            <i class="fas fa-play text-xs"></i>
-                        </a>
-                        <a href="#workflow-stack" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#161B22]/80 hover:bg-[#1C2128] border border-[rgba(245,230,200,0.15)] text-[#F5E6C8] font-semibold text-sm transition-all">
-                            <i class="fas fa-sliders-h text-[#E6C280]"></i>
-                            <span>Production Pipeline</span>
-                        </a>
-                    </div>
                 </div>
 
-                <!-- Visual Media Reel Mockup -->
-                <div class="lg:col-span-5 hero-fade-in">
-                    <div class="relative rounded-2xl overflow-hidden glass-container p-3 border-[#E6C280]/30 shadow-2xl">
-                        <div class="relative aspect-video rounded-xl overflow-hidden bg-[#161B22] group cursor-pointer trigger-video-modal"
-                             data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                             data-video-title="Cinematic AI Studio Reel 2026 · H.O. Damilare Michael">
-                            <img 
-                                src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" 
-                                alt="Cinematic Generative AI Production Frame" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                loading="eager"
-                            />
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12]/85 via-transparent to-transparent"></div>
-                            
-                            <!-- Golden Play Button Overlay -->
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-16 h-16 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-xl shadow-[0_0_25px_rgba(230,194,128,0.6)] group-hover:scale-110 transition-transform">
-                                    <i class="fas fa-play ml-1"></i>
+                <!-- THE VIRTUAL DIRECTOR DECK & INTERACTIVE VIEWFINDER -->
+                <div class="director-deck-container p-4 sm:p-7 hero-fade-in">
+                    <!-- Top Control Strip: Camera Specs, Lens Selector, Aspect Ratio -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[rgba(245,230,200,0.12)]">
+                        <!-- Rec status & Sensor -->
+                        <div class="flex items-center gap-3">
+                            <div class="rec-pulse-indicator">
+                                <span class="rec-pulse-dot"></span>
+                                <span id="directorHudTimecode">REC 00:04:12:18</span>
+                            </div>
+                            <span class="text-[11px] font-mono text-[#8B949E] hidden sm:inline">
+                                SENSOR: 8K VIRTUAL FULL-FRAME · 24.000 FPS
+                            </span>
+                        </div>
+
+                        <!-- Lens Mode Switchers -->
+                        <div class="flex items-center gap-1.5 overflow-x-auto py-1 max-w-full">
+                            <span class="text-[11px] font-mono text-[#E6C280] mr-1 hidden md:inline">LENS:</span>
+                            <button type="button" class="director-lens-btn active" data-lens="35mm Anamorphic 2.39:1">
+                                <i class="fas fa-camera mr-1 text-[#E6C280]"></i> 35mm Anamorphic
+                            </button>
+                            <button type="button" class="director-lens-btn" data-lens="Macro Probe 24mm f/14">
+                                <i class="fas fa-search mr-1 text-[#E6C280]"></i> 24mm Macro Probe
+                            </button>
+                            <button type="button" class="director-lens-btn" data-lens="35mm Portrait Prime">
+                                <i class="fas fa-user mr-1 text-[#E6C280]"></i> 35mm UGC Prime
+                            </button>
+                            <button type="button" class="director-lens-btn" data-lens="IMAX 70mm Grand-Format">
+                                <i class="fas fa-expand mr-1 text-[#E6C280]"></i> IMAX 70mm
+                            </button>
+                        </div>
+
+                        <div class="flex items-center flex-wrap gap-2">
+                            <!-- Moon Brightness / Lunar Radiance Switcher -->
+                            <div class="flex items-center gap-1.5 bg-[#0D0F12]/80 p-1.5 rounded-lg border border-[#E6C280]/25 shadow-md">
+                                <span class="text-[10px] font-mono text-[#E6C280] px-1 flex items-center gap-1">
+                                    <i class="fas fa-moon text-[11px] text-[#FFF3CD]"></i>
+                                    <span class="hidden sm:inline">MOON GLOW:</span>
+                                </span>
+                                <button type="button" class="director-moon-btn px-2 py-0.5 rounded text-[11px] font-mono transition-all text-[#8B949E] hover:text-[#F5E6C8]" data-level="35" title="Crescent Moon · 35% Luminescence">35%</button>
+                                <button type="button" class="director-moon-btn px-2 py-0.5 rounded text-[11px] font-mono transition-all text-[#8B949E] hover:text-[#F5E6C8]" data-level="70" title="Half Moon · 70% Luminescence">70%</button>
+                                <button type="button" class="director-moon-btn active px-2 py-0.5 rounded text-[11px] font-mono transition-all bg-[#E6C280] text-[#0D0F12] font-bold shadow-[0_0_12px_rgba(230,194,128,0.5)]" data-level="100" title="Full Moon · 100% Radiant Luminescence">100%</button>
+                                <button type="button" class="director-moon-btn px-2 py-0.5 rounded text-[11px] font-mono transition-all text-[#8B949E] hover:text-[#FFF3CD]" data-level="160" title="Supermoon · 160% High Cosmic Radiance">160%</button>
+                                <button type="button" class="director-moon-btn px-2 py-0.5 rounded text-[11px] font-mono transition-all text-[#8B949E] hover:text-[#FFF3CD]" data-level="220" title="Hyper-Nova · 220% Dazzling Radiance">220%</button>
+                                <div class="hidden xl:flex items-center gap-1.5 pl-1.5 border-l border-[rgba(245,230,200,0.15)]">
+                                    <input type="range" id="moonBrightnessSlider" min="20" max="220" value="100" class="w-16 h-1 accent-[#E6C280] cursor-pointer bg-[#1A2026] rounded" title="Slide to adjust page brightness in response to moon">
+                                    <span id="moonBrightnessDisplay" class="text-[10px] font-mono text-[#E6C280] w-7 text-right">100%</span>
                                 </div>
                             </div>
 
-                            <div class="absolute bottom-3 left-3 right-3 p-3 rounded-lg bg-[#0D0F12]/80 backdrop-blur-md border border-[rgba(245,230,200,0.1)] flex items-center justify-between text-xs">
-                                <span class="font-mono text-[#E6C280]">STUDIO REEL 2026</span>
-                                <span class="font-mono text-[#8B949E]">4K UHD // CLICK TO STREAM</span>
+                            <!-- Aspect Ratio Switchers -->
+                            <div class="flex items-center gap-1 bg-[#0D0F12]/80 p-1 rounded-lg border border-[rgba(245,230,200,0.1)]">
+                                <button type="button" class="director-aspect-pill active" data-aspect="2.39:1" title="CinemaScope 2.39:1">2.39:1</button>
+                                <button type="button" class="director-aspect-pill" data-aspect="16:9" title="16:9 Standard 4K">16:9</button>
+                                <button type="button" class="director-aspect-pill" data-aspect="9:16" title="9:16 Vertical UGC Social">9:16</button>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Center Viewfinder Stage -->
+                    <div class="py-6 flex justify-center items-center">
+                        <div id="directorViewport" class="director-viewport-frame relative w-full rounded-2xl overflow-hidden border border-[#E6C280]/40 shadow-2xl bg-black group transition-all duration-500" style="aspect-ratio: 21/9; max-width: 100%;">
+                            <!-- Viewfinder HUD Reticle Corners -->
+                            <div class="viewfinder-hud-corner viewfinder-hud-tl"></div>
+                            <div class="viewfinder-hud-corner viewfinder-hud-tr"></div>
+                            <div class="viewfinder-hud-corner viewfinder-hud-bl"></div>
+                            <div class="viewfinder-hud-corner viewfinder-hud-br"></div>
+                            
+                            <!-- Optical Reticle Crosshairs -->
+                            <div class="viewfinder-crosshair"></div>
+
+                            <!-- Live Scene Image Display -->
+                            <img id="directorSceneImg" 
+                                 src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" 
+                                 alt="Active Director Scene Viewport" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+
+                            <!-- Cinematic Vignette & Grading -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12]/90 via-transparent to-[#0D0F12]/40 pointer-events-none"></div>
+
+                            <!-- Top HUD Data Overlay -->
+                            <div class="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-20 text-xs">
+                                <span id="directorScenePill" class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono font-bold tracking-wider backdrop-blur-md">
+                                    4K IMAX CINEMA REEL
+                                </span>
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono backdrop-blur-md flex items-center gap-1.5">
+                                    <i class="fas fa-video text-[#E6C280] text-[10px]"></i>
+                                    <span id="directorLensNameDisplay">35mm Anamorphic 2.39:1</span>
+                                </span>
+                            </div>
+
+                            <!-- Central Play Button: Launches Full Reel Stream -->
+                            <div class="absolute inset-0 flex items-center justify-center z-20">
+                                <button id="directorMainPlayBtn" 
+                                        type="button"
+                                        class="trigger-intro-video w-20 h-20 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-2xl shadow-[0_0_35px_rgba(230,194,128,0.7)] group-hover:scale-110 transition-transform duration-300"
+                                        data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                                        data-video-title="Deep Space Supernova · Sci-Fi Cinema Trailer"
+                                        data-video-category="4K IMAX CINEMA REEL"
+                                        data-video-synopsis="Ultra-wide anamorphic capture of a dying star, volumetric relativistic gas nebulae, interstellar derelict hull reflection, cinematic color grading, 24fps."
+                                        aria-label="Stream Video Reel">
+                                    <i class="fas fa-play ml-1.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Bottom Viewfinder HUD: Title, Live Audio Waveform & Parameters -->
+                            <div class="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 z-20 pointer-events-none">
+                                <div>
+                                    <h3 id="directorSceneTitle" class="text-base sm:text-xl font-bold font-display text-[#F5E6C8] drop-shadow-md">
+                                        Deep Space Supernova · Sci-Fi Cinema Trailer
+                                    </h3>
+                                    <div class="text-[11px] font-mono text-[#8B949E] mt-0.5">
+                                        SHUTTER 180° · ISO 800 · NEURAL COLOR GRADED
+                                    </div>
+                                </div>
+
+                                <!-- Ambient Audio Waveform Visualizer -->
+                                <div class="flex items-center gap-3 bg-[#0D0F12]/85 px-3 py-1.5 rounded-xl border border-[rgba(245,230,200,0.15)] backdrop-blur-md">
+                                    <span class="text-[10px] font-mono text-[#E6C280] flex items-center gap-1">
+                                        <i class="fas fa-volume-up text-[9px]"></i> AUDIO:
+                                    </span>
+                                    <canvas id="directorAudioCanvas" class="w-28 h-6"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Scene Orbit: 4 Interactive Production Presets -->
+                    <div class="pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-mono text-[#E6C280] tracking-wider uppercase flex items-center gap-2">
+                                <i class="fas fa-sliders-h text-[10px]"></i> SELECT INTERACTIVE SCENE PRESET:
+                            </span>
+                            <span class="text-[11px] text-[#8B949E] font-mono hidden sm:inline">
+                                Click any preset to reconfigure virtual lens &amp; prompt
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                            <!-- Preset 1 -->
+                            <div class="prompt-orbit-card active" data-preset="0">
+                                <div class="text-[10px] font-mono text-[#E6C280] mb-1">PRESET 01 // CINEMA</div>
+                                <div class="text-xs font-bold text-[#F5E6C8] truncate">Deep Space Supernova</div>
+                                <div class="text-[10px] text-[#8B949E] mt-0.5">IMAX 70mm · Sci-Fi</div>
+                            </div>
+
+                            <!-- Preset 2 -->
+                            <div class="prompt-orbit-card" data-preset="1">
+                                <div class="text-[10px] font-mono text-[#E6C280] mb-1">PRESET 02 // LUXURY</div>
+                                <div class="text-xs font-bold text-[#F5E6C8] truncate">Titanium Horology</div>
+                                <div class="text-[10px] text-[#8B949E] mt-0.5">Macro Probe · CAD 3D</div>
+                            </div>
+
+                            <!-- Preset 3 -->
+                            <div class="prompt-orbit-card" data-preset="2">
+                                <div class="text-[10px] font-mono text-[#E6C280] mb-1">PRESET 03 // VIRAL UGC</div>
+                                <div class="text-xs font-bold text-[#F5E6C8] truncate">Cellular Skincare Ad</div>
+                                <div class="text-[10px] text-[#8B949E] mt-0.5">9:16 Social · 4.8x ROAS</div>
+                            </div>
+
+                            <!-- Preset 4 -->
+                            <div class="prompt-orbit-card" data-preset="3">
+                                <div class="text-[10px] font-mono text-[#E6C280] mb-1">PRESET 04 // REAL ESTATE</div>
+                                <div class="text-xs font-bold text-[#F5E6C8] truncate">The Obsidian Villa</div>
+                                <div class="text-[10px] text-[#8B949E] mt-0.5">Architectural Flythrough</div>
+                            </div>
+                        </div>
+
+                        <!-- Active Prompt Orchestration Box -->
+                        <div class="p-3.5 rounded-xl bg-[#0D0F12]/80 border border-[rgba(245,230,200,0.1)] flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#E6C280]/20 text-[#FFF3CD] border border-[#E6C280]/30 shrink-0 mt-0.5">
+                                LATENT PROMPT
+                            </span>
+                            <p id="directorScenePrompt" class="text-xs font-mono text-[#C9D1D9] leading-relaxed italic">
+                                "Ultra-wide anamorphic capture of a dying star, volumetric relativistic gas nebulae, interstellar derelict hull reflection, cinematic color grading, 24fps."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Primary CTAs below Director Deck -->
+                <div class="mt-8 flex flex-wrap items-center justify-center gap-4 hero-fade-in">
+                    <a href="#video-grid" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#E6C280] text-[#0D0F12] font-bold text-sm hover:bg-[#FFF3CD] hover:shadow-[0_0_25px_rgba(230,194,128,0.5)] transition-all">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Inspect 6-Reel Card Stack</span>
+                    </a>
+                    <a href="#contact-creative" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#161B22]/90 hover:bg-[#1C2128] border border-[rgba(245,230,200,0.2)] text-[#F5E6C8] font-semibold text-sm transition-all hover:border-[#E6C280]">
+                        <i class="fas fa-paper-plane text-[#E6C280]"></i>
+                        <span>Commission Custom Video</span>
+                    </a>
+                    <button type="button" class="trigger-intro-video inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#12161A]/80 hover:bg-[#1A2026] border border-[#E6C280]/30 text-[#FFF3CD] font-medium text-sm transition-all" data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1">
+                        <i class="fas fa-play text-xs text-[#E6C280]"></i>
+                        <span>Director Statement (4K)</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -494,10 +718,10 @@
                 <iframe 
                     id="pageIntroVideoIframe"
                     class="w-full h-full object-cover" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&amp;rel=0" 
+                    src="https://www.youtube.com/embed/sECemgPYcFg?enablejsapi=1&amp;rel=0&amp;playsinline=1&amp;modestbranding=1" 
                     title="Personal Intro Video - H.O. Damilare Michael" 
                     frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen>
                 </iframe>
 
@@ -513,7 +737,7 @@
                 <button 
                     type="button"
                     class="video-play-pulse-btn trigger-intro-video" 
-                    data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                    data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1&amp;playsinline=1&amp;rel=0&amp;modestbranding=1" 
                     data-video-title="AI Video Creation &amp; Visual Storytelling · H.O. Damilare Michael"
                     aria-label="Play Full-Screen Intro Video">
                     <i class="fas fa-play ml-1"></i>
@@ -604,222 +828,332 @@
             </div>
         </section>
 
-        <!-- 3. INTERACTIVE VIDEO PROJECT CARDS GRID (WITH STREAMING MODAL) -->
-        <section id="video-grid" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-[rgba(245,230,200,0.08)]">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12161A]/85 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3">
-                        <i class="fas fa-play"></i>
-                        <span>STREAMING VIDEO PROJECT CARDS</span>
+        <!-- 3. INTERACTIVE VIDEO CARD STACK: PREVIOUS WORKS (UNFOLD ON SCROLL, REVERSE ON SCROLL BACK) -->
+        <section id="video-grid" class="cards-stack-section relative py-20 border-t border-[rgba(245,230,200,0.08)]">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12161A]/85 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3">
+                            <i class="fas fa-layer-group text-[#FFF3CD]"></i>
+                            <span>INTERACTIVE SCROLL CARD STACK // 6 PRODUCTION CUTS</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8]">
+                            Previous Works: Cinematic AI Showcase
+                        </h2>
+                        <p class="text-xs sm:text-sm text-[#A0AEC0] mt-1 max-w-xl">
+                            Visually stacked video reels spanning UGC ads, 3D commercials, SaaS walkthroughs &amp; cinematic trailers. Scroll down to unfold each card into full focus; scroll up to fold them back into the stack.
+                        </p>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8]">
-                        Featured AI Video Production Showcase
-                    </h2>
-                    <p class="text-xs sm:text-sm text-[#A0AEC0] mt-1">
-                        Click any card to stream full-screen production cuts directly on the website.
-                    </p>
-                </div>
-                <div class="text-xs font-mono text-[#E6C280]">
-                    STREAMING PLAYER // MODAL READY
+                    <div class="flex items-center gap-3">
+                        <span id="stackCounterBadge" class="text-xs font-mono text-[#E6C280] px-3.5 py-1.5 rounded-full bg-[#12161A] border border-[#E6C280]/30 shadow-lg">
+                            Card <span id="stackActiveCardNum">1</span> of 6
+                        </span>
+                        <div class="flex items-center gap-1.5">
+                            <button id="stackPrevBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/25 text-[#E6C280] hover:bg-[#E6C280]/20 flex items-center justify-center text-xs transition-colors" title="Previous Stacked Card">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <button id="stackNextBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/25 text-[#E6C280] hover:bg-[#E6C280]/20 flex items-center justify-center text-xs transition-colors" title="Next Stacked Card">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Video Project Grid (Dynamic & Fluid Across Mobile, Tablet, Desktop) -->
-            <div id="videoProjectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1: AI UGC Video Ad -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="Hyper-Converting AI UGC Beauty &amp; Skincare Ad">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="AI UGC Beauty Ad Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+            <!-- Card Stack Pinned Stage Area -->
+            <div id="cardsStackWrapper" class="cards-stack-pinned-wrapper max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="cardsStackStage" class="cards-stack-stage">
+                    <!-- Stack Card 1: AI UGC Viral Ad -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="0"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="Lumina Cellular Skincare — AI UGC Viral Ad"
+                         data-video-category="AI UGC Commercial"
+                         data-video-synopsis="Natural UGC creator pacing, synthetic talking avatar with lip-sync, hands-only bottle textures, and dynamic problem-solution hook.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="AI UGC Beauty Ad Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 01 // AI UGC AD · 4.8X ROAS
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    00:30
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 01 / 06</span>
+                                        <span>DTC &amp; E-COMMERCE</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        Lumina Cellular Skincare — AI UGC Viral Ad
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        Engineered for high-converting TikTok and Meta advertising funnels. Combines realistic synthetic creator avatars, authentic conversational pacing, micro-expressions, texture close-ups, and an immediate 3-second hook.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Veo 2</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Kling AI</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">After Effects</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            AI UGC AD // METRIC: 4.8X ROAS
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            00:30
-                        </div>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            Lumina Cellular Skincare — AI UGC Viral Ad
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            Natural UGC creator pacing, synthetic talking avatar with lip-sync, hands-only bottle textures, and dynamic problem-solution hook.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">Veo · Kling · AE</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 2: 3D Product Commercial -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="Aura Luxury Chronograph — 3D AI Product Commercial">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Luxury Chronograph Commercial Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+                    <!-- Stack Card 2: 3D AI Product Commercial -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="1"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="Aura Luxury Chronograph — 3D AI Product Commercial"
+                         data-video-category="3D Hybrid Commercial"
+                         data-video-synopsis="Seamless combination of Blender CAD geometry, metallic raytracing, and Runway Gen-3 atmospheric dust particles and lighting.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Luxury Chronograph Commercial Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 02 // 3D PRODUCT COMMERCIAL
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    00:45
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 02 / 06</span>
+                                        <span>LUXURY PRODUCT LAUNCH</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        Aura Titanium Watch — 3D AI Commercial
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        High-end horology visualization uniting CAD mesh modeling in Blender with generative particle atmosphere in Gen-3. Micro gear teeth rotation, sapphire glass refraction, and studio cinematic lighting.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Blender 3D</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Midjourney</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Runway Gen-3</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            COMMERCIAL // 3D HYBRID
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            00:45
-                        </div>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            Aura Titanium Watch — 3D AI Commercial
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            Seamless combination of Blender CAD geometry, metallic raytracing, and Runway Gen-3 atmospheric dust particles and lighting.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">Blender · Midjourney · Gen-3</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 3: SaaS Product Explainer -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="Synthetix Cloud — SaaS Product Interface Explainer">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="SaaS Video Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+                    <!-- Stack Card 3: SaaS Platform Explainer -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="2"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="Synthetix Cloud — SaaS Product Interface Explainer"
+                         data-video-category="SaaS Product Launch"
+                         data-video-synopsis="Turns dense analytics metrics into clear kinetic motion sequences, interface 3D tilts, and authoritative voiceover.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="SaaS Video Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 03 // SAAS MOTION EXPLAINER
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    01:15
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 03 / 06</span>
+                                        <span>B2B ENTERPRISE SOFTWARE</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        Synthetix Cloud — SaaS Platform Launch
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        Deconstructs intricate cloud dashboards into kinetic 3D isometric perspectives with synced neural narration. Designed to shorten enterprise sales cycles and convert prospective CTO buyers.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Figma Motion</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">After Effects</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">ElevenLabs</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            SAAS EXPLAINER // CONVERSION
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            01:15
-                        </div>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            Synthetix Cloud — SaaS Platform Launch
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            Turns dense analytics metrics into clear kinetic motion sequences, interface 3D tilts, and authoritative voiceover.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">Figma · After Effects · ElevenLabs</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 4: Cinematic Real Estate Flythrough -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="The Obsidian Villa — Real Estate Cinematic Walkthrough">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="Real Estate Walkthrough Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+                    <!-- Stack Card 4: Luxury Architectural Walkthrough -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="3"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="The Obsidian Villa — Real Estate Cinematic Walkthrough"
+                         data-video-category="Architectural Walkthrough"
+                         data-video-synopsis="Cinematic camera moves through architectural blueprints, interior golden-hour sunlight simulation, and spatial sound design.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="Real Estate Walkthrough Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 04 // ARCHITECTURAL FLYTHROUGH
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    01:30
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 04 / 06</span>
+                                        <span>HIGH-END REAL ESTATE</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        The Obsidian Villa — Luxury Property Tour
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        Seamless drone fly-ins transitioning into luxurious marble interiors, floor-to-ceiling glass daylight simulations, and acoustic spatial reverbs calibrated for multi-million dollar real estate marketing.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Hailuo Minimax</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Kling 1.5</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Premiere Pro</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            REAL ESTATE // WALKTHROUGH
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            01:30
-                        </div>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            The Obsidian Villa — Luxury Property Tour
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            Cinematic camera moves through architectural blueprints, interior golden-hour sunlight simulation, and spatial sound design.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">Hailuo · Kling · Premiere</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 5: Narrative Cinematic Film Trailer -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="Echoes of Andromeda — Sci-Fi Book Trailer">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Narrative Film Trailer Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+                    <!-- Stack Card 5: Narrative Cinematic Film Trailer -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="4"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="Echoes of Andromeda — Sci-Fi Book Trailer"
+                         data-video-category="Narrative Film Trailer"
+                         data-video-synopsis="Epic scale space environments, coherent character faces across multiple emotional states, dramatic orchestral pacing.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Narrative Film Trailer Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 05 // CINEMATIC FILM TRAILER
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    02:00
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 05 / 06</span>
+                                        <span>AUTHORS &amp; ENTERTAINMENT</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        Echoes of Andromeda — Novel Cinematic Trailer
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        Atmospheric world-building featuring interstellar wreckage, volumetric nebulae, and facial character continuity maintained across dynamic action beats. Built to generate instant pre-orders for author releases.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Google Flow</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Veo Cinema</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Logic Pro Score</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            NARRATIVE TRAILER // CINEMATIC
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            02:00
-                        </div>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            Echoes of Andromeda — Novel Cinematic Trailer
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            Epic scale space environments, coherent character faces across multiple emotional states, dramatic orchestral pacing.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">Google Flow · Veo · Logic Pro</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Card 6: AI Avatar Brand Ambassador -->
-                <div class="glass-container tilt-card overflow-hidden group cursor-pointer trigger-video-modal"
-                     data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                     data-video-title="Apex Financial — AI Brand Ambassador Campaign">
-                    <div class="relative aspect-video overflow-hidden bg-black/60">
-                        <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="AI Brand Ambassador Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-75"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-base shadow-[0_0_20px_rgba(230,194,128,0.5)] group-hover:scale-110 transition-transform">
-                                <i class="fas fa-play ml-1"></i>
+                    <!-- Stack Card 6: AI Avatar Brand Ambassador -->
+                    <div class="stack-card trigger-video-modal cursor-pointer"
+                         data-stack-idx="5"
+                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+                         data-video-title="Apex Financial — AI Brand Ambassador Campaign"
+                         data-video-category="Multilingual AI Ambassador"
+                         data-video-synopsis="HeyGen generated brand ambassador combined with generated corporate environments, b-roll compositing, and voice replication.">
+                        <div class="stack-card-inner">
+                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
+                                <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="AI Brand Ambassador Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
+                                        <i class="fas fa-play ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
+                                    TYPE 06 // MULTILINGUAL AMBASSADOR
+                                </div>
+                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
+                                    00:55
+                                </div>
                             </div>
-                        </div>
-                        <div class="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#0D0F12]/80 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                            AI AVATAR // MULTI-LANGUAGE
-                        </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 text-[10px] font-mono text-[#F5E6C8]">
-                            00:55
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-[#F5E6C8] text-base mb-2 group-hover:text-[#E6C280] transition-colors">
-                            Apex Financial — Multilingual AI Ambassador
-                        </h4>
-                        <p class="text-xs text-[#A0AEC0] line-clamp-2 leading-relaxed mb-4">
-                            HeyGen generated brand ambassador combined with generated corporate environments, b-roll compositing, and voice replication.
-                        </p>
-                        <div class="flex items-center justify-between text-xs pt-2 border-t border-[rgba(245,230,200,0.08)]">
-                            <span class="text-[#E6C280] font-mono text-[11px]">HeyGen · Photoshop · ElevenLabs</span>
-                            <span class="text-[#8B949E] flex items-center gap-1"><i class="fas fa-play text-[10px]"></i> Stream Now</span>
+                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
+                                        <span>REEL 06 / 06</span>
+                                        <span>GLOBAL BRAND CAMPAIGN</span>
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
+                                        Apex Financial — Multilingual AI Ambassador
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
+                                        Synchronous neural persona capable of delivering unified executive statements across 28 global languages with authentic phoneme lip matching, studio depth of field, and brand color grading.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">HeyGen Pro</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Photoshop Comps</span>
+                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Voice Cloning</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
+                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
+                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -893,7 +1227,127 @@
             </div>
         </section>
 
-        <!-- 5. COMMISSION INQUIRY FORM -->
+        <!-- 5. FREQUENTLY ASKED QUESTIONS (CREATIVE AI SPACE FAQ) -->
+        <section id="faq" class="faq-section relative py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#12161A]/90 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3 shadow-lg">
+                    <span class="w-2 h-2 rounded-full bg-[#E6C280] animate-pulse"></span>
+                    <span>STUDIO INTELLIGENCE // CREATIVE AI FAQ</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8] tracking-tight">
+                    Creative AI &amp; Video Production Inquiries
+                </h2>
+                <p class="text-xs sm:text-sm text-[#A0AEC0] mt-2 leading-relaxed">
+                    Direct answers on cinematic prompt engineering, optical camera controls, commercial master rights, and rendering pipelines.
+                </p>
+            </div>
+
+            <div class="accordion-group space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-1">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            What is the Virtual Director Deck and how does generative AI cinematography work?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-1" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            The Virtual Director Deck simulates physical cinematographic camera parameters—including anamorphic focal lengths, macro probe tracking, and sensor aspects (2.39:1, 16:9, 9:16)—within latent diffusion space, allowing precise optical continuity and narrative direction before final neural render.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-2">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Can AI-generated commercial videos match broadcast television and Hollywood cinema standards?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-2" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Yes. By marrying custom LoRA model conditioning, 3D camera projection, professional color grading (DaVinci Resolve), and AI temporal upscaling to 4K/8K, our productions eliminate visual artifacts and achieve photoreal cinematic fidelity.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-3">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Which neural models, 3D pipelines, and audio synthesis suites do you utilize?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-3" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Our studio pipeline integrates Midjourney v6, Runway Gen-3 Alpha, Kling AI, Luma Dream Machine, Blender 3D for spatial assets, ElevenLabs for neural voice cloning and Foley sound effects, and Adobe After Effects for final optical compositing.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-4">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            What is the typical production timeline for an AI commercial or viral UGC campaign?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-4" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Single commercial spots and high-converting TikTok/Reels UGC ads deliver in 3 to 5 business days. Full multi-spot brand campaigns with custom audio scoring and localization deliver in 1 to 2 weeks.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-5">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Do clients retain full commercial broadcast ownership and master licensing rights?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-5" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Yes, 100% of master video renders, sound stems, and commercial exploitation rights are assigned to the client upon project completion with zero recurring royalty fees.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-cr-6">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            How does the card stack unfolding showcase feature demonstrate your video capabilities?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-cr-6" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            The interactive card stack allows visitors to scroll through stacked video production cards spanning 4K IMAX cinema trailers, luxury macro horology, high-ROAS viral UGC testimonials, architectural flythroughs, and fashion lookbooks with real-time video modal streaming.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. COMMISSION INQUIRY FORM -->
         <section id="contact-creative" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-24">
             <div class="glass-container p-8 sm:p-12 relative overflow-hidden">
                 <div class="text-center max-w-xl mx-auto mb-10">

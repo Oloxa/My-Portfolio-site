@@ -196,7 +196,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, visibility;
 }
 
 #preloader.loaded {
@@ -261,6 +262,19 @@ body {
     z-index: 1000;
     pointer-events: none;
     padding: 0 1rem;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    will-change: transform, opacity;
+}
+
+.mho-nav-pill-wrapper.nav-hidden {
+    transform: translateY(-130%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mho-nav-pill-wrapper.nav-visible {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .mho-nav-pill {
@@ -879,8 +893,17 @@ body {
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
+}
+
+/* Home Page: Strictly remove and hide any celestial moon */
+body[data-page-theme="about"] .celestial-moon-wrap,
+body[data-page-theme="about"] #creativeCelestialMoon {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 @media (min-width: 768px) {
@@ -897,10 +920,11 @@ body {
     height: 100%;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #FFFDF5 0%, #F5E6C8 30%, #E6C280 65%, #C29B48 100%);
-    box-shadow: 0 0 60px rgba(230, 194, 128, 0.55), 0 0 120px rgba(245, 230, 200, 0.25);
+    box-shadow: 0 0 calc(60px * var(--moon-multiplier, 1)) rgba(230, 194, 128, calc(0.65 * var(--moon-multiplier, 1))), 0 0 calc(125px * var(--moon-multiplier, 1)) rgba(245, 230, 200, calc(0.35 * var(--moon-multiplier, 1)));
     overflow: hidden;
     position: relative;
     animation: moon-glow 16s infinite ease-in-out;
+    transition: box-shadow 0.4s ease, filter 0.4s ease, transform 0.4s ease;
 }
 
 .moon-phase-shadow {
@@ -913,6 +937,7 @@ body {
     border-radius: 50%;
     animation: phase-shift 16s infinite linear;
     box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.85), 0 0 15px #0D0F12;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 @keyframes phase-shift {
@@ -923,12 +948,12 @@ body {
 
 @keyframes moon-glow {
     0%, 100% {
-        box-shadow: 0 0 75px rgba(230, 194, 128, 0.65), 0 0 130px rgba(255, 243, 205, 0.35);
+        box-shadow: 0 0 calc(75px * var(--moon-multiplier, 1)) rgba(230, 194, 128, calc(0.75 * var(--moon-multiplier, 1))), 0 0 calc(140px * var(--moon-multiplier, 1)) rgba(255, 243, 205, calc(0.45 * var(--moon-multiplier, 1)));
         opacity: 1;
     }
     50% {
-        box-shadow: 0 0 20px rgba(230, 194, 128, 0.18), 0 0 40px rgba(255, 243, 205, 0.08);
-        opacity: 0.6;
+        box-shadow: 0 0 calc(30px * var(--moon-multiplier, 1)) rgba(230, 194, 128, calc(0.3 * var(--moon-multiplier, 1))), 0 0 calc(60px * var(--moon-multiplier, 1)) rgba(255, 243, 205, calc(0.18 * var(--moon-multiplier, 1)));
+        opacity: 0.7;
     }
 }
 
@@ -1143,7 +1168,7 @@ body {
     }
 }
 
-/* Background Canvas & Ambient Layer Utilities */
+/* Background Canvas & Ambient Layer Utilities (Subtly Dimmed for Soft Elegance) */
 .canvas-bg-layer {
     position: fixed;
     inset: 0;
@@ -1151,6 +1176,8 @@ body {
     height: 100vh;
     pointer-events: none;
     z-index: 0;
+    opacity: 0.72;
+    filter: brightness(0.86);
 }
 
 .cellular-bio-ambient {
@@ -1158,8 +1185,19 @@ body {
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    background: radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.04) 0%, transparent 60%),
-                radial-gradient(circle at 25% 75%, rgba(230, 194, 128, 0.035) 0%, transparent 65%);
+    opacity: 0.55;
+    background: radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.025) 0%, transparent 60%),
+                radial-gradient(circle at 25% 75%, rgba(230, 194, 128, 0.02) 0%, transparent 65%);
+}
+
+.cosmic-nebula-ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background: radial-gradient(circle at 70% 30%, rgba(230, 194, 128, 0.025) 0%, transparent 65%),
+                radial-gradient(circle at 20% 70%, rgba(179, 102, 255, 0.02) 0%, transparent 60%);
 }
 
 /* ==========================================================================
@@ -1421,9 +1459,108 @@ body {
     height: 100vh;
     pointer-events: none;
     z-index: 0;
+    opacity: 0.62;
+    filter: brightness(0.85);
+    transition: opacity 0.5s ease, filter 0.5s ease;
+    contain: strict;
 }
 
-/* 1. Creative Space: Enhanced Comet & Starfield (native) */
+/* Web Architecture: 30% Brighter Technical Vector Grid */
+body[data-page-theme="web"] .canvas-bg-layer,
+#analyticsGridCanvas {
+    opacity: 0.94 !important;
+    filter: brightness(1.32) contrast(1.18) !important;
+}
+
+body[data-page-theme="web"] .analytics-grid-overlay {
+    opacity: 0.92 !important;
+    background-size: 50px 50px;
+    background-image: 
+        linear-gradient(rgba(230, 194, 128, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(230, 194, 128, 0.055) 1px, transparent 1px);
+    mask-image: radial-gradient(circle at 50% 38%, black 50%, transparent 92%);
+    -webkit-mask-image: radial-gradient(circle at 50% 38%, black 50%, transparent 92%);
+}
+
+/* 1. Creative Space: Deep Galaxy, Solar System, Comets & Synchronized Moon Radiance */
+body[data-page-theme="creative"] {
+    --moon-multiplier: 1;
+    transition: background-color 0.5s ease;
+}
+
+/* Full-page ambient illumination layer that dynamically responds to moon brightness */
+.creative-page-illumination {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(circle at 8% 10%, rgba(255, 243, 205, calc(0.25 * var(--moon-multiplier, 1))) 0%, rgba(230, 194, 128, calc(0.12 * var(--moon-multiplier, 1))) 40%, transparent 75%);
+    opacity: calc(0.5 + 0.35 * var(--moon-multiplier, 1));
+    transition: opacity 0.5s ease, background 0.5s ease;
+    mix-blend-mode: screen;
+}
+
+body[data-page-theme="creative"] .celestial-moon-wrap {
+    pointer-events: auto;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body[data-page-theme="creative"] .celestial-moon-wrap:hover {
+    transform: scale(1.08);
+}
+
+body[data-page-theme="creative"] .canvas-bg-layer,
+body[data-page-theme="creative"] #cosmicCanvas {
+    opacity: calc(0.82 * var(--moon-multiplier, 1));
+    filter: brightness(calc(1.12 * var(--moon-multiplier, 1))) contrast(calc(1.06 * var(--moon-multiplier, 1)));
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+body[data-page-theme="creative"] .cosmic-nebula-ambient {
+    position: fixed;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 75% 20%, rgba(138, 75, 255, 0.1), transparent 55%),
+        radial-gradient(ellipse at 25% 75%, rgba(230, 194, 128, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 243, 205, 0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: calc(0.75 * var(--moon-multiplier, 1));
+    filter: brightness(calc(1.15 * var(--moon-multiplier, 1)));
+    mix-blend-mode: screen;
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+body[data-page-theme="creative"] #creativeMoonlightGlow {
+    opacity: calc(0.7 * var(--moon-multiplier, 1));
+    filter: brightness(calc(1.2 * var(--moon-multiplier, 1)));
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+body[data-page-theme="creative"] #heroCosmicAura {
+    opacity: calc(0.75 * var(--moon-multiplier, 1));
+    transform: translate(-50%, -50%) scale(calc(0.9 + 0.15 * var(--moon-multiplier, 1)));
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+body[data-page-theme="creative"] .director-viewport-frame {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 calc(45px * var(--moon-multiplier, 1)) rgba(230, 194, 128, calc(0.45 * var(--moon-multiplier, 1)));
+    transition: box-shadow 0.4s ease;
+}
+
+body[data-page-theme="creative"] .director-moon-btn {
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+body[data-page-theme="creative"] .director-moon-btn.active {
+    background: #E6C280 !important;
+    color: #0D0F12 !important;
+    font-weight: 700;
+    box-shadow: 0 0 14px rgba(230, 194, 128, 0.6) !important;
+}
+
 /* 2. Medicine / Cellular Body Flow (Leadership & Health) */
 .cellular-glow-wrap {
     filter: drop-shadow(0 0 25px rgba(230, 194, 128, 0.15));
@@ -1432,25 +1569,35 @@ body {
 /* 3. Analytics & Grid Structural Building (Web Services) */
 .analytics-grid-overlay {
     background-image: 
-        linear-gradient(rgba(230, 194, 128, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(230, 194, 128, 0.04) 1px, transparent 1px);
+        linear-gradient(rgba(230, 194, 128, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(230, 194, 128, 0.025) 1px, transparent 1px);
     background-size: 40px 40px;
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
+    opacity: 0.65;
     mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 85%);
     -webkit-mask-image: radial-gradient(circle at 50% 35%, black 40%, transparent 85%);
 }
 
-/* 4. Storytelling / Narrative Flow (About Me / Index) */
-.narrative-stream-ambient {
+/* 4. Home Page: Multidisciplinary Conceptual Canvas (Movie, Cartoons, 2D, 3D, Motion Graphics, Web, Leadership & Health) */
+body[data-page-theme="about"] #narrativeCanvas {
+    opacity: 0.94 !important;
+    filter: brightness(1.18) contrast(1.08) !important;
+    contain: strict;
+}
+
+body[data-page-theme="about"] .narrative-stream-ambient {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(230, 194, 128, 0.06), transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(255, 243, 205, 0.04), transparent 50%);
+    background: 
+        radial-gradient(ellipse at 15% 25%, rgba(230, 194, 128, 0.06), transparent 50%),
+        radial-gradient(ellipse at 85% 75%, rgba(255, 243, 205, 0.05), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03), transparent 65%);
     pointer-events: none;
     z-index: 0;
+    opacity: 0.8;
 }
 
 /* ==========================================================================
@@ -1532,6 +1679,9 @@ body {
     gap: 1.5rem;
     width: max-content;
     animation: carousel-move-right 40s linear infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .motion-carousel-track-left {
@@ -1539,6 +1689,9 @@ body {
     gap: 1.5rem;
     width: max-content;
     animation: carousel-move-left 40s linear infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .motion-carousel-container:hover .motion-carousel-track-right,
@@ -1547,13 +1700,13 @@ body {
 }
 
 @keyframes carousel-move-left {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
 }
 
 @keyframes carousel-move-right {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
+    from { transform: translate3d(-50%, 0, 0); }
+    to { transform: translate3d(0, 0, 0); }
 }
 
 .carousel-project-card {
@@ -1563,13 +1716,15 @@ body {
     background: rgba(18, 22, 28, 0.85);
     border: 1px solid rgba(245, 230, 200, 0.12);
     overflow: hidden;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s ease;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .carousel-project-card:hover {
-    transform: translateY(-6px) scale(1.02);
+    transform: translate3d(0, -6px, 0) scale(1.02);
     border-color: #E6C280;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(230, 194, 128, 0.25);
 }
@@ -1821,4 +1976,362 @@ body.a11y-reduced-motion * {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
 }
+
+/* ==========================================================================
+   CARDS STACK FEATURE: CREATIVE AI SPACE PREVIOUS WORKS
+   ========================================================================== */
+.cards-stack-section {
+    position: relative;
+    width: 100%;
+}
+
+.cards-stack-pinned-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cards-stack-stage {
+    position: relative;
+    width: 100%;
+    max-width: 920px;
+    height: 520px;
+    margin: 0 auto;
+    perspective: 1200px;
+}
+
+.stack-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 860px;
+    height: 480px;
+    background: rgba(18, 22, 28, 0.95);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(230, 194, 128, 0.28);
+    border-radius: 1.75rem;
+    box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(230, 194, 128, 0.08);
+    overflow: hidden;
+    transform-origin: center bottom;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform, opacity;
+}
+
+.stack-card:hover {
+    border-color: rgba(230, 194, 128, 0.6);
+    box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.95), 0 0 45px rgba(230, 194, 128, 0.2);
+}
+
+.stack-card-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cards-stack-stage {
+        height: 600px;
+    }
+    .stack-card {
+        height: 580px;
+        border-radius: 1.25rem;
+    }
+    .stack-card-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+}
+
+/* ==========================================================================
+   CREATIVE AI HERO: VIRTUAL DIRECTOR SUITE & VIEWFINDER HUD
+   ========================================================================== */
+.director-deck-container {
+    position: relative;
+    border-radius: 2rem;
+    background: radial-gradient(circle at 50% 20%, rgba(26, 32, 40, 0.75) 0%, rgba(13, 15, 18, 0.95) 100%);
+    border: 1px solid rgba(230, 194, 128, 0.3);
+    box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.9), 0 0 45px rgba(230, 194, 128, 0.08);
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.viewfinder-hud-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: rgba(230, 194, 128, 0.6);
+    pointer-events: none;
+    z-index: 25;
+}
+
+.viewfinder-hud-tl { top: 1rem; left: 1rem; border-top: 2px solid; border-left: 2px solid; }
+.viewfinder-hud-tr { top: 1rem; right: 1rem; border-top: 2px solid; border-right: 2px solid; }
+.viewfinder-hud-bl { bottom: 1rem; left: 1rem; border-bottom: 2px solid; border-left: 2px solid; }
+.viewfinder-hud-br { bottom: 1rem; right: 1rem; border-bottom: 2px solid; border-right: 2px solid; }
+
+.viewfinder-crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+    z-index: 24;
+}
+
+.viewfinder-crosshair::before,
+.viewfinder-crosshair::after {
+    content: '';
+    position: absolute;
+    background: rgba(245, 230, 200, 0.35);
+}
+.viewfinder-crosshair::before { top: 17px; left: 0; width: 36px; height: 1px; }
+.viewfinder-crosshair::after { top: 0; left: 17px; width: 1px; height: 36px; }
+
+.director-lens-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 9999px;
+    background: rgba(18, 22, 28, 0.75);
+    border: 1px solid rgba(245, 230, 200, 0.14);
+    color: #A0AEC0;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.director-lens-btn:hover {
+    border-color: rgba(230, 194, 128, 0.5);
+    color: #FFF3CD;
+    background: rgba(230, 194, 128, 0.12);
+}
+
+.director-lens-btn.active {
+    border-color: #E6C280;
+    color: #0D0F12;
+    background: linear-gradient(135deg, #FFF3CD 0%, #E6C280 100%);
+    font-weight: 700;
+    box-shadow: 0 0 16px rgba(230, 194, 128, 0.4);
+}
+
+.director-aspect-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(13, 15, 18, 0.85);
+    border: 1px solid rgba(245, 230, 200, 0.12);
+    color: #8B949E;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.director-aspect-pill.active {
+    border-color: #E6C280;
+    color: #E6C280;
+    background: rgba(230, 194, 128, 0.15);
+}
+
+.rec-pulse-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #EF4444;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+}
+
+.rec-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #EF4444;
+    box-shadow: 0 0 8px #EF4444;
+    animation: ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.prompt-orbit-card {
+    background: rgba(18, 22, 28, 0.85);
+    border: 1px solid rgba(245, 230, 200, 0.12);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.prompt-orbit-card:hover {
+    border-color: rgba(230, 194, 128, 0.45);
+    background: rgba(24, 29, 37, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(230, 194, 128, 0.1);
+}
+
+.prompt-orbit-card.active {
+    border-color: #E6C280;
+    background: linear-gradient(135deg, rgba(230, 194, 128, 0.14) 0%, rgba(18, 22, 28, 0.95) 100%);
+    box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.7), 0 0 25px rgba(230, 194, 128, 0.18);
+}
+
+.director-viewport-frame {
+    transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1), aspect-ratio 0.45s ease;
+}
+
+/* ==========================================================================
+   INTERACTIVE FAQ ACCORDION COMPONENT & SECTION
+   ========================================================================== */
+.faq-section {
+    position: relative;
+    z-index: 10;
+}
+
+.faq-accordion-item {
+    background: rgba(18, 22, 28, 0.72);
+    border: 1px solid rgba(245, 230, 200, 0.12);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.faq-accordion-item:hover {
+    border-color: rgba(230, 194, 128, 0.38);
+    background: rgba(22, 28, 36, 0.85);
+    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(230, 194, 128, 0.08);
+}
+
+.faq-accordion-item:has(.accordion-content.open) {
+    border-color: rgba(230, 194, 128, 0.6);
+    background: rgba(20, 26, 34, 0.95);
+    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75), 0 0 28px rgba(230, 194, 128, 0.14);
+}
+
+.accordion-trigger {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    color: #F5E6C8;
+    transition: color 0.25s ease;
+}
+
+.accordion-trigger:focus-visible {
+    outline: 2px solid #E6C280;
+    outline-offset: -2px;
+}
+
+.accordion-trigger:hover .faq-question-text {
+    color: #FFF3CD;
+}
+
+.faq-accordion-item:has(.accordion-content.open) .faq-question-text {
+    color: #FFF3CD;
+}
+
+.accordion-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(230, 194, 128, 0.1);
+    border: 1px solid rgba(230, 194, 128, 0.25);
+    color: #E6C280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
+}
+
+.accordion-trigger:hover .accordion-icon {
+    background: rgba(230, 194, 128, 0.2);
+    border-color: #E6C280;
+    color: #FFF3CD;
+}
+
+.faq-accordion-item:has(.accordion-content.open) .accordion-icon {
+    background: #E6C280;
+    color: #0D0F12;
+    border-color: #FFF3CD;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.3s ease;
+    padding: 0 1.5rem;
+}
+
+.accordion-content.open {
+    opacity: 1;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.faq-answer-inner {
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(245, 230, 200, 0.08);
+    color: #C9D1D9;
+    font-size: 0.875rem;
+    line-height: 1.65;
+}
+
+/* ==========================================================================
+   H1 & HEADING GSAP PERSPECTIVE TEXT REVEAL STYLES
+   ========================================================================== */
+.gsap-split-line {
+    display: block;
+    overflow: hidden;
+    perspective: 800px;
+}
+
+.gsap-text-word {
+    display: inline-block;
+    transform-origin: 0% 50% -40px;
+    will-change: transform, opacity;
+}
+
+.gsap-hero-title {
+    perspective: 1000px;
+}
+
+.gold-shimmer-text {
+    background: linear-gradient(135deg, #E6C280 0%, #FFF3CD 25%, #F5E6C8 50%, #C29B48 75%, #FFF3CD 100%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gold-text-shimmer 7s ease-in-out infinite alternate;
+}
+
+@keyframes gold-text-shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+
 

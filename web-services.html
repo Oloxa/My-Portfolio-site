@@ -41,6 +41,69 @@
     <meta property="og:description" content="High-performance web architecture, scalable custom applications, and automated digital systems.">
     <meta name="theme-color" content="#0D0F12">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+
+    <!-- JSON-LD FAQ Schema for Web Architecture -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What architectural principles and frameworks guide your engineering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every system is architected with modern modularity, type safety, and zero bloat: Next.js App Router, React 19, TypeScript, Tailwind CSS, PostgreSQL, and GSAP/WebGL for hardware-accelerated animations. Codebases emphasize atomic component design and strict clean architecture."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you guarantee 99.9% uptime, sub-second load times, and edge performance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We deploy on global edge networks (Cloudflare, Vercel, Netlify) with asset streaming, smart caching policies, automated Brotli compression, and minimal client runtime overhead, routinely scoring 95+ on Google Core Web Vitals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are all 26 projects in your showcase portfolio active, authentic, and inspectable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, every single system in the showcase links to its authentic GitHub repository and corresponding live production deployment (including Xpera at Xpera.io). Projects without active public hosting clearly indicate offline status with zero fake links."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is your software development lifecycle, testing methodology, and code handoff?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Projects follow a structured lifecycle: Architecture Specification, Interactive Wireframing, Sprint Development, Unit/E2E Testing, and Automated CI/CD Deployment. Handoff includes full git histories, environment setup manuals, and architecture documentation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you architect custom API integrations, automated webhooks, and payment gateways?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we build resilient webhook orchestrations, Stripe/PayPal payment systems, headless CMS connectors (WordPress, Strapi, Sanity), CRM synchronizations, and custom REST/GraphQL endpoints with rate limiting and automated retry queues."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide technical NDAs, ongoing maintenance SLAs, and cloud security monitoring?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mutual non-disclosure agreements (NDAs) are provided before project discovery commences. We also offer monthly maintenance SLAs covering security patches, dependency updates, uptime monitoring, and SLA incident response."
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- High-End Typography: Plus Jakarta Sans, Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -470,10 +533,10 @@
                 <iframe 
                     id="pageIntroVideoIframe"
                     class="w-full h-full object-cover" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&amp;rel=0" 
+                    src="https://www.youtube.com/embed/JSl9UcDaywA?enablejsapi=1&amp;rel=0&amp;playsinline=1&amp;modestbranding=1" 
                     title="Personal Intro Video - H.O. Damilare Michael" 
                     frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen>
                 </iframe>
 
@@ -489,7 +552,7 @@
                 <button 
                     type="button"
                     class="video-play-pulse-btn trigger-intro-video" 
-                    data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                    data-video-url="https://www.youtube.com/embed/JSl9UcDaywA?autoplay=1&amp;playsinline=1&amp;rel=0&amp;modestbranding=1" 
                     data-video-title="Web Architecture &amp; Scalability · H.O. Damilare Michael"
                     aria-label="Play Full-Screen Intro Video">
                     <i class="fas fa-play ml-1"></i>
@@ -810,7 +873,127 @@
             </div>
         </section>
 
-        <!-- 5. CONSULTATION & ESTIMATE INQUIRY FORM -->
+        <!-- 5. FREQUENTLY ASKED QUESTIONS (WEB ARCHITECTURE FAQ) -->
+        <section id="faq" class="faq-section relative py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#12161A]/90 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3 shadow-lg">
+                    <span class="w-2 h-2 rounded-full bg-[#E6C280] animate-pulse"></span>
+                    <span>TECHNICAL INTELLIGENCE // WEB ARCHITECTURE FAQ</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8] tracking-tight">
+                    Architecture &amp; Engineering Inquiries
+                </h2>
+                <p class="text-xs sm:text-sm text-[#A0AEC0] mt-2 leading-relaxed">
+                    Technical standards, edge deployment protocols, code handoffs, and performance benchmarks for custom digital platforms.
+                </p>
+            </div>
+
+            <div class="accordion-group space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-1">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            What architectural principles and frameworks guide your engineering?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-1" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Every system is architected with modern modularity, type safety, and zero bloat: Next.js App Router, React 19, TypeScript, Tailwind CSS, PostgreSQL, and GSAP/WebGL for hardware-accelerated animations. Codebases emphasize atomic component design and strict clean architecture.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-2">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            How do you guarantee 99.9% uptime, sub-second load times, and edge performance?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-2" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            We deploy on global edge networks (Cloudflare, Vercel, Netlify) with asset streaming, smart caching policies, automated Brotli compression, and minimal client runtime overhead, routinely scoring 95+ on Google Core Web Vitals.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-3">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Are all 26 projects in your showcase portfolio active, authentic, and inspectable?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-3" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Yes, every single system in the showcase links to its authentic GitHub repository and corresponding live production deployment (including Xpera at Xpera.io). Projects without active public hosting clearly indicate offline status with zero fake links.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-4">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            What is your software development lifecycle, testing methodology, and code handoff?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-4" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Projects follow a structured lifecycle: Architecture Specification, Interactive Wireframing, Sprint Development, Unit/E2E Testing, and Automated CI/CD Deployment. Handoff includes full git histories, environment setup manuals, and architecture documentation.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-5">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Can you architect custom API integrations, automated webhooks, and payment gateways?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-5" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Yes, we build resilient webhook orchestrations, Stripe/PayPal payment systems, headless CMS connectors (WordPress, Strapi, Sanity), CRM synchronizations, and custom REST/GraphQL endpoints with rate limiting and automated retry queues.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-accordion-item">
+                    <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-web-6">
+                        <span class="faq-question-text text-sm sm:text-base font-semibold">
+                            Do you provide technical NDAs, ongoing maintenance SLAs, and cloud security monitoring?
+                        </span>
+                        <span class="accordion-icon" aria-hidden="true">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </button>
+                    <div id="faq-web-6" class="accordion-content" role="region">
+                        <div class="faq-answer-inner">
+                            Mutual non-disclosure agreements (NDAs) are provided before project discovery commences. We also offer monthly maintenance SLAs covering security patches, dependency updates, uptime monitoring, and SLA incident response.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONSULTATION & ESTIMATE INQUIRY FORM -->
         <section id="contact-tech" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-24">
             <div class="glass-container p-8 sm:p-12 relative overflow-hidden">
                 <div class="text-center max-w-xl mx-auto mb-10">

@@ -56,7 +56,7 @@ function showNotification(message, isError = false) {
     }, 4000);
 }
 
-// Global Preloader Execution
+// Global Preloader Execution (Optimized for Snappy & Seamless Loading)
 function initPreloader() {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
@@ -66,8 +66,16 @@ function initPreloader() {
 
     let current = 0;
     const target = 100;
-    const duration = 650; // ms
+    const duration = 180; // Instantaneous 180ms
     const start = performance.now();
+
+    function dismissPreloader() {
+        if (preloader.classList.contains('loaded')) return;
+        if (progressEl) progressEl.style.width = '100%';
+        if (percentEl) percentEl.textContent = '100%';
+        preloader.classList.add('loaded');
+        triggerHeroEntrance();
+    }
 
     function updateCounter(now) {
         const elapsed = now - start;
@@ -81,31 +89,33 @@ function initPreloader() {
         if (progress < 1) {
             requestAnimationFrame(updateCounter);
         } else {
-            if (progressEl) progressEl.style.width = '100%';
-            if (percentEl) percentEl.textContent = '100%';
-            setTimeout(() => {
-                preloader.classList.add('loaded');
-                triggerHeroEntrance();
-            }, 120);
+            dismissPreloader();
         }
     }
 
-    requestAnimationFrame(updateCounter);
+    if (document.readyState === 'complete') {
+        dismissPreloader();
+    } else {
+        requestAnimationFrame(updateCounter);
+        window.addEventListener('load', () => setTimeout(dismissPreloader, 40), { once: true });
+    }
 }
 
-// Hero Entrance Animation
+// Hero Entrance Animation with H1 Text GSAP Perspective Reveal
 function triggerHeroEntrance() {
     if (typeof gsap === 'undefined') return;
 
     gsap.fromTo('.hero-fade-in', 
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.12, ease: 'power3.out' }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.85, stagger: 0.08, ease: 'power3.out' }
     );
 
     gsap.fromTo('.celestial-moon-wrap',
-        { scale: 0.7, opacity: 0, y: -20 },
-        { scale: 1, opacity: 1, y: 0, duration: 1.6, ease: 'back.out(1.4)', delay: 0.2 }
+        { scale: 0.75, opacity: 0, y: -20 },
+        { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: 'back.out(1.3)', delay: 0.1 }
     );
+
+    initHeadingGsapAnimations();
 }
 
 // Scroll Progress Bar
@@ -143,7 +153,7 @@ function initThemeBackground() {
     }
 }
 
-// 1. Creative Space: Cosmic Galaxy & Comets with Responsive Stellar Drift
+// 1. Creative Space: Deep Space Galaxy, Solar System, Comets & Stellar Drift
 function initCosmicGalaxy() {
     const canvas = document.getElementById('cosmicCanvas');
     const warpContainer = document.getElementById('warpBg');
@@ -155,6 +165,7 @@ function initCosmicGalaxy() {
 
         let mousePos = { x: width / 2, y: height / 2, active: false };
         let smoothParallax = { x: 0, y: 0 };
+        let time = 0;
 
         window.addEventListener('mousemove', (e) => {
             mousePos.x = e.clientX;
@@ -171,52 +182,250 @@ function initCosmicGalaxy() {
             height = canvas.height = window.innerHeight;
         });
 
-        const STAR_COUNT = Math.min(140, Math.floor(width / 12));
-        const starHues = ['#ffffff', '#FFF3CD', '#E6C280', '#F5E6C8', '#FFEBB5'];
+        // --- A. STELLAR STARFIELD WITH REALISTIC SCINTILLATION ---
+        const STAR_COUNT = Math.min(180, Math.floor(width / 9));
+        const starHues = ['#ffffff', '#FFF3CD', '#E6C280', '#F5E6C8', '#D8B4FE', '#93C5FD'];
         const stars = [];
 
         for (let i = 0; i < STAR_COUNT; i++) {
             stars.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                size: 0.8 + Math.random() * 2.2,
-                depth: 0.2 + Math.random() * 0.8,
+                size: 0.7 + Math.random() * 2.2,
+                depth: 0.15 + Math.random() * 0.85,
                 color: starHues[Math.floor(Math.random() * starHues.length)],
                 pulse: Math.random() * Math.PI * 2,
-                pulseSpeed: 0.01 + Math.random() * 0.025,
-                baseAlpha: 0.2 + Math.random() * 0.7
+                pulseSpeed: 0.015 + Math.random() * 0.035,
+                baseAlpha: 0.18 + Math.random() * 0.55
             });
         }
 
+        // --- B. SWIRLING SPIRAL GALAXY ARMS (COSMIC DUST) ---
+        const GALAXY_PARTICLES = 90;
+        const galaxyArms = [];
+        for (let i = 0; i < GALAXY_PARTICLES; i++) {
+            const arm = i % 2; // 2 distinct spiral arms
+            const dist = 35 + (i / GALAXY_PARTICLES) * 260;
+            const angleOffset = (arm * Math.PI) + (dist * 0.022);
+            galaxyArms.push({
+                dist: dist,
+                angleOffset: angleOffset,
+                size: 1 + Math.random() * 2.2,
+                color: i % 3 === 0 ? '#E6C280' : (i % 3 === 1 ? '#FFF3CD' : '#C084FC'),
+                alpha: 0.15 + Math.random() * 0.45
+            });
+        }
+        let galaxyRotation = 0;
+
+        // --- C. SOLAR SYSTEM ENGINE (SUN, ORBITS, PLANETS, RINGED GIANT & MOON) ---
+        const planets = [
+            {
+                name: "Hermes Prime",
+                semiA: 85,
+                semiB: 55,
+                angle: 0.4,
+                speed: 0.018,
+                radius: 4,
+                color: "#E6C280",
+                glow: "rgba(230, 194, 128, 0.6)",
+                hasMoon: false
+            },
+            {
+                name: "Aura Oceanus",
+                semiA: 155,
+                semiB: 100,
+                angle: 2.1,
+                speed: 0.011,
+                radius: 6.5,
+                color: "#7DD3FC",
+                glow: "rgba(125, 211, 252, 0.6)",
+                hasMoon: true,
+                moonAngle: 0,
+                moonSpeed: 0.05,
+                moonDist: 14
+            },
+            {
+                name: "Kronos Titan",
+                semiA: 235,
+                semiB: 150,
+                angle: 4.2,
+                speed: 0.0065,
+                radius: 9.5,
+                color: "#FDE68A",
+                glow: "rgba(253, 230, 138, 0.5)",
+                hasRings: true,
+                ringRadiusX: 19,
+                ringRadiusY: 6,
+                ringTilt: -0.35
+            },
+            {
+                name: "Neura Celestial",
+                semiA: 320,
+                semiB: 200,
+                angle: 1.1,
+                speed: 0.0035,
+                radius: 5.5,
+                color: "#C084FC",
+                glow: "rgba(192, 132, 252, 0.4)",
+                hasAura: true
+            }
+        ];
+
+        // --- D. HIGH-VELOCITY COMETS & SHOOTING STARS ---
         const comets = [];
+        const cometSparks = [];
+
         function spawnComet() {
-            if (comets.length >= 2) return;
+            if (comets.length >= 3) return;
+            const startFromTop = Math.random() > 0.4;
             comets.push({
-                x: 80 + Math.random() * (width - 160),
-                y: -40,
-                vx: 3.5 + Math.random() * 3,
-                vy: 2.8 + Math.random() * 2.5,
+                x: startFromTop ? (Math.random() * width * 0.85) : -30,
+                y: startFromTop ? -30 : (Math.random() * height * 0.5),
+                vx: 5.5 + Math.random() * 4.5,
+                vy: 4.2 + Math.random() * 3.5,
+                length: 80 + Math.random() * 90,
                 alpha: 0.85,
+                size: 2.5 + Math.random() * 1.5,
                 color: Math.random() > 0.4 ? '#FFF3CD' : '#E6C280'
             });
         }
 
         setInterval(() => {
-            if (Math.random() > 0.35) spawnComet();
-        }, 4200);
+            if (Math.random() > 0.25) spawnComet();
+        }, 2600);
 
         function renderCosmicSpace() {
-            ctx.clearRect(0, 0, width, height);
+            if (document.hidden) {
+                requestAnimationFrame(renderCosmicSpace);
+                return;
+            }
 
-            const targetParallaxX = mousePos.active ? (mousePos.x - width / 2) * 0.025 : 0;
-            const targetParallaxY = mousePos.active ? (mousePos.y - height / 2) * 0.025 : 0;
+            ctx.clearRect(0, 0, width, height);
+            time += 0.016;
+
+            const targetParallaxX = mousePos.active ? (mousePos.x - width / 2) * 0.028 : 0;
+            const targetParallaxY = mousePos.active ? (mousePos.y - height / 2) * 0.028 : 0;
             smoothParallax.x += (targetParallaxX - smoothParallax.x) * 0.05;
             smoothParallax.y += (targetParallaxY - smoothParallax.y) * 0.05;
 
-            // Render Stars with Depth Parallax and Subtle Cursor Deflection
+            // --- 1. RENDER SWIRLING GALAXY SPIRAL ARMS ---
+            const galaxyX = (width < 900 ? width * 0.22 : width * 0.28) + smoothParallax.x * 0.4;
+            const galaxyY = (width < 900 ? height * 0.72 : height * 0.65) + smoothParallax.y * 0.4;
+            galaxyRotation += 0.0012;
+
+            // Core galaxy glow
+            const galGrad = ctx.createRadialGradient(galaxyX, galaxyY, 0, galaxyX, galaxyY, 140);
+            galGrad.addColorStop(0, 'rgba(230, 194, 128, 0.12)');
+            galGrad.addColorStop(0.5, 'rgba(192, 132, 252, 0.06)');
+            galGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = galGrad;
+            ctx.beginPath();
+            ctx.arc(galaxyX, galaxyY, 140, 0, Math.PI * 2);
+            ctx.fill();
+
+            galaxyArms.forEach(gp => {
+                const currentAngle = gp.angleOffset + galaxyRotation;
+                const px = galaxyX + Math.cos(currentAngle) * gp.dist;
+                const py = galaxyY + Math.sin(currentAngle) * (gp.dist * 0.65); // Elliptical perspective
+
+                ctx.beginPath();
+                ctx.arc(px, py, gp.size, 0, Math.PI * 2);
+                ctx.fillStyle = gp.color;
+                ctx.globalAlpha = gp.alpha;
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+
+            // --- 2. RENDER SOLAR SYSTEM: SUN & ORBITAL PATHS ---
+            const sunX = (width < 900 ? width * 0.78 : width * 0.72) + smoothParallax.x * 0.8;
+            const sunY = (width < 900 ? height * 0.28 : height * 0.35) + smoothParallax.y * 0.8;
+
+            // Pulsing Coronal Radiance (The Solar Core)
+            const sunPulse = Math.sin(time * 2.2) * 3;
+            const sunGlowGrad = ctx.createRadialGradient(sunX, sunY, 4, sunX, sunY, 65 + sunPulse);
+            sunGlowGrad.addColorStop(0, '#FFFFFF');
+            sunGlowGrad.addColorStop(0.18, 'rgba(255, 243, 205, 0.95)');
+            sunGlowGrad.addColorStop(0.45, 'rgba(230, 194, 128, 0.55)');
+            sunGlowGrad.addColorStop(0.8, 'rgba(230, 194, 128, 0.12)');
+            sunGlowGrad.addColorStop(1, 'transparent');
+
+            ctx.fillStyle = sunGlowGrad;
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, 65 + sunPulse, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Solar Core Disk
+            ctx.fillStyle = '#FFFDF0';
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, 13, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Render Elliptical Orbital Guides
+            ctx.strokeStyle = 'rgba(230, 194, 128, 0.14)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 7]);
+
+            planets.forEach(p => {
+                ctx.beginPath();
+                ctx.ellipse(sunX, sunY, p.semiA, p.semiB, -0.22, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+            ctx.setLineDash([]); // Reset line dash
+
+            // Render Orbiting Planets
+            planets.forEach(p => {
+                p.angle += p.speed;
+                // Parametric ellipse calculation with rotation
+                const tilt = -0.22;
+                const rawX = Math.cos(p.angle) * p.semiA;
+                const rawY = Math.sin(p.angle) * p.semiB;
+                const rotX = rawX * Math.cos(tilt) - rawY * Math.sin(tilt);
+                const rotY = rawX * Math.sin(tilt) + rawY * Math.cos(tilt);
+
+                const px = sunX + rotX;
+                const py = sunY + rotY;
+
+                // Planet Glow Aura
+                ctx.fillStyle = p.glow;
+                ctx.beginPath();
+                ctx.arc(px, py, p.radius * 2.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Planet Body
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Ringed Giant: Saturn Rings
+                if (p.hasRings) {
+                    ctx.save();
+                    ctx.translate(px, py);
+                    ctx.rotate(p.ringTilt);
+                    ctx.strokeStyle = 'rgba(253, 230, 138, 0.75)';
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, p.ringRadiusX, p.ringRadiusY, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // Exoplanet Moonlet
+                if (p.hasMoon) {
+                    p.moonAngle += p.moonSpeed;
+                    const mx = px + Math.cos(p.moonAngle) * p.moonDist;
+                    const my = py + Math.sin(p.moonAngle) * (p.moonDist * 0.7);
+                    ctx.fillStyle = '#F8FAFC';
+                    ctx.beginPath();
+                    ctx.arc(mx, my, 1.8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // --- 3. RENDER SCINTILLATING STELLAR STARS ---
             stars.forEach(s => {
                 s.pulse += s.pulseSpeed;
-                const alpha = Math.sin(s.pulse) * 0.2 + s.baseAlpha;
+                const alpha = (Math.sin(s.pulse) * 0.2 + s.baseAlpha);
 
                 let sx = s.x + smoothParallax.x * s.depth * 2;
                 let sy = s.y + smoothParallax.y * s.depth * 2;
@@ -225,8 +434,8 @@ function initCosmicGalaxy() {
                     const dx = sx - mousePos.x;
                     const dy = sy - mousePos.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 140 && dist > 0) {
-                        const push = (1 - dist / 140) * 1.5 * s.depth;
+                    if (dist < 150 && dist > 0) {
+                        const push = (1 - dist / 150) * 1.8 * s.depth;
                         sx += (dx / dist) * push;
                         sy += (dy / dist) * push;
                     }
@@ -235,33 +444,69 @@ function initCosmicGalaxy() {
                 ctx.beginPath();
                 ctx.arc(sx, sy, s.size, 0, Math.PI * 2);
                 ctx.fillStyle = s.color;
-                ctx.globalAlpha = Math.max(0.1, Math.min(1, alpha));
+                ctx.globalAlpha = Math.max(0.08, Math.min(0.85, alpha));
                 ctx.fill();
             });
             ctx.globalAlpha = 1;
 
-            // Render Comets
+            // --- 4. RENDER COMETS WITH ION TAILS & TRAILING STARDUST SPARKS ---
             for (let i = comets.length - 1; i >= 0; i--) {
                 const c = comets[i];
                 c.x += c.vx;
                 c.y += c.vy;
-                c.alpha -= 0.005;
+                c.alpha -= 0.007;
 
-                const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.vx * 15, c.y - c.vy * 15);
-                grad.addColorStop(0, c.color);
+                // Spawn tail dust sparks
+                if (Math.random() > 0.45) {
+                    cometSparks.push({
+                        x: c.x - c.vx * 2 + (Math.random() - 0.5) * 6,
+                        y: c.y - c.vy * 2 + (Math.random() - 0.5) * 6,
+                        alpha: 0.8,
+                        color: c.color
+                    });
+                }
+
+                const tailX = c.x - c.vx * 16;
+                const tailY = c.y - c.vy * 16;
+                const grad = ctx.createLinearGradient(c.x, c.y, tailX, tailY);
+                grad.addColorStop(0, '#FFFFFF');
+                grad.addColorStop(0.2, c.color);
                 grad.addColorStop(1, 'transparent');
 
                 ctx.beginPath();
-                ctx.moveTo(c.x + smoothParallax.x, c.y + smoothParallax.y);
-                ctx.lineTo(c.x - c.vx * 14 + smoothParallax.x, c.y - c.vy * 14 + smoothParallax.y);
+                ctx.moveTo(c.x, c.y);
+                ctx.lineTo(tailX, tailY);
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 1.6;
+                ctx.lineWidth = c.size;
                 ctx.globalAlpha = Math.max(0, c.alpha);
                 ctx.stroke();
+
+                // Comet head flare
+                ctx.fillStyle = '#FFFFFF';
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.size * 1.2, 0, Math.PI * 2);
+                ctx.fill();
+
                 ctx.globalAlpha = 1;
 
                 if (c.y > height + 100 || c.x > width + 100 || c.alpha <= 0) {
                     comets.splice(i, 1);
+                }
+            }
+
+            // Render comet dust sparks
+            for (let s = cometSparks.length - 1; s >= 0; s--) {
+                const sp = cometSparks[s];
+                sp.alpha -= 0.035;
+                if (sp.alpha <= 0) {
+                    cometSparks.splice(s, 1);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, 1.2, 0, Math.PI * 2);
+                    ctx.fillStyle = sp.color;
+                    ctx.globalAlpha = sp.alpha * 0.7;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
                 }
             }
 
@@ -273,95 +518,6 @@ function initCosmicGalaxy() {
     }
 
     if (!warpContainer) return;
-
-    warpContainer.innerHTML = '';
-    const activeStars = [];
-    const MAX_STARS = 120;
-    const starHues = ['#ffffff', '#FFF3CD', '#E6C280', '#F5E6C8', '#FFEBB5'];
-
-    function spawnStar() {
-        if (activeStars.length >= MAX_STARS) return;
-        const star = document.createElement('div');
-        const size = 1 + Math.random() * 2.8;
-        const color = starHues[Math.floor(Math.random() * starHues.length)];
-        const isGold = color !== '#ffffff';
-        const shadowColor = isGold ? 'rgba(230,194,128,0.85)' : 'rgba(255,255,255,0.85)';
-
-        star.className = 'absolute rounded-full pointer-events-none';
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.backgroundColor = color;
-        star.style.boxShadow = `0 0 ${size * 3.5}px ${shadowColor}`;
-
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-        star.style.left = `${posX}%`;
-        star.style.top = `${posY}%`;
-        star.style.opacity = '0';
-
-        warpContainer.appendChild(star);
-        activeStars.push({ el: star, x: posX, y: posY });
-
-        if (typeof gsap !== 'undefined') {
-            gsap.to(star, {
-                opacity: 0.25 + Math.random() * 0.75,
-                scale: 1 + Math.random() * 0.6,
-                duration: 1.8 + Math.random() * 3.5,
-                yoyo: true,
-                repeat: -1,
-                ease: 'sine.inOut',
-                delay: Math.random() * 2.5
-            });
-        } else {
-            star.style.opacity = '0.7';
-        }
-    }
-
-    for (let i = 0; i < MAX_STARS; i++) {
-        spawnStar();
-    }
-
-    function launchComet() {
-        const comet = document.createElement('div');
-        comet.className = 'absolute pointer-events-none z-10';
-        const startX = 15 + Math.random() * 75;
-        const startY = Math.random() * 45;
-        const length = 110 + Math.random() * 140;
-        const angle = 35 + Math.random() * 25; // degrees
-
-        comet.style.left = `${startX}%`;
-        comet.style.top = `${startY}%`;
-        comet.style.width = `${length}px`;
-        comet.style.height = '2px';
-        comet.style.background = 'linear-gradient(90deg, #FFF3CD 0%, rgba(230, 194, 128, 0.8) 25%, transparent 100%)';
-        comet.style.transform = `rotate(${angle}deg)`;
-        comet.style.borderRadius = '999px';
-        comet.style.boxShadow = '0 0 16px rgba(255, 243, 205, 0.9)';
-        comet.style.opacity = '0';
-
-        warpContainer.appendChild(comet);
-
-        if (typeof gsap !== 'undefined') {
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    if (comet.parentNode) comet.parentNode.removeChild(comet);
-                    const nextDelay = 3500 + Math.random() * 6000;
-                    setTimeout(launchComet, nextDelay);
-                }
-            });
-            tl.to(comet, { opacity: 0.95, duration: 0.2, ease: 'power1.out' })
-              .to(comet, {
-                  x: 350,
-                  y: 280,
-                  opacity: 0,
-                  duration: 1.3,
-                  ease: 'power2.in'
-              }, '-=0.1');
-        }
-    }
-
-    setTimeout(launchComet, 1500);
-    setTimeout(launchComet, 4000);
 }
 
 // 2. Leadership & Health: Subtle Interconnected Cellular Defense & Pathogen Neutralization (With Responsive Cursor Interaction)
@@ -414,40 +570,40 @@ function initBioCellularFlow() {
             y: Math.random() * height,
             radius: 13 + Math.random() * 20,
             innerRadius: 3.5 + Math.random() * 5.5,
-            vx: (Math.random() - 0.5) * 0.32,
-            vy: -0.15 - Math.random() * 0.35, // Gentle systemic buoyancy
+            vx: (Math.random() - 0.5) * 0.72,
+            vy: -0.35 - Math.random() * 0.65, // Accelerated systemic buoyancy
             pulse: Math.random() * Math.PI * 2,
-            pulseSpeed: 0.016 + Math.random() * 0.024,
+            pulseSpeed: 0.038 + Math.random() * 0.045,
             isImmuneSentinel: Math.random() > 0.65, // Emerald vitality/immune sentinels
             lastFireTime: 0,
-            fireCooldown: 40 + Math.floor(Math.random() * 60),
+            fireCooldown: 16 + Math.floor(Math.random() * 24),
             organelles: [
-                { angle: Math.random() * Math.PI * 2, dist: 5 + Math.random() * 6, speed: 0.015 },
-                { angle: Math.random() * Math.PI * 2, dist: 7 + Math.random() * 4, speed: -0.012 }
+                { angle: Math.random() * Math.PI * 2, dist: 5 + Math.random() * 6, speed: 0.035 },
+                { angle: Math.random() * Math.PI * 2, dist: 7 + Math.random() * 4, speed: -0.028 }
             ]
         });
     }
 
     // 2. Cooperative Intercellular Signal Pulses (Healthy cell-to-cell communication)
     const intercellularPulses = [];
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 11; i++) {
         intercellularPulses.push({
             from: Math.floor(Math.random() * CELL_COUNT),
             to: Math.floor(Math.random() * CELL_COUNT),
             progress: Math.random(),
-            speed: 0.006 + Math.random() * 0.01
+            speed: 0.018 + Math.random() * 0.025
         });
     }
 
     // 3. Ambient ATP / Vitality Sparkles
     const atpParticles = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 35; i++) {
         atpParticles.push({
             x: Math.random() * width,
             y: Math.random() * height,
             radius: 0.9 + Math.random() * 1.5,
-            vy: -0.2 - Math.random() * 0.4,
-            vx: (Math.random() - 0.5) * 0.2,
+            vy: -0.55 - Math.random() * 0.9,
+            vx: (Math.random() - 0.5) * 0.45,
             alpha: 0.15 + Math.random() * 0.45,
             pulse: Math.random() * Math.PI * 2
         });
@@ -465,15 +621,15 @@ function initBioCellularFlow() {
             x: margin + Math.random() * (width - margin * 2),
             y: margin + Math.random() * (height - margin * 2),
             radius: 11 + Math.random() * 8,
-            vx: (Math.random() - 0.5) * 0.25,
-            vy: (Math.random() - 0.5) * 0.25,
+            vx: (Math.random() - 0.5) * 0.65,
+            vy: (Math.random() - 0.5) * 0.65,
             angle: Math.random() * Math.PI * 2,
-            rotSpeed: (Math.random() - 0.5) * 0.015,
+            rotSpeed: (Math.random() - 0.5) * 0.035,
             spikes: 8,
             spikeLength: 5 + Math.random() * 3,
             maxHp: 100,
             hp: 100,
-            spawnScale: 0.05,
+            spawnScale: 0.1,
             flash: 0,
             dissolving: false,
             dissolveProgress: 0
@@ -506,8 +662,8 @@ function initBioCellularFlow() {
         // --- SUBTLE LIVING BIO-FIELD HALO UNDER CURSOR ---
         if (mousePos.active) {
             const haloGrad = ctx.createRadialGradient(mousePos.x, mousePos.y, 0, mousePos.x, mousePos.y, 185);
-            haloGrad.addColorStop(0, 'rgba(230, 194, 128, 0.04)');
-            haloGrad.addColorStop(0.5, 'rgba(16, 185, 129, 0.018)');
+            haloGrad.addColorStop(0, 'rgba(230, 194, 128, 0.025)');
+            haloGrad.addColorStop(0.5, 'rgba(16, 185, 129, 0.01)');
             haloGrad.addColorStop(1, 'transparent');
             ctx.fillStyle = haloGrad;
             ctx.beginPath();
@@ -517,7 +673,7 @@ function initBioCellularFlow() {
 
         // --- A. SPAWN VIRUSES PERIODICALLY ---
         virusSpawnTimer++;
-        if (virusSpawnTimer > 180 && viruses.length < MAX_ACTIVE_VIRUSES) {
+        if (virusSpawnTimer > 65 && viruses.length < MAX_ACTIVE_VIRUSES) {
             spawnVirus();
             virusSpawnTimer = 0;
         }
@@ -546,10 +702,10 @@ function initBioCellularFlow() {
             if (p.x < -10) p.x = width + 10;
             if (p.x > width + 10) p.x = -10;
 
-            const glow = Math.sin(p.pulse) * 0.15 + p.alpha;
+            const glow = (Math.sin(p.pulse) * 0.12 + p.alpha) * 0.65;
             ctx.beginPath();
             ctx.arc(p.x + smoothParallax.x * 0.5, p.y + smoothParallax.y * 0.5, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(230, 194, 128, ${Math.max(0.08, glow)})`;
+            ctx.fillStyle = `rgba(230, 194, 128, ${Math.max(0.04, glow)})`;
             ctx.fill();
         });
 
@@ -561,7 +717,7 @@ function initBioCellularFlow() {
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < 155) {
-                    let alpha = (1 - dist / 155) * 0.18;
+                    let alpha = (1 - dist / 155) * 0.11;
 
                     // Intercellular filaments subtly illuminate when cursor passes nearby
                     if (mousePos.active) {
@@ -571,7 +727,7 @@ function initBioCellularFlow() {
                         const mdy = midY - mousePos.y;
                         const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
                         if (mdist < 180) {
-                            alpha += (1 - mdist / 180) * 0.22;
+                            alpha += (1 - mdist / 180) * 0.12;
                         }
                     }
 
@@ -579,8 +735,8 @@ function initBioCellularFlow() {
                     ctx.moveTo(cells[i].x + smoothParallax.x, cells[i].y + smoothParallax.y);
                     ctx.lineTo(cells[j].x + smoothParallax.x, cells[j].y + smoothParallax.y);
                     ctx.strokeStyle = cells[i].isImmuneSentinel || cells[j].isImmuneSentinel
-                        ? `rgba(16, 185, 129, ${alpha * 0.95})`
-                        : `rgba(230, 194, 128, ${alpha})`;
+                        ? `rgba(16, 185, 129, ${alpha * 0.72})`
+                        : `rgba(230, 194, 128, ${alpha * 0.75})`;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -609,7 +765,7 @@ function initBioCellularFlow() {
 
                     ctx.beginPath();
                     ctx.arc(px, py, 1.8, 0, Math.PI * 2);
-                    ctx.fillStyle = c1.isImmuneSentinel ? 'rgba(16, 185, 129, 0.85)' : 'rgba(255, 243, 205, 0.8)';
+                    ctx.fillStyle = c1.isImmuneSentinel ? 'rgba(16, 185, 129, 0.6)' : 'rgba(255, 243, 205, 0.55)';
                     ctx.fill();
                 }
             }
@@ -668,14 +824,14 @@ function initBioCellularFlow() {
                     ctx.beginPath();
                     ctx.moveTo(sx1, sy1);
                     ctx.lineTo(sx2, sy2);
-                    ctx.strokeStyle = v.flash > 0 ? 'rgba(255, 243, 205, 0.7)' : 'rgba(239, 68, 68, 0.55)';
-                    ctx.lineWidth = 1.4;
+                    ctx.strokeStyle = v.flash > 0 ? 'rgba(255, 243, 205, 0.45)' : 'rgba(239, 68, 68, 0.35)';
+                    ctx.lineWidth = 1.3;
                     ctx.stroke();
 
                     // Spike bulb head
                     ctx.beginPath();
                     ctx.arc(sx2, sy2, 1.8, 0, Math.PI * 2);
-                    ctx.fillStyle = v.flash > 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(220, 38, 38, 0.75)';
+                    ctx.fillStyle = v.flash > 0 ? 'rgba(255, 255, 255, 0.65)' : 'rgba(220, 38, 38, 0.48)';
                     ctx.fill();
                 }
 
@@ -683,18 +839,18 @@ function initBioCellularFlow() {
                 ctx.beginPath();
                 ctx.arc(0, 0, curRadius, 0, Math.PI * 2);
                 ctx.fillStyle = v.flash > 0
-                    ? 'rgba(255, 243, 205, 0.8)'
-                    : 'rgba(220, 38, 38, 0.65)';
-                ctx.shadowBlur = v.flash > 0 ? 12 : 8;
-                ctx.shadowColor = v.flash > 0 ? '#FFF3CD' : 'rgba(239, 68, 68, 0.5)';
+                    ? 'rgba(255, 243, 205, 0.5)'
+                    : 'rgba(220, 38, 38, 0.42)';
+                ctx.shadowBlur = v.flash > 0 ? 8 : 4;
+                ctx.shadowColor = v.flash > 0 ? '#FFF3CD' : 'rgba(239, 68, 68, 0.3)';
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
                 // Inner nucleocapsid ring
                 ctx.beginPath();
                 ctx.arc(0, 0, curRadius * 0.55, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(153, 27, 27, 0.7)';
-                ctx.lineWidth = 1.2;
+                ctx.strokeStyle = 'rgba(153, 27, 27, 0.5)';
+                ctx.lineWidth = 1;
                 ctx.stroke();
 
                 ctx.restore();
@@ -702,20 +858,20 @@ function initBioCellularFlow() {
                 // Telemetry tag
                 if (v.spawnScale >= 0.95) {
                     ctx.font = '8px monospace';
-                    ctx.fillStyle = 'rgba(239, 68, 68, 0.65)';
+                    ctx.fillStyle = 'rgba(239, 68, 68, 0.45)';
                     ctx.textAlign = 'center';
                     ctx.fillText('PATHOGEN', v.x + smoothParallax.x, v.y + smoothParallax.y - curRadius - 8);
                 }
             } else {
                 // Dissolving into harmless golden nutrients
-                v.dissolveProgress += 0.04;
+                v.dissolveProgress += 0.085;
                 const curRadius = v.radius * (1 - v.dissolveProgress);
                 const alpha = Math.max(0, 1 - v.dissolveProgress);
 
                 ctx.beginPath();
                 ctx.arc(v.x + smoothParallax.x, v.y + smoothParallax.y, Math.max(0.5, curRadius), 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(230, 194, 128, ${alpha * 0.7})`;
-                ctx.shadowBlur = 15;
+                ctx.fillStyle = `rgba(230, 194, 128, ${alpha * 0.45})`;
+                ctx.shadowBlur = 8;
                 ctx.shadowColor = '#E6C280';
                 ctx.fill();
                 ctx.shadowBlur = 0;
@@ -771,7 +927,7 @@ function initBioCellularFlow() {
 
             // Extend defensive filament and fire antibodies
             if (closestVirus) {
-                const defenseAlpha = (1 - closestDist / 240) * 0.22;
+                const defenseAlpha = (1 - closestDist / 240) * 0.14;
 
                 ctx.beginPath();
                 ctx.moveTo(c.x + smoothParallax.x, c.y + smoothParallax.y);
@@ -794,7 +950,7 @@ function initBioCellularFlow() {
                         targetX: closestVirus.x,
                         targetY: closestVirus.y,
                         progress: 0,
-                        speed: 0.03 + Math.random() * 0.02,
+                        speed: 0.075 + Math.random() * 0.045,
                         isEmerald: c.isImmuneSentinel
                     });
                 }
@@ -809,16 +965,16 @@ function initBioCellularFlow() {
             // Outer membrane
             ctx.beginPath();
             ctx.arc(cx, cy, breathingR, 0, Math.PI * 2);
-            ctx.strokeStyle = `${primaryColor} 0.22)`;
-            ctx.lineWidth = 1.3;
+            ctx.strokeStyle = `${primaryColor} 0.15)`;
+            ctx.lineWidth = 1.2;
             ctx.stroke();
 
             // Inner vital nucleus
             ctx.beginPath();
             ctx.arc(cx, cy, c.innerRadius, 0, Math.PI * 2);
-            ctx.fillStyle = c.isImmuneSentinel ? 'rgba(16, 185, 129, 0.65)' : 'rgba(230, 194, 128, 0.65)';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = c.isImmuneSentinel ? 'rgba(16, 185, 129, 0.5)' : 'rgba(230, 194, 128, 0.5)';
+            ctx.fillStyle = c.isImmuneSentinel ? 'rgba(16, 185, 129, 0.45)' : 'rgba(230, 194, 128, 0.45)';
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = c.isImmuneSentinel ? 'rgba(16, 185, 129, 0.3)' : 'rgba(230, 194, 128, 0.3)';
             ctx.fill();
             ctx.shadowBlur = 0;
 
@@ -830,7 +986,9 @@ function initBioCellularFlow() {
                 ctx.beginPath();
                 ctx.arc(ox, oy, 1.2, 0, Math.PI * 2);
                 ctx.fillStyle = '#FFF3CD';
+                ctx.globalAlpha = 0.55;
                 ctx.fill();
+                ctx.globalAlpha = 1;
             });
         });
 
@@ -847,9 +1005,9 @@ function initBioCellularFlow() {
 
             ctx.beginPath();
             ctx.arc(ab.x + smoothParallax.x, ab.y + smoothParallax.y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = ab.isEmerald ? '#A7F3D0' : '#FFF3CD';
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = ab.isEmerald ? '#10B981' : '#E6C280';
+            ctx.fillStyle = ab.isEmerald ? 'rgba(167, 243, 208, 0.65)' : 'rgba(255, 243, 205, 0.6)';
+            ctx.shadowBlur = 4;
+            ctx.shadowColor = ab.isEmerald ? 'rgba(16, 185, 129, 0.45)' : 'rgba(230, 194, 128, 0.45)';
             ctx.fill();
             ctx.shadowBlur = 0;
 
@@ -864,7 +1022,7 @@ function initBioCellularFlow() {
                             y: ab.target.y,
                             vx: (Math.random() - 0.5) * 1.8,
                             vy: (Math.random() - 0.5) * 1.8,
-                            alpha: 0.85,
+                            alpha: 0.65,
                             color: ab.isEmerald ? '#10B981' : '#FFF3CD'
                         });
                     }
@@ -877,7 +1035,7 @@ function initBioCellularFlow() {
                                 y: ab.target.y,
                                 vx: (Math.random() - 0.5) * 2.8,
                                 vy: (Math.random() - 0.5) * 2.8,
-                                alpha: 0.95,
+                                alpha: 0.75,
                                 color: k % 2 === 0 ? '#E6C280' : '#FFF3CD'
                             });
                         }
@@ -912,7 +1070,7 @@ function initBioCellularFlow() {
                 ctx.beginPath();
                 ctx.arc(s.x + smoothParallax.x, s.y + smoothParallax.y, 1.4, 0, Math.PI * 2);
                 ctx.fillStyle = s.color;
-                ctx.globalAlpha = s.alpha;
+                ctx.globalAlpha = s.alpha * 0.65;
                 ctx.fill();
                 ctx.globalAlpha = 1;
             }
@@ -924,7 +1082,7 @@ function initBioCellularFlow() {
     renderBioFlow();
 }
 
-// 3. Web Proficiency: Analytics Data Grid & Matrix Vectors (With Responsive Cursor Interaction)
+// 3. Web Proficiency: Analytics Data Grid & Matrix Vectors (30% Brighter Technical Vector Mesh)
 function initAnalyticsDataGrid() {
     const canvas = document.getElementById('analyticsGridCanvas');
     if (!canvas) return;
@@ -935,6 +1093,7 @@ function initAnalyticsDataGrid() {
 
     let mousePos = { x: -999, y: -999, active: false };
     let smoothParallax = { x: 0, y: 0 };
+    let gridPulse = 0;
 
     window.addEventListener('mousemove', (e) => {
         mousePos.x = e.clientX;
@@ -951,32 +1110,50 @@ function initAnalyticsDataGrid() {
         height = canvas.height = window.innerHeight;
     });
 
-    const GRID_SIZE = 55;
+    const GRID_SIZE = 50;
     const packets = [];
-    const PACKET_COUNT = 24;
+    const PACKET_COUNT = 32;
 
     for (let i = 0; i < PACKET_COUNT; i++) {
         packets.push({
             x: Math.floor(Math.random() * (width / GRID_SIZE)) * GRID_SIZE,
             y: Math.floor(Math.random() * (height / GRID_SIZE)) * GRID_SIZE,
             dir: Math.random() > 0.5 ? 'h' : 'v',
-            speed: 1.5 + Math.random() * 2.2,
-            length: 18 + Math.random() * 26,
-            color: Math.random() > 0.3 ? '#E6C280' : '#FFF3CD'
+            speed: 1.8 + Math.random() * 2.5,
+            length: 24 + Math.random() * 32,
+            color: Math.random() > 0.35 ? '#FFF3CD' : '#E6C280'
+        });
+    }
+
+    // Glowing coordinate matrix hubs
+    const matrixHubs = [];
+    const HUB_COUNT = 16;
+    for (let i = 0; i < HUB_COUNT; i++) {
+        matrixHubs.push({
+            gridX: (i * 7 + 3) * GRID_SIZE,
+            gridY: ((i * 5 + 2) % 18) * GRID_SIZE,
+            phase: Math.random() * Math.PI * 2,
+            pulseSpeed: 0.02 + Math.random() * 0.03
         });
     }
 
     function renderGridData() {
-        ctx.clearRect(0, 0, width, height);
+        if (document.hidden) {
+            requestAnimationFrame(renderGridData);
+            return;
+        }
 
-        const targetParallaxX = mousePos.active ? (mousePos.x - width / 2) * 0.02 : 0;
-        const targetParallaxY = mousePos.active ? (mousePos.y - height / 2) * 0.02 : 0;
+        ctx.clearRect(0, 0, width, height);
+        gridPulse += 0.02;
+
+        const targetParallaxX = mousePos.active ? (mousePos.x - width / 2) * 0.022 : 0;
+        const targetParallaxY = mousePos.active ? (mousePos.y - height / 2) * 0.022 : 0;
         smoothParallax.x += (targetParallaxX - smoothParallax.x) * 0.05;
         smoothParallax.y += (targetParallaxY - smoothParallax.y) * 0.05;
 
-        // Subtle architectural grid coordinate lines
-        ctx.strokeStyle = 'rgba(245, 230, 200, 0.04)';
-        ctx.lineWidth = 1;
+        // --- 1. ARCHITECTURAL GRID COORDINATE LINES (30%+ BRIGHTER) ---
+        ctx.strokeStyle = 'rgba(230, 194, 128, 0.085)';
+        ctx.lineWidth = 1.1;
         ctx.beginPath();
         for (let x = 0; x < width; x += GRID_SIZE) {
             ctx.moveTo(x + smoothParallax.x, 0);
@@ -988,75 +1165,106 @@ function initAnalyticsDataGrid() {
         }
         ctx.stroke();
 
-        // Subtle interactive glow nodes near cursor
+        // --- 2. PULSING MATRIX HUBS AT INTERSECTIONS ---
+        matrixHubs.forEach(hub => {
+            hub.phase += hub.pulseSpeed;
+            const hx = (hub.gridX % (width + GRID_SIZE)) + smoothParallax.x;
+            const hy = (hub.gridY % (height + GRID_SIZE)) + smoothParallax.y;
+            const alpha = 0.3 + Math.sin(hub.phase) * 0.28;
+
+            ctx.fillStyle = `rgba(230, 194, 128, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(hx, hy, 3, 0, Math.PI * 2);
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(230, 194, 128, 0.7)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Reticle crosshair marker at hub
+            ctx.strokeStyle = `rgba(255, 243, 205, ${alpha * 0.75})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(hx - 5, hy);
+            ctx.lineTo(hx + 5, hy);
+            ctx.moveTo(hx, hy - 5);
+            ctx.lineTo(hx, hy + 5);
+            ctx.stroke();
+        });
+
+        // --- 3. INTERACTIVE GLOW NODES NEAR CURSOR ---
         if (mousePos.active) {
             const nearGridX = Math.round(mousePos.x / GRID_SIZE) * GRID_SIZE;
             const nearGridY = Math.round(mousePos.y / GRID_SIZE) * GRID_SIZE;
 
-            for (let ox = -GRID_SIZE; ox <= GRID_SIZE; ox += GRID_SIZE) {
-                for (let oy = -GRID_SIZE; oy <= GRID_SIZE; oy += GRID_SIZE) {
+            for (let ox = -GRID_SIZE * 2; ox <= GRID_SIZE * 2; ox += GRID_SIZE) {
+                for (let oy = -GRID_SIZE * 2; oy <= GRID_SIZE * 2; oy += GRID_SIZE) {
                     const nx = nearGridX + ox + smoothParallax.x;
                     const ny = nearGridY + oy + smoothParallax.y;
                     const d = Math.hypot(nx - mousePos.x, ny - mousePos.y);
-                    if (d < 120) {
-                        const alpha = (1 - d / 120) * 0.35;
+                    if (d < 160) {
+                        const alpha = (1 - d / 160) * 0.45;
                         ctx.beginPath();
-                        ctx.arc(nx, ny, 2.5, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(230, 194, 128, ${alpha})`;
+                        ctx.arc(nx, ny, 3.2, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255, 243, 205, ${alpha})`;
+                        ctx.shadowBlur = 6;
+                        ctx.shadowColor = 'rgba(230, 194, 128, 0.6)';
                         ctx.fill();
+                        ctx.shadowBlur = 0;
                     }
                 }
             }
         }
 
-        // Data packets flowing along grid lines
+        // --- 4. HIGH-LUMINANCE DATA PACKETS (30%+ BRIGHTER) ---
         packets.forEach(p => {
             let currentSpeed = p.speed;
 
-            // Slightly speed up packet if near cursor
             if (mousePos.active) {
                 const distToMouse = Math.hypot(p.x - mousePos.x, p.y - mousePos.y);
-                if (distToMouse < 140) {
-                    currentSpeed *= 1.35;
+                if (distToMouse < 150) {
+                    currentSpeed *= 1.4;
                 }
             }
 
             ctx.beginPath();
             if (p.dir === 'h') {
                 p.x += currentSpeed;
-                if (p.x > width + 50) {
-                    p.x = -50;
+                if (p.x > width + 60) {
+                    p.x = -60;
                     p.y = Math.floor(Math.random() * (height / GRID_SIZE)) * GRID_SIZE;
                 }
                 const grad = ctx.createLinearGradient(p.x + smoothParallax.x, p.y + smoothParallax.y, p.x - p.length + smoothParallax.x, p.y + smoothParallax.y);
                 grad.addColorStop(0, p.color);
                 grad.addColorStop(1, 'transparent');
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 2.0;
+                ctx.globalAlpha = 0.94;
                 ctx.moveTo(p.x + smoothParallax.x, p.y + smoothParallax.y);
                 ctx.lineTo(p.x - p.length + smoothParallax.x, p.y + smoothParallax.y);
             } else {
                 p.y += currentSpeed;
-                if (p.y > height + 50) {
-                    p.y = -50;
+                if (p.y > height + 60) {
+                    p.y = -60;
                     p.x = Math.floor(Math.random() * (width / GRID_SIZE)) * GRID_SIZE;
                 }
                 const grad = ctx.createLinearGradient(p.x + smoothParallax.x, p.y + smoothParallax.y, p.x + smoothParallax.x, p.y - p.length + smoothParallax.y);
                 grad.addColorStop(0, p.color);
                 grad.addColorStop(1, 'transparent');
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 2.0;
+                ctx.globalAlpha = 0.94;
                 ctx.moveTo(p.x + smoothParallax.x, p.y + smoothParallax.y);
                 ctx.lineTo(p.x + smoothParallax.x, p.y - p.length + smoothParallax.y);
             }
             ctx.stroke();
+            ctx.globalAlpha = 1;
 
-            // Head beacon dot
-            ctx.fillStyle = '#FFF3CD';
+            // Head beacon dot with bright radiant halo
+            ctx.fillStyle = '#FFFFFF';
             ctx.beginPath();
-            ctx.arc(p.x + smoothParallax.x, p.y + smoothParallax.y, 2, 0, Math.PI * 2);
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = 'rgba(230, 194, 128, 0.9)';
+            ctx.arc(p.x + smoothParallax.x, p.y + smoothParallax.y, 2.4, 0, Math.PI * 2);
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#FFF3CD';
             ctx.fill();
             ctx.shadowBlur = 0;
         });
@@ -1106,9 +1314,9 @@ function initNarrativeLightFlow() {
         smoothParallax.y += (targetParallaxY - smoothParallax.y) * 0.05;
 
         const waves = [
-            { y: height * 0.35, amp: 45, freq: 0.0018, speed: step * 0.9, color: 'rgba(230, 194, 128, 0.06)' },
-            { y: height * 0.55, amp: 60, freq: 0.0012, speed: step * 1.2, color: 'rgba(255, 243, 205, 0.04)' },
-            { y: height * 0.75, amp: 50, freq: 0.0022, speed: step * 0.7, color: 'rgba(240, 192, 90, 0.05)' }
+            { y: height * 0.35, amp: 45, freq: 0.0018, speed: step * 0.9, color: 'rgba(230, 194, 128, 0.035)' },
+            { y: height * 0.55, amp: 60, freq: 0.0012, speed: step * 1.2, color: 'rgba(255, 243, 205, 0.025)' },
+            { y: height * 0.75, amp: 50, freq: 0.0022, speed: step * 0.7, color: 'rgba(240, 192, 90, 0.028)' }
         ];
 
         waves.forEach(w => {
@@ -1129,7 +1337,7 @@ function initNarrativeLightFlow() {
                 ctx.lineTo(x + smoothParallax.x, waveY + smoothParallax.y);
             }
             ctx.strokeStyle = w.color;
-            ctx.lineWidth = 1.75;
+            ctx.lineWidth = 1.35;
             ctx.stroke();
         });
 
@@ -1175,162 +1383,294 @@ function initIntroVideoPlayer() {
 }
 
 /* ==========================================================================
-   WEB ARCHITECTURE: 14 PROJECTS REPOSITORY, DUAL CAROUSELS & 7-ITEM REPEATER
+   WEB ARCHITECTURE: 26 PROJECTS REPOSITORY, DUAL CAROUSELS & 7-ITEM REPEATER
    ========================================================================== */
 const WEB_PROJECTS_DATA = [
     {
-        id: 'nexuspay',
-        title: 'NexusPay Enterprise Fintech Core',
+        id: 'adetech',
+        title: 'Adetech Global Corporate Architecture',
+        category: 'Enterprise Cloud Platforms',
+        snippet: 'Scalable corporate web architecture providing infrastructure management & enterprise integrations.',
+        description: 'Adetech is an enterprise corporate and technological presence engineered for maximum uptime, international CDN distribution, and multi-cloud service management. Features streamlined inquiry pipelines and dynamic content modules.',
+        tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Cloudflare Edge', 'REST API'],
+        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Adetech-Website',
+        demo: 'https://adetechglobalwebsite.netlify.app'
+    },
+    {
+        id: 'aetheria',
+        title: 'Aetheria Ultra-Luxury Real Estate Sanctuary',
+        category: 'Interactive WebGL & 3D Portals',
+        snippet: 'Immersive architectural showcase for high-net-worth property acquisitions with cinematic spatial styling.',
+        description: 'Aetheria redefines luxury real estate digital experiences with fluid micro-interactions, responsive high-resolution gallery viewports, VIP consultation scheduling, and modern architectural elegance.',
+        tags: ['React', 'Three.js', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Aetheria-Real-Estate-Site',
+        demo: 'https://aetheria-real-estate-site.netlify.app'
+    },
+    {
+        id: 'apex-logistics',
+        title: 'Apex Global Logistics Matrix',
         category: 'Custom Web Applications',
-        snippet: 'Distributed real-time financial payments infrastructure with multi-currency settlement & fraud detection telemetry.',
-        description: 'NexusPay is an enterprise-tier payments engine built for high-throughput transactional velocity. Integrates localized payment gateways, instant bank rail verification, and an encrypted audit ledger operating at sub-50ms latency.',
-        tags: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Stripe API', 'PostgreSQL', 'Redis'],
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/nexuspay-core',
-        demo: 'https://nexuspay-demo.internal'
-    },
-    {
-        id: 'auracraft',
-        title: 'AuraCraft Multi-Vendor Marketplace',
-        category: 'Marketplace Platforms',
-        snippet: 'Scalable multivendor commerce ecosystem with real-time bidding, escrow payments, and dynamic commissions.',
-        description: 'AuraCraft connects artisan creators with global enterprise buyers. Features sub-second algorithmic search via Algolia, automated vendor payouts, dispute resolution workflows, and real-time stock orchestration.',
-        tags: ['React 19', 'GraphQL', 'Node.js', 'PostgreSQL', 'Tailwind', 'Docker'],
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/auracraft-marketplace',
-        demo: 'https://auracraft-demo.internal'
-    },
-    {
-        id: 'omniflow',
-        title: 'OmniFlow Automation & CRM Engine',
-        category: 'Email & Workflow Automations',
-        snippet: 'Event-driven customer engagement pipeline processing 500k+ automated email sequences daily.',
-        description: 'Engineered an enterprise marketing automation suite with a visual drag-and-drop workflow canvas. Synchronizes behavioral event queues, segment targeting, webhook triggers, and automated A/B delivery analytics.',
-        tags: ['Vue 3', 'TypeScript', 'WebSockets', 'SendGrid API', 'BullMQ', 'Express'],
-        image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/omniflow-automation',
-        demo: 'https://omniflow-demo.internal'
-    },
-    {
-        id: 'edusphere',
-        title: 'EduSphere Interactive LMS & Academy',
-        category: 'Online Course & LMS Platforms',
-        snippet: 'Digital learning management portal with adaptive video streaming, live cohorts, and verifiable credentialing.',
-        description: 'EduSphere powers cohort-based educational academies with zero buffering via Mux video CDN, interactive quizzes, automated PDF certificate minting, community forum threads, and Stripe recurring subscription billing.',
-        tags: ['Next.js', 'Tailwind CSS', 'Mux Video', 'Prisma ORM', 'Stripe Subscriptions'],
-        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/edusphere-lms',
-        demo: 'https://edusphere-demo.internal'
-    },
-    {
-        id: 'veloce',
-        title: 'Veloce Luxury DTC Headless Storefront',
-        category: 'Custom Web Applications',
-        snippet: 'Ultra-fast headless luxury storefront achieving a 99/100 Lighthouse performance score.',
-        description: 'Veloce replaces bloated legacy storefronts with an ultra-responsive headless frontend powered by the Shopify Storefront GraphQL API. Boasts instantaneous page transitions, smooth cart flyouts, and 3D product previews.',
-        tags: ['Shopify Storefront API', 'React', 'Framer Motion', 'Tailwind CSS', 'Vercel Edge'],
-        image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/veloce-storefront',
-        demo: 'https://veloce-demo.internal'
-    },
-    {
-        id: 'biosync',
-        title: 'BioSync Telehealth & Wellness Portal',
-        category: 'Custom Web Applications',
-        snippet: 'HIPAA-compliant telemedicine dashboard with encrypted WebRTC video visits and vital telemetry.',
-        description: 'Provides patients and clinical physicians with an encrypted medical portal for remote appointments, electronic prescription dispatching, longitudinal blood panel tracking, and secure biometric document storage.',
-        tags: ['React', 'WebRTC', 'Node.js', 'Tailwind CSS', 'HIPAA Secure DB'],
-        image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/biosync-telehealth',
-        demo: 'https://biosync-demo.internal'
-    },
-    {
-        id: 'kinetix',
-        title: 'Kinetix Global Logistics & Fleet Telemetry',
-        category: 'Custom Web Applications',
-        snippet: 'Real-time geospatial tracking engine coordinating multimodal shipping containers worldwide.',
-        description: 'Built for international supply chain managers. Visualizes vessel coordinates, ambient temperature sensor telemetry, route delay predictive forecasting, and automated customs documentation dispatch.',
-        tags: ['TypeScript', 'Mapbox GL', 'Node.js', 'Tailwind CSS', 'Socket.IO'],
+        snippet: 'Real-time fleet coordination telemetry & global freight route visibility platform.',
+        description: 'Engineered to eliminate supply chain opacity. Integrates multimodal freight tracking, customs documentation automation, latency-free vessel positioning, and enterprise client dashboards.',
+        tags: ['TypeScript', 'React', 'Tailwind CSS', 'Geospatial Telemetry', 'REST API'],
         image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/kinetix-fleet',
-        demo: 'https://kinetix-demo.internal'
+        github: 'https://github.com/Oloxa/Apex-Logistics-Matrix',
+        demo: 'https://apex-logistics-matrix.netlify.app'
     },
     {
-        id: 'synapse-ai',
-        title: 'Synapse Studio AI Generative Pipeline',
-        category: 'Custom Web Applications',
-        snippet: 'Enterprise GenAI orchestration hub integrating text-to-video, LLM prompt chaining, and asset management.',
-        description: 'An AI productivity suite enabling marketing teams to generate commercial video scripts, dispatch batch rendering requests to Kling and Runway, assemble visual storyboards, and export multi-format social campaign cuts.',
-        tags: ['Next.js 14', 'Python FastAPI', 'Tailwind CSS', 'Vector DB', 'FFmpeg'],
-        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/synapse-ai-studio',
-        demo: 'https://synapse-demo.internal'
+        id: 'atelier-monarch',
+        title: 'Atelier Monarch Haute Horology & Fashion',
+        category: 'E-Commerce & Luxury Catalogues',
+        snippet: 'Bespoke luxury horology & apparel boutique boasting sub-second page transitions & high-fidelity typography.',
+        description: 'Tailored for high-end luxury collectors. Built with minimalist editorial aesthetics, curated timepiece lookbooks, private concierge appointment scheduling, and encrypted checkout workflows.',
+        tags: ['React', 'Tailwind CSS', 'GraphQL', 'Shopify Storefront', 'GSAP'],
+        image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Atelier-Monarch',
+        demo: 'https://atelier-monarch.netlify.app'
     },
     {
-        id: 'architek-3d',
-        title: 'Architek 3D Virtual Real Estate Showroom',
-        category: 'Custom Web Applications',
-        snippet: 'WebGL-powered interactive 3D property showroom allowing interactive walkthroughs inside browser.',
-        description: 'Immersive property visualization tool engineered using Three.js and custom shader passes. Buyers can explore architectural residences, switch lighting moods, inspect CAD floor plans, and schedule private sales viewings.',
-        tags: ['Three.js', 'WebGL', 'React', 'Tailwind CSS', 'GLTF Pipeline'],
-        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/architek-3d-showroom',
-        demo: 'https://architek-demo.internal'
+        id: 'aura-techie',
+        title: 'Aura Techie High-Conversion SaaS Landing',
+        category: 'High-Performance Landing Pages',
+        snippet: 'Performance-engineered landing portal achieving 99/100 Core Web Vitals with dynamic lead captures.',
+        description: 'A modern technology product showcase featuring kinetic typography, dark-mode glassmorphic cards, responsive interactive feature matrices, and seamless integration with CRM webhooks.',
+        tags: ['HTML5', 'Tailwind CSS', 'GSAP', 'Vite', 'Responsive Design'],
+        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Aura-Techie-Landing',
+        demo: 'https://aura-ng.netlify.app'
     },
     {
-        id: 'aerocloud',
-        title: 'AeroCloud SaaS Telemetry & DevOps Dashboard',
+        id: 'cito',
+        title: 'Cito Digital Transformation Platform',
+        category: 'High-Performance Landing Pages',
+        snippet: 'Executive digital transformation launchpad designed to accelerate enterprise software adoption.',
+        description: 'Cito provides modern technology consultancies with a high-impact conversion platform. Boasts frictionless interactive demo scheduling, structured service breakdowns, and optimized mobile velocity.',
+        tags: ['React', 'Tailwind CSS', 'Vite', 'Micro-Interactions', 'SEO Engine'],
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Cito-Landing-Page',
+        demo: 'https://citolandingpg.netlify.app'
+    },
+    {
+        id: 'creative-design-apparel',
+        title: 'Creative Design Apparel Catalogue',
+        category: 'E-Commerce & Luxury Catalogues',
+        snippet: 'Editorial streetwear & fashion catalogue featuring dynamic filtering and aesthetic product lookbooks.',
+        description: 'An interactive fashion catalogue built for independent fashion design houses. Incorporates modular fabric swatch previews, seasonal drop timers, and fluid grid layouts.',
+        tags: ['React', 'Tailwind CSS', 'Headless CMS', 'Editorial Layout', 'Vite'],
+        image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Creative-Design-Apparel-Catalogue',
+        demo: null
+    },
+    {
+        id: 'devflow-copilot',
+        title: 'DevFlow Copilot Developer Workspace',
         category: 'Custom Web Applications',
-        snippet: 'High-density observability dashboard rendering real-time server health, latency spikes, and CPU metrics.',
-        description: 'DevOps telemetry dashboard built for microservice cluster managers. Incorporates real-time charts via D3, alert threshold triggers, log stream search, and role-based team collaboration permissions.',
-        tags: ['React', 'D3.js', 'Chart.js', 'Tailwind CSS', 'REST API'],
+        snippet: 'Cloud-based developer productivity workstation streamlining workflow automation and code reviews.',
+        description: 'A collaborative code intelligence workspace integrating syntax tree analysis, interactive snippet boards, multi-file side-by-side diff viewers, and webhook-driven CI/CD notifications.',
+        tags: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Monaco Editor', 'REST API'],
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/DevFlow-Copilot',
+        demo: null
+    },
+    {
+        id: 'flow-os',
+        title: 'Flow OS Web Desktop Interface',
+        category: 'Custom Web Applications',
+        snippet: 'Browser-based operating system shell with multi-window multitasking & file management.',
+        description: 'A responsive Web OS platform featuring draggable floating windows, taskbar docking, theme configuration, sandboxed browser mini-apps, and instant state persistence.',
+        tags: ['TypeScript', 'React', 'Tailwind CSS', 'Window Management', 'Vite'],
+        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Flow-OS-Landing-Page',
+        demo: 'https://flow-0s.netlify.app'
+    },
+    {
+        id: 'study-pulse',
+        title: 'Study Pulse AI Student Learning Hub',
+        category: 'Online Course & LMS Platforms',
+        snippet: 'Adaptive educational intelligence hub with personalized study trackers & cohort analytics.',
+        description: 'Empowers students and academic institutions with intelligent study session logging, spaced repetition flashcards, automated progress metrics, and low-latency interactive quizzes.',
+        tags: ['React', 'TypeScript', 'Tailwind CSS', 'Adaptive Analytics', 'Edge API'],
+        image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/MAIN-Study-Pulse',
+        demo: 'https://mainstudypulse.netlify.app'
+    },
+    {
+        id: 'maison-there',
+        title: 'MAISON THÉRÈSE Luxury Interior Architecture',
+        category: 'Interactive WebGL & 3D Portals',
+        snippet: 'High-end interior architecture showroom featuring 3D virtual room exploration & product specs.',
+        description: 'Engineered for luxury architectural firms. Allows private clients to inspect designer fixtures, explore bespoke interior spatial layouts, and request private consultations with architectural partners.',
+        tags: ['React', 'Three.js', 'Tailwind CSS', 'CAD Visualization', 'Vite'],
+        image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/MAISON-TH-R-E---Luxury-Interior-Architecture-Product-Showroom',
+        demo: 'https://maison-thre-luxury.netlify.app'
+    },
+    {
+        id: 'medstream',
+        title: 'Medstream Telemetry & Clinical Health',
+        category: 'Custom Web Applications',
+        snippet: 'Secure clinical telemetry portal delivering encrypted biometric tracking & practitioner records.',
+        description: 'Engineered to modernize patient vitals tracking. Features longitudinal biomarker charting, HIPAA-aligned architecture, encrypted consultation requests, and immediate practitioner alert webhooks.',
+        tags: ['React', 'WebRTC', 'Tailwind CSS', 'HIPAA Architecture', 'REST API'],
+        image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Medstream',
+        demo: 'https://medistream.netlify.app'
+    },
+    {
+        id: 'my-portfolio',
+        title: 'HODM Multidisciplinary Portfolio Archive',
+        category: 'High-Performance Landing Pages',
+        snippet: 'Primary multidisciplinary personal brand archive demonstrating full-stack engineering & AI visual creation.',
+        description: 'The foundational portfolio architecture of H.O. Damilare Michael. Showcases full-stack web platforms, generative AI video workflows, leadership frameworks, and health protocols.',
+        tags: ['HTML5', 'Tailwind CSS', 'GSAP', 'Canvas Shaders', 'Web Audio'],
+        image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/My-Portfolio-site',
+        demo: null
+    },
+    {
+        id: 'mykesyte',
+        title: 'MykeSyte Interactive Studio',
+        category: 'High-Performance Landing Pages',
+        snippet: 'Creative web laboratory experimenting with kinetic micro-interactions & experimental CSS.',
+        description: 'An interactive playground engineered to stress-test high-performance animations, canvas particulate fields, responsive typography scaling, and smooth navigation patterns.',
+        tags: ['JavaScript', 'Tailwind CSS', 'CSS3', 'WebGL', 'Responsive UI'],
+        image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/mykesyte',
+        demo: null
+    },
+    {
+        id: 'nexnova',
+        title: 'NexNova Cloud Telemetry & DevOps Core',
+        category: 'Enterprise Cloud Platforms',
+        snippet: 'Distributed cloud observability suite delivering container health metrics & latency heatmaps.',
+        description: 'Built for cloud infrastructure managers. Monitors microservice health, automated deployment pipelines, canary releases, and system uptime alerts through a reactive dark-mode interface.',
+        tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Microservices', 'GraphQL'],
         image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/aerocloud-devops',
-        demo: 'https://aerocloud-demo.internal'
+        github: 'https://github.com/Oloxa/NexNova',
+        demo: 'https://nexxnova.netlify.app'
     },
     {
-        id: 'prism-cms',
-        title: 'PrismCMS Headless Editorial Publishing Hub',
-        category: 'CMS Builds (WordPress / Headless)',
-        snippet: 'Decoupled content management architecture supporting high-volume multilingual journalistic publications.',
-        description: 'Transforms publishing workflows with instant preview deployments, modular blocks, structured metadata for rich snippets, CDN edge caching, and localized multi-language editorial syndication.',
-        tags: ['Sanity.io', 'Next.js', 'Tailwind CSS', 'Algolia', 'GraphQL'],
-        image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/prism-headless-cms',
-        demo: 'https://prism-demo.internal'
+        id: 'notewave-ai',
+        title: 'NoteWave AI Knowledge & Student Hub',
+        category: 'Online Course & LMS Platforms',
+        snippet: 'Intelligent note orchestration platform with semantic query matching & automated summaries.',
+        description: 'NoteWave AI aggregates student lecture notes, automatically compiles concise revision summaries, extracts key definitions, and provides instantaneous search across large knowledge repositories.',
+        tags: ['React', 'Node.js', 'Tailwind CSS', 'Vector Embeddings', 'IndexedDB'],
+        image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/NoteWaveAI',
+        demo: 'https://notewave-studenthub.netlify.app'
     },
     {
-        id: 'hyperscale',
-        title: 'HyperScale Serverless Microservice Mesh',
+        id: 'pc-refinishing-cyber',
+        title: 'PC Refinishing Cyber Diagnostics WebApp',
         category: 'Custom Web Applications',
-        snippet: 'Container orchestration manager facilitating multi-region container deployments with instant rollback.',
-        description: 'Streamlines complex cloud deployments with health monitoring, automatic canary rollouts, traffic balancing, and integrated TLS certificate provisioning.',
-        tags: ['Golang API', 'TypeScript', 'React', 'Tailwind CSS', 'Docker APIs'],
+        snippet: 'Hardware diagnostic telemetry suite & automated PC restoration service scheduling engine.',
+        description: 'Delivers real-time computer diagnostics estimation, hardware upgrade calculations, benchmark comparisons, and seamless booking for custom computing restoration.',
+        tags: ['TypeScript', 'React', 'Tailwind CSS', 'Hardware Diagnostics', 'Vite'],
+        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/PC-Refinishing-Cyber-WebApp',
+        demo: 'https://pc-refinishing.netlify.app'
+    },
+    {
+        id: 'pc-refinishing-spa',
+        title: 'PC Refinishing Spa Experience',
+        category: 'High-Performance Landing Pages',
+        snippet: 'Boutique hardware concierge landing platform featuring interactive transformation sliders.',
+        description: 'A sensory, boutique showcase celebrating custom craftsmanship in computing hardware restoration. Features before-and-after interactive comparison sliders and VIP booking flows.',
+        tags: ['HTML5', 'Tailwind CSS', 'GSAP ScrollTrigger', 'Responsive UI'],
+        image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Pc-Refinishing-Spa-Landing-Page',
+        demo: 'https://pc-refinishing-spa.netlify.app'
+    },
+    {
+        id: 'sacco',
+        title: 'SACCO Community Savings & Micro-Lending',
+        category: 'Custom Web Applications',
+        snippet: 'Decentralized financial cooperative ledger facilitating member savings & micro-credit loans.',
+        description: 'Engineered to bring transparency to grassroots cooperative finance. Features tamper-evident transaction ledgers, member savings goal tracking, automated interest calculations, and SMS notification webhooks.',
+        tags: ['React', 'TypeScript', 'Tailwind CSS', 'Ledger Integrity', 'Stripe API'],
+        image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/SACCO-Community-Savings-Loan-',
+        demo: 'https://saac0.netlify.app'
+    },
+    {
+        id: 'spectre',
+        title: 'SPECTRE Electric Hypercar Showcase',
+        category: 'Interactive WebGL & 3D Portals',
+        snippet: 'Adrenaline-fueled 3D automotive portal featuring dynamic aerodynamics & specs inspection.',
+        description: 'Showcasing next-generation electric hypercar engineering. Incorporates interactive 360-degree model rotation, dynamic powertrain telemetry readouts, acceleration benchmarks, and VIP allocation reservations.',
+        tags: ['WebGL', 'Three.js', 'React', 'Tailwind CSS', 'Audio FX'],
+        image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/SPECTRE-E-HYPERCAR',
+        demo: 'https://spectre-e-hypercar-website.netlify.app'
+    },
+    {
+        id: 'surth',
+        title: 'SUTRH Digital Apparel Passport & Provenance',
+        category: 'E-Commerce & Luxury Catalogues',
+        snippet: 'Cryptographic fashion provenance passport verifying ethical sourcing & limited-run garment authenticity.',
+        description: 'Bridging physical luxury garments with digital ownership verification. Each collection piece receives a permanent provenance ledger, detailed fabric care guides, and exclusive collector perks.',
+        tags: ['React', 'Tailwind CSS', 'Provenance Verification', 'Vite', 'Framer'],
+        image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/SUTRH-DESIGN-APPAREL-PASSPORT',
+        demo: 'https://surth.netlify.app'
+    },
+    {
+        id: 'synthetix-saas',
+        title: 'Synthetix Enterprise SaaS Operations',
+        category: 'Custom Web Applications',
+        snippet: 'High-throughput cloud workflow engine connecting enterprise teams to automated data pipelines.',
+        description: 'An enterprise operations powerhouse designed for distributed teams. Integrates permissioned role-based dashboards, automated data transformation queues, and live event monitoring.',
+        tags: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Server Actions'],
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Synthetix-SaaS-WebApp',
+        demo: 'https://synthetix-saas.netlify.app'
+    },
+    {
+        id: 'synthetix-webapp',
+        title: 'Synthetix Cloud Console',
+        category: 'Custom Web Applications',
+        snippet: 'Lightweight cloud dashboard client delivering real-time telemetry charts & API dispatching.',
+        description: 'A companion web client engineered with zero-latency interface responses. Allows system administrators to monitor server nodes, review webhook logs, and dispatch automated tasks.',
+        tags: ['React', 'TypeScript', 'Tailwind CSS', 'REST API', 'Redis'],
+        image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Synthetix-Webapp',
+        demo: 'https://synthetix-webapp.netlify.app'
+    },
+    {
+        id: 'valence',
+        title: 'Valence Longevity & Cellular Health Institute',
+        category: 'Custom Web Applications',
+        snippet: 'Pioneering longevity research platform presenting cellular longevity protocols & NAD+ optimization.',
+        description: 'Valence bridges clinical geroscience with accessible human optimization protocols. Features comprehensive biomarker assessment tools, mitochondrial supplement guides, and physician referral integrations.',
+        tags: ['React', 'Tailwind CSS', 'Biometric Protocols', 'Vite', 'Framer Motion'],
+        image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Valence-Longevity-Institute',
+        demo: 'https://valence-longevity-institute.netlify.app'
+    },
+    {
+        id: 'xpera',
+        title: 'Xpera — Experience Intelligence Engine',
+        category: 'Enterprise Cloud Platforms',
+        snippet: 'Next-generation experiential platform delivering intelligent personalized digital interactions at scale.',
+        description: 'Xpera represents the pinnacle of modern experience engineering. Unites distributed micro-frontends, predictive user engagement models, and instantaneous edge content delivery.',
+        tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Distributed Mesh', 'Micro-Frontends'],
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
+        github: 'https://github.com/Oloxa/Xpera',
+        demo: 'https://xpera.io'
+    },
+    {
+        id: 'xpera-hebrew',
+        title: 'Xpera Hebrew Localized Architecture',
+        category: 'Enterprise Cloud Platforms',
+        snippet: 'RTL-optimized localization of the Xpera platform engineered for Middle Eastern enterprise adoption.',
+        description: 'A bi-directional, right-to-left localized deployment of Xpera. Preserves fluid layout hierarchies, typographic nuance, and performance metrics while tailoring content for Hebrew-speaking markets.',
+        tags: ['React', 'Tailwind CSS', 'RTL Localization', 'Bi-directional Layout', 'Vite'],
         image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/hyperscale-mesh',
-        demo: 'https://hyperscale-demo.internal'
-    },
-    {
-        id: 'lumina-resort',
-        title: 'Lumina Luxury Resort Booking & Concierge',
-        category: 'CMS Builds (WordPress / Headless)',
-        snippet: 'Bespoke hospitality reservations suite featuring room availability calendars and concierge requests.',
-        description: 'Created for an ultra-luxury private island resort. Integrates dynamic seasonal rate pricing, private dining booking reservations, multi-currency credit card processing, and an automated SMS concierge system.',
-        tags: ['WordPress Rest API', 'React', 'Tailwind CSS', 'Stripe', 'Twilio'],
-        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/lumina-hospitality',
-        demo: 'https://lumina-demo.internal'
-    },
-    {
-        id: 'pulse-automate',
-        title: 'PulseAutomate Multi-Channel Marketing Webhook',
-        category: 'Email & Workflow Automations',
-        snippet: 'Omnichannel lead routing bridge connecting webhooks to Slack, Salesforce, HubSpot, and WhatsApp.',
-        description: 'Eliminates lead drop-off by transforming raw form submissions into validated CRM records, triggering instant SMS / WhatsApp greetings to high-intent leads within 60 seconds of submission.',
-        tags: ['Node.js', 'Express', 'Tailwind CSS', 'HubSpot API', 'WhatsApp Business API'],
-        image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80',
-        github: 'https://github.com/reel3dlab/pulse-automate',
-        demo: 'https://pulse-demo.internal'
+        github: 'https://github.com/Oloxa/Xpera-Hebrew-Distinct-Website',
+        demo: 'https://xpera-website.netlify.app'
     }
 ];
 
@@ -1349,11 +1689,18 @@ function initDualMotionCarousels() {
     const trackLeft = document.getElementById('carouselTrackLeft');
     if (!trackRight || !trackLeft) return;
 
-    // Split projects into 2 sets of 7, duplicate them to ensure seamless infinite looping
-    const set1 = WEB_PROJECTS_DATA.slice(0, 7);
-    const set2 = WEB_PROJECTS_DATA.slice(7, 14);
+    // Split 26 projects into 2 sets of 13, duplicate them for seamless continuous infinite looping
+    const half = Math.ceil(WEB_PROJECTS_DATA.length / 2);
+    const set1 = WEB_PROJECTS_DATA.slice(0, half);
+    const set2 = WEB_PROJECTS_DATA.slice(half);
 
     function createCardHtml(p) {
+        const liveIndicator = p.demo 
+            ? `<a href="${p.demo}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-[#E6C280] hover:text-[#FFF3CD] transition-colors p-1" title="Open Live Site: ${p.demo}"><i class="fas fa-external-link-alt text-xs"></i></a>`
+            : `<span class="text-[#8B949E]/35 cursor-not-allowed p-1" title="No live link available - repository only"><i class="fas fa-external-link-alt text-xs opacity-30"></i></span>`;
+            
+        const repoIndicator = `<a href="${p.github}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-[#A0AEC0] hover:text-[#E6C280] transition-colors p-1" title="View Source on GitHub"><i class="fab fa-github text-xs"></i></a>`;
+
         return `
             <div class="carousel-project-card group" onclick="openProjectModal('${p.id}')" role="button" tabindex="0">
                 <div class="h-44 w-full relative overflow-hidden bg-black/40">
@@ -1362,6 +1709,7 @@ function initDualMotionCarousels() {
                     <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#12161A]/90 text-[#E6C280] border border-[#E6C280]/30 backdrop-blur-md">
                         ${p.category}
                     </span>
+                    ${!p.demo ? '<span class="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono bg-black/75 text-[#8B949E] border border-white/10">Repo Only</span>' : ''}
                 </div>
                 <div class="p-4">
                     <h4 class="text-sm font-bold text-[#F5E6C8] group-hover:text-[#FFF3CD] transition-colors truncate mb-1">
@@ -1374,9 +1722,9 @@ function initDualMotionCarousels() {
                         <span class="text-[#E6C280] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                             Expand Details <i class="fas fa-arrow-right text-[10px]"></i>
                         </span>
-                        <div class="flex items-center gap-2 text-[#8B949E]">
-                            <i class="fab fa-github"></i>
-                            <i class="fas fa-external-link-alt"></i>
+                        <div class="flex items-center gap-2">
+                            ${repoIndicator}
+                            ${liveIndicator}
                         </div>
                     </div>
                 </div>
@@ -1384,11 +1732,10 @@ function initDualMotionCarousels() {
         `;
     }
 
-    // Populate track Right with duplicate set for continuous CSS marquee loop
+    // Populate tracks with duplicate sets for infinite marquee effect
     const htmlSet1 = set1.map(createCardHtml).join('');
     trackRight.innerHTML = htmlSet1 + htmlSet1;
 
-    // Populate track Left with duplicate set
     const htmlSet2 = set2.map(createCardHtml).join('');
     trackLeft.innerHTML = htmlSet2 + htmlSet2;
 }
@@ -1410,48 +1757,58 @@ function initRepeaterPagination() {
         const endIndex = startIndex + REPEATER_ITEMS_PER_PAGE;
         const pageItems = WEB_PROJECTS_DATA.slice(startIndex, endIndex);
 
-        repeaterGrid.innerHTML = pageItems.map((p, idx) => `
-            <div class="repeater-project-card group flex flex-col justify-between" onclick="openProjectModal('${p.id}')" role="button" tabindex="0">
-                <div>
-                    <div class="h-48 w-full relative overflow-hidden bg-black/40">
-                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#12161A] via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute top-3 left-3 flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#12161A]/90 text-[#E6C280] border border-[#E6C280]/40 backdrop-blur-md">
-                                0${startIndex + idx + 1}
-                            </span>
-                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#0D0F12]/85 text-[#F5E6C8] border border-[#F5E6C8]/20 backdrop-blur-md">
-                                ${p.category}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <h4 class="text-base font-bold text-[#F5E6C8] group-hover:text-[#FFF3CD] transition-colors mb-2">
-                            ${p.title}
-                        </h4>
-                        <p class="text-xs text-[#8B949E] leading-relaxed mb-4 line-clamp-3">
-                            ${p.description}
-                        </p>
-                        <div class="flex flex-wrap gap-1.5 mb-4">
-                            ${p.tags.slice(0, 3).map(tag => `
-                                <span class="text-[10px] px-2 py-0.5 rounded-md bg-[#F5E6C8]/5 text-[#C9D1D9] border border-[#F5E6C8]/10 font-mono">
-                                    ${tag}
+        repeaterGrid.innerHTML = pageItems.map((p, idx) => {
+            const hasDemo = Boolean(p.demo);
+            const liveBadge = hasDemo
+                ? `<a href="${p.demo}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-[#E6C280] hover:text-[#FFF3CD] flex items-center gap-1 text-[11px] font-semibold transition-colors" title="Launch Live Site: ${p.demo}"><i class="fas fa-external-link-alt text-[10px]"></i> Live Site</a>`
+                : `<span class="text-[#8B949E]/40 cursor-not-allowed flex items-center gap-1 text-[11px]" title="No live link available - repository only"><i class="fas fa-ban text-[10px] opacity-40"></i> No Live Link</span>`;
+
+            const repoBadge = `<a href="${p.github}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-[#A0AEC0] hover:text-[#E6C280] flex items-center gap-1 text-[11px] transition-colors" title="View Source on GitHub"><i class="fab fa-github text-[11px]"></i> GitHub</a>`;
+
+            return `
+                <div class="repeater-project-card group flex flex-col justify-between" onclick="openProjectModal('${p.id}')" role="button" tabindex="0">
+                    <div>
+                        <div class="h-48 w-full relative overflow-hidden bg-black/40">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#12161A] via-transparent to-transparent opacity-80"></div>
+                            <div class="absolute top-3 left-3 flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#12161A]/90 text-[#E6C280] border border-[#E6C280]/40 backdrop-blur-md font-mono">
+                                    ${String(startIndex + idx + 1).padStart(2, '0')}
                                 </span>
-                            `).join('')}
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#0D0F12]/85 text-[#F5E6C8] border border-[#F5E6C8]/20 backdrop-blur-md">
+                                    ${p.category}
+                                </span>
+                            </div>
+                            ${!hasDemo ? '<span class="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono bg-black/80 text-[#8B949E] border border-white/10">Internal Repo</span>' : ''}
+                        </div>
+                        <div class="p-5">
+                            <h4 class="text-base font-bold text-[#F5E6C8] group-hover:text-[#FFF3CD] transition-colors mb-2">
+                                ${p.title}
+                            </h4>
+                            <p class="text-xs text-[#8B949E] leading-relaxed mb-4 line-clamp-3">
+                                ${p.description}
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                ${p.tags.slice(0, 3).map(tag => `
+                                    <span class="text-[10px] px-2 py-0.5 rounded-md bg-[#F5E6C8]/5 text-[#C9D1D9] border border-[#F5E6C8]/10 font-mono">
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-t border-[#F5E6C8]/10 flex items-center justify-between mt-auto">
+                        <button class="text-xs font-bold text-[#E6C280] group-hover:text-[#FFF3CD] flex items-center gap-1.5 transition-colors">
+                            Technical Spec <i class="fas fa-chevron-right text-[10px]"></i>
+                        </button>
+                        <div class="flex items-center gap-3 text-xs">
+                            ${repoBadge}
+                            ${liveBadge}
                         </div>
                     </div>
                 </div>
-                <div class="p-5 pt-0 border-t border-[#F5E6C8]/10 flex items-center justify-between mt-auto">
-                    <button class="text-xs font-bold text-[#E6C280] group-hover:text-[#FFF3CD] flex items-center gap-1.5 transition-colors">
-                        View Technical Spec <i class="fas fa-chevron-right text-[10px]"></i>
-                    </button>
-                    <div class="flex items-center gap-3 text-xs text-[#A0AEC0]">
-                        <span class="hover:text-[#E6C280] transition-colors" title="Repository Available"><i class="fab fa-github"></i></span>
-                        <span class="hover:text-[#E6C280] transition-colors" title="Production Deployment"><i class="fas fa-external-link-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
         // Update indicators
         if (pageIndicator) pageIndicator.textContent = `Page ${page} of ${totalPages}`;
@@ -1527,8 +1884,34 @@ function openProjectModal(projectId) {
             </span>
         `).join('');
     }
-    if (githubLink) githubLink.href = project.github;
-    if (liveLink) liveLink.href = project.demo;
+
+    // Smart repo button wiring
+    if (githubLink) {
+        githubLink.href = project.github;
+        githubLink.target = "_blank";
+        githubLink.rel = "noopener noreferrer";
+        githubLink.innerHTML = `<i class="fab fa-github mr-1.5"></i> GitHub Repository`;
+    }
+
+    // Smart live site button wiring (No action if demo is null)
+    if (liveLink) {
+        if (project.demo) {
+            liveLink.href = project.demo;
+            liveLink.target = "_blank";
+            liveLink.rel = "noopener noreferrer";
+            liveLink.onclick = null;
+            liveLink.className = "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#E6C280] text-[#0D0F12] font-bold text-xs hover:bg-[#FFF3CD] hover:shadow-[0_0_20px_rgba(230,194,128,0.4)] transition-all";
+            liveLink.innerHTML = `Launch Live Site <i class="fas fa-external-link-alt text-[10px] ml-1"></i>`;
+            liveLink.title = `Visit deployed live application at ${project.demo}`;
+        } else {
+            liveLink.removeAttribute('href');
+            liveLink.removeAttribute('target');
+            liveLink.onclick = (e) => { e.preventDefault(); e.stopPropagation(); return false; };
+            liveLink.className = "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#1E232B] text-[#8B949E] border border-white/5 text-xs opacity-50 cursor-not-allowed select-none";
+            liveLink.innerHTML = `No Live Link (Repo Only) <i class="fas fa-ban text-[10px] ml-1"></i>`;
+            liveLink.title = "No public live deployment available for this repository";
+        }
+    }
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -1812,11 +2195,77 @@ function initNavigation() {
             }
         });
     }
+
+    // Initialize smart scroll behavior for floating island navbar
+    initNavbarScroll();
+}
+
+// Floating Island Navbar Scroll Behavior:
+// 1. Disappears on downward scroll
+// 2. Briefly reappears on upward scroll
+// 3. Always appears and stays visible at top of page (hero section)
+function initNavbarScroll() {
+    const navWrapper = document.querySelector('.mho-nav-pill-wrapper');
+    if (!navWrapper) return;
+
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    let isTicking = false;
+    let hideTimer = null;
+
+    function handleScroll() {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const delta = currentScrollY - lastScrollY;
+
+        // Condition A: Whenever at the top of the page (Hero Section, scrollY <= 120), always visible
+        if (currentScrollY <= 120) {
+            navWrapper.classList.remove('nav-hidden');
+            navWrapper.classList.add('nav-visible');
+            if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+            lastScrollY = currentScrollY;
+            isTicking = false;
+            return;
+        }
+
+        // Condition B: Downward scroll -> disappears
+        if (delta > 6) {
+            navWrapper.classList.add('nav-hidden');
+            navWrapper.classList.remove('nav-visible');
+            if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+        }
+        // Condition C: Upward scroll -> briefly appears again
+        else if (delta < -6) {
+            navWrapper.classList.remove('nav-hidden');
+            navWrapper.classList.add('nav-visible');
+
+            // Set brief appearance timer while not at hero section
+            if (hideTimer) clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                const nowY = window.pageYOffset || document.documentElement.scrollTop;
+                if (nowY > 120) {
+                    navWrapper.classList.add('nav-hidden');
+                    navWrapper.classList.remove('nav-visible');
+                }
+            }, 3500);
+        }
+
+        lastScrollY = currentScrollY;
+        isTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!isTicking) {
+            window.requestAnimationFrame(handleScroll);
+            isTicking = true;
+        }
+    }, { passive: true });
 }
 
 function init3DTilt() {
     const cards = document.querySelectorAll('.tilt-card, .glass-container');
     cards.forEach(card => {
+        // Exclude 'About' section glass-containers so they use subtle GSAP expansion, and exclude stack cards
+        if (card.closest('#biography') || card.closest('.cards-stack-stage')) return;
+
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -1957,13 +2406,19 @@ function initAccordions() {
                     c.classList.remove('open');
                     c.style.maxHeight = null;
                 });
+                parent.querySelectorAll('.accordion-trigger').forEach(t => {
+                    t.setAttribute('aria-expanded', 'false');
+                });
                 parent.querySelectorAll('.accordion-icon').forEach(i => i.style.transform = 'rotate(0deg)');
             }
 
             if (!isOpen) {
                 content.classList.add('open');
-                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.maxHeight = (content.scrollHeight + 30) + 'px';
+                trigger.setAttribute('aria-expanded', 'true');
                 if (icon) icon.style.transform = 'rotate(180deg)';
+            } else {
+                trigger.setAttribute('aria-expanded', 'false');
             }
         });
     });
@@ -2068,6 +2523,393 @@ function initGsapAnimations() {
             }
         );
     }
+
+    // Subtle GSAP Hover Effect for '.glass-container' cards in 'About' Section
+    initAboutCardHover();
+
+    // Creative AI Space Card Stack Unfolding Feature
+    initCardsStack();
+
+    // H1 and Heading GSAP Perspective & Shimmer Animations
+    initHeadingGsapAnimations();
+}
+
+// H1 & Heading GSAP Perspective & Shimmer Text Reveal Animations
+function initHeadingGsapAnimations() {
+    if (typeof gsap === 'undefined') return;
+
+    // 1. Hero H1 Headings with 3D Perspective & Shimmer Reveal
+    const heroH1s = document.querySelectorAll('h1.font-display, .hero-fade-in h1, section#hero h1, section h1');
+    heroH1s.forEach(h1 => {
+        if (h1.getAttribute('data-gsap-animated')) return;
+        h1.setAttribute('data-gsap-animated', 'true');
+        h1.classList.add('gsap-hero-title');
+
+        gsap.fromTo(h1, 
+            { opacity: 0, y: 44, rotationX: 18, transformOrigin: '0% 50% -30px' },
+            { opacity: 1, y: 0, rotationX: 0, duration: 1.15, ease: 'power3.out', delay: 0.15 }
+        );
+
+        // Highlight gold gradient words with animated shimmer
+        const highlights = h1.querySelectorAll('.bg-clip-text, span');
+        if (highlights.length > 0) {
+            highlights.forEach(hl => hl.classList.add('gold-shimmer-text'));
+            gsap.fromTo(highlights,
+                { opacity: 0, scale: 0.94, filter: 'blur(4px)' },
+                { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.2, delay: 0.35, ease: 'power2.out', stagger: 0.08 }
+            );
+        }
+    });
+
+    // 2. Section H2 Headings with ScrollTrigger
+    if (typeof ScrollTrigger !== 'undefined') {
+        const sectionH2s = document.querySelectorAll('main section h2.font-display, main section h2');
+        sectionH2s.forEach(h2 => {
+            if (h2.closest('#hero') || h2.getAttribute('data-gsap-h2')) return;
+            h2.setAttribute('data-gsap-h2', 'true');
+
+            gsap.fromTo(h2, 
+                { opacity: 0, y: 32 },
+                {
+                    scrollTrigger: {
+                        trigger: h2,
+                        start: 'top 88%',
+                        toggleActions: 'play none none none'
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.85,
+                    ease: 'power3.out'
+                }
+            );
+        });
+    }
+}
+
+// Subtle GSAP Hover effect on '.glass-container' cards in 'About' section
+function initAboutCardHover() {
+    if (typeof gsap === 'undefined') return;
+    const aboutSection = document.getElementById('biography');
+    if (!aboutSection) return;
+
+    const cards = aboutSection.querySelectorAll('.glass-container');
+    cards.forEach(card => {
+        card.style.transformOrigin = 'center center';
+        card.style.willChange = 'transform, box-shadow, border-color';
+
+        card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+                scale: 1.025,
+                boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(230, 194, 128, 0.22)',
+                borderColor: 'rgba(230, 194, 128, 0.45)',
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                scale: 1,
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(230, 194, 128, 0.04)',
+                borderColor: 'rgba(245, 230, 200, 0.1)',
+                duration: 0.4,
+                ease: 'power2.out',
+                overwrite: 'auto'
+            });
+        });
+    });
+}
+
+// Card Stack Feature for Creative AI Space (Unfolds on scroll, reverses on scroll back)
+function initCardsStack() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    const stage = document.getElementById('cardsStackStage');
+    const stackSection = document.getElementById('video-grid');
+    if (!stage || !stackSection) return;
+
+    const cards = Array.from(stage.querySelectorAll('.stack-card'));
+    if (cards.length === 0) return;
+
+    const total = cards.length;
+    const badgeNum = document.getElementById('stackActiveCardNum');
+
+    // 1. Initial Stacked Appearance: cards visibly stacked on top of one another!
+    cards.forEach((card, i) => {
+        gsap.set(card, {
+            zIndex: total - i,
+            scale: 1 - i * 0.035,
+            y: i * 16,
+            rotation: (i % 2 === 0 ? 1 : -1) * (i * 1.2),
+            opacity: 1 - i * 0.08,
+            transformOrigin: 'center bottom'
+        });
+    });
+
+    // 2. ScrollTrigger scrubbing timeline - pinned sequence
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: stackSection,
+            start: 'top top+=20',
+            end: `+=${total * 550}`,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            onUpdate: (self) => {
+                const progress = self.progress;
+                const activeIndex = Math.min(total - 1, Math.floor(progress * total));
+                if (badgeNum) {
+                    badgeNum.textContent = (activeIndex + 1);
+                }
+            }
+        }
+    });
+
+    // 3. Sequential card unfolding
+    for (let i = 0; i < total - 1; i++) {
+        tl.to(cards[i], {
+            y: -140,
+            opacity: 0,
+            scale: 1.05,
+            rotation: i % 2 === 0 ? -6 : 6,
+            duration: 1,
+            ease: 'power2.inOut'
+        }, i);
+
+        for (let j = i + 1; j < total; j++) {
+            const pos = j - (i + 1);
+            tl.to(cards[j], {
+                scale: 1 - pos * 0.035,
+                y: pos * 16,
+                rotation: (pos % 2 === 0 ? 1 : -1) * (pos * 1.2),
+                opacity: 1 - pos * 0.08,
+                duration: 1,
+                ease: 'power2.inOut'
+            }, i);
+        }
+    }
+
+    // 4. Chevron controls for jumping cards in stack
+    const prevBtn = document.getElementById('stackPrevBtn');
+    const nextBtn = document.getElementById('stackNextBtn');
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const st = tl.scrollTrigger;
+            if (st) {
+                const nextProgress = Math.min(1, st.progress + (1 / (total - 1)));
+                const targetY = st.start + (st.end - st.start) * nextProgress;
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+            }
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const st = tl.scrollTrigger;
+            if (st) {
+                const prevProgress = Math.max(0, st.progress - (1 / (total - 1)));
+                const targetY = st.start + (st.end - st.start) * prevProgress;
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Delegate click to open modal for each card
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('button') || e.target.closest('a')) return;
+            const embedUrl = card.getAttribute('data-video-url') || 'https://www.youtube.com/embed/sECemgPYcFg?autoplay=1';
+            const title = card.getAttribute('data-video-title') || 'Featured Commercial Video';
+            const category = card.getAttribute('data-video-category') || 'Production Cut';
+            const synopsis = card.getAttribute('data-video-synopsis') || 'Full production reel.';
+            openVideoModal(embedUrl, title, category, synopsis);
+        });
+    });
+}
+
+// Creative AI Space: Virtual Director Studio & Viewfinder Interactivity
+function initCreativeDirectorDeck() {
+    const lensBtns = document.querySelectorAll('.director-lens-btn');
+    const aspectPills = document.querySelectorAll('.director-aspect-pill');
+    const promptCards = document.querySelectorAll('.prompt-orbit-card');
+    const viewportFrame = document.getElementById('directorViewport');
+    const sceneTitleEl = document.getElementById('directorSceneTitle');
+    const scenePillEl = document.getElementById('directorScenePill');
+    const scenePromptEl = document.getElementById('directorScenePrompt');
+    const sceneImageEl = document.getElementById('directorSceneImg');
+    const playBtn = document.getElementById('directorMainPlayBtn');
+    const lensNameDisplay = document.getElementById('directorLensNameDisplay');
+    const hudTimecode = document.getElementById('directorHudTimecode');
+
+    // Live timecode counter
+    if (hudTimecode) {
+        let frames = 18;
+        let seconds = 12;
+        let minutes = 4;
+        setInterval(() => {
+            frames++;
+            if (frames >= 24) { frames = 0; seconds++; }
+            if (seconds >= 60) { seconds = 0; minutes++; }
+            hudTimecode.textContent = `REC 00:0${minutes}:${String(seconds).padStart(2, '0')}:${String(frames).padStart(2, '0')}`;
+        }, 1000 / 24);
+    }
+
+    // Preset scene data
+    const SCENE_PRESETS = [
+        {
+            title: "Deep Space Supernova · Sci-Fi Cinema Trailer",
+            category: "4K IMAX CINEMA REEL",
+            lens: "35mm Anamorphic 2.39:1",
+            aspect: "2.39:1",
+            prompt: "Ultra-wide anamorphic capture of a dying star, volumetric relativistic gas nebulae, interstellar derelict hull reflection, cinematic color grading, 24fps.",
+            image: "/src/assets/images/cinematic_ai_studio_1790219642646.jpg",
+            videoUrl: "https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+        },
+        {
+            title: "Aura Titanium Chronograph · 3D Product Commercial",
+            category: "LUXURY COMMERCIAL",
+            lens: "Macro Probe 24mm f/14",
+            aspect: "16:9",
+            prompt: "Macro probe lens tracking through intricate titanium gear escapement, sapphire crystal anti-reflective refraction, studio chiaroscuro lighting, photoreal CAD detail.",
+            image: "/src/assets/images/web_tech_architecture_1790219622367.jpg",
+            videoUrl: "https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+        },
+        {
+            title: "Lumina Cellular Skincare · High-ROAS AI UGC Viral Ad",
+            category: "AI UGC VIRAL AD · 4.8X ROAS",
+            lens: "35mm Portrait Prime",
+            aspect: "9:16",
+            prompt: "Authentic selfie-angle creator testimonial, micro facial expressions, real-time lip-sync, hands-only serum droplet texture close-up, high energy TikTok hook.",
+            image: "/src/assets/images/michael_portrait_hero_1790219600904.jpg",
+            videoUrl: "https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+        },
+        {
+            title: "The Obsidian Villa · Architectural Cinematic Flythrough",
+            category: "REAL ESTATE SHOWCASE",
+            lens: "IMAX 70mm Grand-Format",
+            aspect: "2.39:1",
+            prompt: "Seamless drone fly-in through cantilevered glass facades, golden-hour ocean horizon reflections, marble acoustics, Hollywood cinematic pacing.",
+            image: "/src/assets/images/cinematic_ai_studio_1790219642646.jpg",
+            videoUrl: "https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
+        }
+    ];
+
+    // Lens button switching
+    lensBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            lensBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const lensText = btn.getAttribute('data-lens') || btn.textContent.trim();
+            if (lensNameDisplay) lensNameDisplay.textContent = lensText;
+            showNotification(`Camera Lens Switched: ${lensText}`);
+        });
+    });
+
+    // Aspect ratio switching
+    aspectPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            aspectPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            const aspect = pill.getAttribute('data-aspect');
+            if (viewportFrame) {
+                if (aspect === '2.39:1') {
+                    viewportFrame.style.aspectRatio = '21/9';
+                    viewportFrame.style.maxWidth = '100%';
+                } else if (aspect === '16:9') {
+                    viewportFrame.style.aspectRatio = '16/9';
+                    viewportFrame.style.maxWidth = '100%';
+                } else if (aspect === '9:16') {
+                    viewportFrame.style.aspectRatio = '9/16';
+                    viewportFrame.style.maxWidth = '360px';
+                }
+            }
+        });
+    });
+
+    // Scene prompt card switching
+    promptCards.forEach((card, idx) => {
+        card.addEventListener('click', () => {
+            promptCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            const data = SCENE_PRESETS[idx];
+            if (!data) return;
+
+            // Animate transition flash
+            if (viewportFrame && typeof gsap !== 'undefined') {
+                gsap.fromTo(viewportFrame, 
+                    { filter: 'brightness(1.8) contrast(1.2)' },
+                    { filter: 'brightness(1) contrast(1)', duration: 0.45, ease: 'power2.out' }
+                );
+            }
+
+            if (sceneTitleEl) sceneTitleEl.textContent = data.title;
+            if (scenePillEl) scenePillEl.textContent = data.category;
+            if (scenePromptEl) scenePromptEl.textContent = `"${data.prompt}"`;
+            if (sceneImageEl) {
+                sceneImageEl.src = data.image;
+                sceneImageEl.alt = data.title;
+            }
+            if (playBtn) {
+                playBtn.setAttribute('data-video-url', data.videoUrl);
+                playBtn.setAttribute('data-video-title', data.title);
+                playBtn.setAttribute('data-video-category', data.category);
+                playBtn.setAttribute('data-video-synopsis', data.prompt);
+            }
+
+            // Sync lens and aspect buttons
+            lensBtns.forEach(b => {
+                if (b.getAttribute('data-lens') === data.lens) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+            aspectPills.forEach(a => {
+                if (a.getAttribute('data-aspect') === data.aspect) {
+                    a.classList.add('active');
+                } else {
+                    a.classList.remove('active');
+                }
+            });
+            if (lensNameDisplay) lensNameDisplay.textContent = data.lens;
+        });
+    });
+
+    // Real-time Director Audio Waveform Canvas Visualizer
+    const audioCanvas = document.getElementById('directorAudioCanvas');
+    if (audioCanvas) {
+        const actx = audioCanvas.getContext('2d');
+        let awidth = audioCanvas.width = audioCanvas.offsetWidth || 280;
+        let aheight = audioCanvas.height = 40;
+
+        window.addEventListener('resize', () => {
+            if (audioCanvas.offsetWidth) awidth = audioCanvas.width = audioCanvas.offsetWidth;
+        });
+
+        let phase = 0;
+        function renderWaveform() {
+            actx.clearRect(0, 0, awidth, aheight);
+            actx.beginPath();
+            actx.strokeStyle = 'rgba(230, 194, 128, 0.7)';
+            actx.lineWidth = 1.5;
+
+            phase += 0.05;
+            const mid = aheight / 2;
+            const bars = 36;
+            const barWidth = awidth / bars;
+
+            for (let i = 0; i < bars; i++) {
+                const amp = (Math.sin(phase + i * 0.35) * 0.4 + Math.cos(phase * 1.5 + i * 0.2) * 0.35 + 0.5) * (mid - 4);
+                const x = i * barWidth + barWidth / 2;
+                actx.moveTo(x, mid - amp);
+                actx.lineTo(x, mid + amp);
+            }
+            actx.stroke();
+            requestAnimationFrame(renderWaveform);
+        }
+        renderWaveform();
+    }
 }
 
 // Cinematic Mandatory Scroll-Snap Navigation & Observer (Home Page)
@@ -2137,4 +2979,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initForms();
     initGsapAnimations();
     initCinematicScrollSnap();
+    initCreativeDirectorDeck();
 });
