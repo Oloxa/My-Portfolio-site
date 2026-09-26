@@ -1980,8 +1980,9 @@ function openVideoModal(url, title, category, synopsis) {
                         ${title || 'Commercial Video Asset'}
                     </h3>
                 </div>
-                <div class="aspect-video w-full rounded-xl overflow-hidden bg-black mb-4 border border-[#E6C280]/20">
+                <div id="videoModalMediaContainer" class="aspect-video w-full rounded-xl overflow-hidden bg-black mb-4 border border-[#E6C280]/20 relative">
                     <iframe id="videoModalIframe" class="w-full h-full" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video id="videoModalVideo" class="w-full h-full object-cover hidden" controls playsinline></video>
                 </div>
                 <p id="videoModalSynopsis" class="text-sm text-[#8B949E] leading-relaxed">
                     ${synopsis || ''}
@@ -1998,11 +1999,34 @@ function openVideoModal(url, title, category, synopsis) {
     const categoryEl = videoModal.querySelector('#videoModalCategory');
     const synopsisEl = videoModal.querySelector('#videoModalSynopsis');
     const iframe = videoModal.querySelector('#videoModalIframe');
+    const videoEl = videoModal.querySelector('#videoModalVideo');
 
     if (titleEl) titleEl.textContent = title;
     if (categoryEl) categoryEl.textContent = category;
     if (synopsisEl) synopsisEl.textContent = synopsis;
-    if (iframe) iframe.src = url;
+
+    const isDirectVideo = url && (url.endsWith('.mp4') || url.endsWith('.webm') || url.startsWith('/media') || url.startsWith('/xtra'));
+    if (isDirectVideo) {
+        if (iframe) {
+            iframe.src = '';
+            iframe.classList.add('hidden');
+        }
+        if (videoEl) {
+            videoEl.src = url;
+            videoEl.classList.remove('hidden');
+            videoEl.play().catch(() => {});
+        }
+    } else {
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.src = '';
+            videoEl.classList.add('hidden');
+        }
+        if (iframe) {
+            iframe.classList.remove('hidden');
+            iframe.src = url;
+        }
+    }
 
     videoModal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -2013,6 +2037,11 @@ function closeVideoModal() {
     if (!videoModal) return;
     const iframe = videoModal.querySelector('#videoModalIframe');
     if (iframe) iframe.src = '';
+    const videoEl = videoModal.querySelector('#videoModalVideo');
+    if (videoEl) {
+        videoEl.pause();
+        videoEl.src = '';
+    }
     videoModal.classList.remove('active');
     document.body.style.overflow = '';
 }
@@ -2148,6 +2177,17 @@ function initFooterSequenceNav() {
    NAVIGATION, HOVER & FORMS
    ========================================================================== */
 function initNavigation() {
+    const currentTheme = document.body ? document.body.getAttribute('data-page-theme') : '';
+    // Navigation header is only for Home (Page 1) and Leadership & Health (Page 4),
+    // strictly invisible/omitted on Web Architecture (Page 2) and Creative Space (Page 3)
+    if (currentTheme === 'web' || currentTheme === 'creative') {
+        const existingNav = document.querySelector('.mho-nav-pill-wrapper');
+        if (existingNav) existingNav.remove();
+        const existingDrawer = document.querySelector('.mho-mobile-drawer');
+        if (existingDrawer) existingDrawer.remove();
+        return;
+    }
+
     const toggleBtn = document.querySelector('.mho-mobile-toggle');
     let drawer = document.querySelector('.mho-mobile-drawer');
 
@@ -2205,6 +2245,8 @@ function initNavigation() {
 // 2. Briefly reappears on upward scroll
 // 3. Always appears and stays visible at top of page (hero section)
 function initNavbarScroll() {
+    const currentTheme = document.body ? document.body.getAttribute('data-page-theme') : '';
+    if (currentTheme === 'web' || currentTheme === 'creative') return;
     const navWrapper = document.querySelector('.mho-nav-pill-wrapper');
     if (!navWrapper) return;
 
@@ -2389,6 +2431,180 @@ function initNavigationSubmenus() {
             }
         });
     });
+}
+
+// Floating Page Sections Hamburger Navigation (Web & Creative Pages)
+// When clicked, expands horizontally into a sleek header nav menu showing section titles
+function initPageSectionsNav() {
+    const navWrapper = document.getElementById('pageSectionsNav');
+    const pill = document.getElementById('pageSectionsPill');
+    const toggleBtn = document.getElementById('sectionsMenuToggle');
+    const closeBtn = document.getElementById('sectionsMenuClose');
+    const scrollContainer = navWrapper ? navWrapper.querySelector('.sections-horizontal-scroll') : null;
+
+    if (!navWrapper || !pill || !toggleBtn) return;
+
+    const sectionLinks = navWrapper.querySelectorAll('.section-nav-link');
+
+    function openMenu() {
+        pill.classList.add('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        navWrapper.classList.remove('nav-hidden');
+        navWrapper.classList.add('nav-visible');
+
+        // Scroll active link into view in the horizontal bar
+        setTimeout(() => {
+            const activeLink = navWrapper.querySelector('.section-nav-link.active');
+            if (activeLink && scrollContainer) {
+                activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }, 150);
+    }
+
+    function closeMenu() {
+        pill.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleMenu() {
+        if (pill.classList.contains('is-open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    }
+
+    // Toggle button click
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close button click
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMenu();
+        });
+    }
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+        if (pill.classList.contains('is-open') && !pill.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && pill.classList.contains('is-open')) {
+            closeMenu();
+        }
+    });
+
+    // Smooth navigation with top offset
+    sectionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const targetId = href.substring(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elemRect = targetEl.getBoundingClientRect().top;
+                    const elemPos = elemRect - bodyRect;
+                    const targetY = elemPos - offset;
+
+                    window.scrollTo({
+                        top: targetY,
+                        behavior: 'smooth'
+                    });
+
+                    sectionLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    try {
+                        history.pushState(null, null, href);
+                    } catch (err) {}
+                }
+            }
+        });
+    });
+
+    // ScrollSpy to highlight active section in horizontal bar
+    const sectionIds = Array.from(sectionLinks).map(l => l.getAttribute('href').replace('#', '')).filter(Boolean);
+    const sectionElements = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    if (sectionElements.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    sectionLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        if (linkHref === `#${id}`) {
+                            link.classList.add('active');
+                            // If menu is open, smoothly center the active item
+                            if (pill.classList.contains('is-open') && scrollContainer) {
+                                link.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                            }
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            rootMargin: '-15% 0px -65% 0px',
+            threshold: 0.05
+        });
+
+        sectionElements.forEach(el => observer.observe(el));
+    }
+
+    // Smart Scroll behavior: hides on fast scroll down, reveals on scroll up
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    let isTicking = false;
+
+    function handleScroll() {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const delta = currentScrollY - lastScrollY;
+
+        // If open, always remain visible
+        if (pill.classList.contains('is-open')) {
+            navWrapper.classList.remove('nav-hidden');
+            navWrapper.classList.add('nav-visible');
+            lastScrollY = currentScrollY;
+            isTicking = false;
+            return;
+        }
+
+        // At very top of page: always visible
+        if (currentScrollY <= 80) {
+            navWrapper.classList.remove('nav-hidden');
+            navWrapper.classList.add('nav-visible');
+        } else if (delta > 8 && currentScrollY > 120) {
+            // Scrolling down: hide
+            navWrapper.classList.add('nav-hidden');
+            navWrapper.classList.remove('nav-visible');
+        } else if (delta < -8) {
+            // Scrolling up: reveal
+            navWrapper.classList.remove('nav-hidden');
+            navWrapper.classList.add('nav-visible');
+        }
+
+        lastScrollY = currentScrollY;
+        isTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!isTicking) {
+            window.requestAnimationFrame(handleScroll);
+            isTicking = true;
+        }
+    }, { passive: true });
 }
 
 function initAccordions() {
@@ -2621,111 +2837,297 @@ function initAboutCardHover() {
     });
 }
 
-// Card Stack Feature for Creative AI Space (Unfolds on scroll, reverses on scroll back)
-function initCardsStack() {
+// ==========================================================================
+// PREVIOUS WORKS: SCROLL-DRIVEN HORIZONTAL VIDEO PORTFOLIO SHOWCASE
+// ==========================================================================
+function initPortfolioShowcase() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    const stage = document.getElementById('cardsStackStage');
-    const stackSection = document.getElementById('video-grid');
-    if (!stage || !stackSection) return;
 
-    const cards = Array.from(stage.querySelectorAll('.stack-card'));
+    const section = document.getElementById('video-grid');
+    const track = document.getElementById('portfolioTrack');
+    const viewport = document.getElementById('portfolioStageViewport');
+    if (!section || !track || !viewport) return;
+
+    const cards = Array.from(track.querySelectorAll('.portfolio-card'));
     if (cards.length === 0) return;
 
     const total = cards.length;
-    const badgeNum = document.getElementById('stackActiveCardNum');
+    const activeIndexEl = document.getElementById('portfolioActiveIndex');
+    const totalCountEl = document.getElementById('portfolioTotalCount');
+    const progressBarEl = document.getElementById('portfolioProgressBar');
+    const prevBtn = document.getElementById('portfolioPrevBtn');
+    const nextBtn = document.getElementById('portfolioNextBtn');
+    const audioToggleBtn = document.getElementById('portfolioAudioToggle');
+    const audioIcon = document.getElementById('portfolioAudioIcon');
+    const audioLabel = document.getElementById('portfolioAudioLabel');
 
-    // 1. Initial Stacked Appearance: cards visibly stacked on top of one another!
-    cards.forEach((card, i) => {
-        gsap.set(card, {
-            zIndex: total - i,
-            scale: 1 - i * 0.035,
-            y: i * 16,
-            rotation: (i % 2 === 0 ? 1 : -1) * (i * 1.2),
-            opacity: 1 - i * 0.08,
-            transformOrigin: 'center bottom'
+    if (totalCountEl) {
+        totalCountEl.textContent = String(total).padStart(2, '0');
+    }
+
+    // Audio Mute State (default muted for seamless browser autoplay compliance)
+    let isAudioMuted = true;
+    if (audioToggleBtn) {
+        audioToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isAudioMuted = !isAudioMuted;
+            if (audioIcon) {
+                audioIcon.className = isAudioMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up text-[#E6C280]';
+            }
+            if (audioLabel) {
+                audioLabel.innerHTML = isAudioMuted 
+                    ? 'SOUND OFF' 
+                    : '<span class="flex items-center gap-1">SOUND ON <span class="audio-bar-anim"></span><span class="audio-bar-anim"></span><span class="audio-bar-anim"></span></span>';
+            }
+            // Update audio state on all card videos
+            cards.forEach(card => {
+                const vid = card.querySelector('video');
+                if (vid) vid.muted = isAudioMuted;
+            });
         });
+    }
+
+    // Initialize all card video elements
+    cards.forEach(card => {
+        const vid = card.querySelector('video');
+        if (vid) {
+            vid.muted = isAudioMuted;
+            vid.playsInline = true;
+            vid.setAttribute('playsinline', '');
+            vid.setAttribute('webkit-playsinline', '');
+            vid.loop = true;
+            vid.preload = 'metadata';
+            vid.controls = false;
+        }
     });
 
-    // 2. ScrollTrigger scrubbing timeline - pinned sequence
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: stackSection,
-            start: 'top top+=20',
-            end: `+=${total * 550}`,
-            pin: true,
-            scrub: 0.8,
-            anticipatePin: 1,
-            onUpdate: (self) => {
-                const progress = self.progress;
-                const activeIndex = Math.min(total - 1, Math.floor(progress * total));
-                if (badgeNum) {
-                    badgeNum.textContent = (activeIndex + 1);
+    // Handle Reduced Motion Preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        cards.forEach((card) => {
+            gsap.set(card, { scale: 1, opacity: 1, clearProps: 'transform' });
+            const vid = card.querySelector('video');
+            if (vid) vid.controls = true;
+        });
+        return;
+    }
+
+    // Function to calculate exact horizontal track translation to center Card `idx`
+    function getCardCenterOffset(idx) {
+        if (!cards[idx] || !viewport) return 0;
+        const viewportWidth = viewport.clientWidth;
+        const card = cards[idx];
+        const cardLeft = card.offsetLeft;
+        const cardWidth = card.offsetWidth;
+        return (viewportWidth / 2) - cardLeft - (cardWidth / 2);
+    }
+
+    let activeCardIndex = -1;
+
+    // Helper: Synchronize Video Playback (Strictly ONE video playing at any time)
+    function syncVideoPlayback(targetIdx) {
+        cards.forEach((card, idx) => {
+            const vid = card.querySelector('video');
+            if (!vid) return;
+
+            if (idx === targetIdx) {
+                card.classList.add('is-active');
+                vid.muted = isAudioMuted;
+
+                if (vid.paused) {
+                    const playPromise = vid.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            // Autoplay policies handled gracefully without console noise
+                        });
+                    }
+                }
+            } else {
+                card.classList.remove('is-active');
+                if (!vid.paused) {
+                    vid.pause();
+                }
+            }
+        });
+    }
+
+    function pauseAllCardVideos() {
+        cards.forEach(card => {
+            card.classList.remove('is-active');
+            const vid = card.querySelector('video');
+            if (vid && !vid.paused) {
+                vid.pause();
+            }
+        });
+    }
+
+    // Dynamic Center Detection & Card Transformation
+    function updateCardTransformations() {
+        const viewportRect = viewport.getBoundingClientRect();
+        const viewportCenter = viewportRect.left + viewportRect.width / 2;
+        const maxDist = Math.max(viewportRect.width * 0.55, 300);
+
+        let closestIdx = 0;
+        let minDiff = Infinity;
+
+        cards.forEach((card, idx) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const diff = Math.abs(cardCenter - viewportCenter);
+
+            // Calculate normalized distance (0 = dead center, 1 = boundary)
+            const norm = Math.min(1, diff / maxDist);
+
+            // Cinematic visual interpolation:
+            // Center card: scale 1.0, opacity 1.0, top elevation
+            // Side cards: scale ~0.84, opacity ~0.55
+            const scale = 1 - norm * 0.16;
+            const opacity = 1 - norm * 0.45;
+            const zIndex = Math.round(100 - norm * 50);
+
+            gsap.set(card, {
+                scale: scale,
+                opacity: opacity,
+                zIndex: zIndex,
+                transformOrigin: 'center center'
+            });
+
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestIdx = idx;
+            }
+        });
+
+        // Trigger active change when center card shifts
+        if (closestIdx !== activeCardIndex) {
+            activeCardIndex = closestIdx;
+            if (activeIndexEl) {
+                activeIndexEl.textContent = String(activeCardIndex + 1).padStart(2, '0');
+            }
+            syncVideoPlayback(activeCardIndex);
+        }
+    }
+
+    // Initial position setup: Center Card 0
+    gsap.set(track, { x: getCardCenterOffset(0) });
+    updateCardTransformations();
+
+    // ScrollTrigger Pinned Scrub Animation
+    ScrollTrigger.create({
+        id: 'portfolioScrollTrigger',
+        trigger: section,
+        pin: true,
+        start: 'top top',
+        end: () => `+=${(total - 1) * Math.max(window.innerHeight * 0.95, 750)}`,
+        scrub: 0.8, // Smooth physical inertia scrub
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+            const progress = self.progress;
+
+            // Interpolate track horizontal translation from Card 0 center to Card (total-1) center
+            const startX = getCardCenterOffset(0);
+            const endX = getCardCenterOffset(total - 1);
+            const targetX = startX + (endX - startX) * progress;
+
+            gsap.set(track, { x: targetX });
+
+            // Update scrub progress bar
+            if (progressBarEl) {
+                const pct = Math.max(16.6, progress * 100);
+                progressBarEl.style.width = `${pct}%`;
+            }
+
+            // Real-time dynamic center detection and card depth scaling
+            updateCardTransformations();
+        },
+        onLeave: () => {
+            // Unpinned - scrolled past section
+            pauseAllCardVideos();
+        },
+        onLeaveBack: () => {
+            // Unpinned - scrolled above section
+            pauseAllCardVideos();
+        },
+        onEnter: () => {
+            // Entering from above
+            updateCardTransformations();
+        },
+        onEnterBack: () => {
+            // Entering from below (natural reverse entry)
+            updateCardTransformations();
+        }
+    });
+
+    // Programmatic Scroll to Card
+    function scrollToCard(targetIdx) {
+        const clamped = Math.max(0, Math.min(total - 1, targetIdx));
+        const st = ScrollTrigger.getById('portfolioScrollTrigger');
+        if (!st) return;
+
+        const targetProgress = clamped / (total - 1);
+        const targetScrollY = st.start + (st.end - st.start) * targetProgress;
+        window.scrollTo({
+            top: targetScrollY,
+            behavior: 'smooth'
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToCard(activeCardIndex - 1);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToCard(activeCardIndex + 1);
+        });
+    }
+
+    // Keyboard Arrow Keys (Left / Right) support when section is visible
+    window.addEventListener('keydown', (e) => {
+        const st = ScrollTrigger.getById('portfolioScrollTrigger');
+        if (!st) return;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                if (activeCardIndex < total - 1) {
+                    e.preventDefault();
+                    scrollToCard(activeCardIndex + 1);
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                if (activeCardIndex > 0) {
+                    e.preventDefault();
+                    scrollToCard(activeCardIndex - 1);
                 }
             }
         }
     });
 
-    // 3. Sequential card unfolding
-    for (let i = 0; i < total - 1; i++) {
-        tl.to(cards[i], {
-            y: -140,
-            opacity: 0,
-            scale: 1.05,
-            rotation: i % 2 === 0 ? -6 : 6,
-            duration: 1,
-            ease: 'power2.inOut'
-        }, i);
-
-        for (let j = i + 1; j < total; j++) {
-            const pos = j - (i + 1);
-            tl.to(cards[j], {
-                scale: 1 - pos * 0.035,
-                y: pos * 16,
-                rotation: (pos % 2 === 0 ? 1 : -1) * (pos * 1.2),
-                opacity: 1 - pos * 0.08,
-                duration: 1,
-                ease: 'power2.inOut'
-            }, i);
-        }
-    }
-
-    // 4. Chevron controls for jumping cards in stack
-    const prevBtn = document.getElementById('stackPrevBtn');
-    const nextBtn = document.getElementById('stackNextBtn');
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            const st = tl.scrollTrigger;
-            if (st) {
-                const nextProgress = Math.min(1, st.progress + (1 / (total - 1)));
-                const targetY = st.start + (st.end - st.start) * nextProgress;
-                window.scrollTo({ top: targetY, behavior: 'smooth' });
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            const st = tl.scrollTrigger;
-            if (st) {
-                const prevProgress = Math.max(0, st.progress - (1 / (total - 1)));
-                const targetY = st.start + (st.end - st.start) * prevProgress;
-                window.scrollTo({ top: targetY, behavior: 'smooth' });
-            }
-        });
-    }
-
-    // Delegate click to open modal for each card
-    cards.forEach(card => {
+    // Click on Card or Action Button opens Full Video Modal
+    cards.forEach((card) => {
         card.addEventListener('click', (e) => {
-            if (e.target.closest('button') || e.target.closest('a')) return;
-            const embedUrl = card.getAttribute('data-video-url') || 'https://www.youtube.com/embed/sECemgPYcFg?autoplay=1';
-            const title = card.getAttribute('data-video-title') || 'Featured Commercial Video';
-            const category = card.getAttribute('data-video-category') || 'Production Cut';
-            const synopsis = card.getAttribute('data-video-synopsis') || 'Full production reel.';
-            openVideoModal(embedUrl, title, category, synopsis);
+            if (e.target.closest('#portfolioAudioToggle') || e.target.closest('#portfolioPrevBtn') || e.target.closest('#portfolioNextBtn')) return;
+            const videoUrl = card.getAttribute('data-video-url') || '';
+            const title = card.getAttribute('data-video-title') || 'Featured AI Production';
+            const category = card.getAttribute('data-video-category') || 'AI Cinematic';
+            const synopsis = card.getAttribute('data-video-synopsis') || '';
+            openVideoModal(videoUrl, title, category, synopsis);
         });
     });
+
+    // Window Resize / Orientation Change Handler
+    window.addEventListener('resize', () => {
+        ScrollTrigger.refresh();
+        updateCardTransformations();
+    });
+}
+
+function initCardsStack() {
+    initPortfolioShowcase();
 }
 
 // Creative AI Space: Virtual Director Studio & Viewfinder Interactivity
@@ -2781,7 +3183,7 @@ function initCreativeDirectorDeck() {
             lens: "35mm Portrait Prime",
             aspect: "9:16",
             prompt: "Authentic selfie-angle creator testimonial, micro facial expressions, real-time lip-sync, hands-only serum droplet texture close-up, high energy TikTok hook.",
-            image: "/src/assets/images/michael_portrait_hero_1790219600904.jpg",
+            image: "https://res.cloudinary.com/iscdlbxg/image/upload/v1790332667/profile_pixx.jpg",
             videoUrl: "https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
         },
         {
@@ -2960,6 +3362,178 @@ function initCinematicScrollSnap() {
     snapSections.forEach(section => observer.observe(section));
 }
 
+/* ==========================================================================
+   VIDEO COMPONENTS INTERSECTION OBSERVER (Auto-play on Scroll into Viewport)
+   ========================================================================== */
+function initVideoAutoplayObserver() {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+
+    // 1. Observe all HTML5 video elements (card videos, background reels, showcase videos)
+    const videoElements = document.querySelectorAll('video, .portfolio-card-video, [data-autoplay-video]');
+
+    if (videoElements.length > 0) {
+        const videoObserverOptions = {
+            root: null,
+            rootMargin: '0px 0px -40px 0px',
+            threshold: [0, 0.25, 0.5]
+        };
+
+        const html5VideoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                // Auto-play when video scrolls into view (at least 25% visible)
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+                    // Browser autoplay requirements: muted and playsinline
+                    video.muted = true;
+                    video.setAttribute('playsinline', '');
+                    video.setAttribute('webkit-playsinline', '');
+                    
+                    if (video.paused) {
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                // Silently handle autoplay prevention or abort errors
+                            });
+                        }
+                    }
+                } else if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
+                    // Automatically pause when scrolled out of viewport to preserve resources
+                    if (!video.paused) {
+                        video.pause();
+                    }
+                }
+            });
+        }, videoObserverOptions);
+
+        videoElements.forEach(video => {
+            // Guarantee baseline attributes for mobile & desktop autoplay compliance
+            video.muted = true;
+            video.playsInline = true;
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+            html5VideoObserver.observe(video);
+        });
+    }
+
+    // 2. Observe iframe video components (e.g., YouTube / Vimeo intro-video containers)
+    const introVideoContainers = document.querySelectorAll('.mho-intro-video-container');
+    if (introVideoContainers.length > 0) {
+        const iframeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const container = entry.target;
+                const iframe = container.querySelector('iframe');
+                if (!iframe || !iframe.contentWindow) return;
+
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                    try {
+                        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'mute', args: [] }), '*');
+                        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
+                    } catch (e) {}
+                } else if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
+                    try {
+                        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
+                    } catch (e) {}
+                }
+            });
+        }, { threshold: [0, 0.3] });
+
+        introVideoContainers.forEach(container => iframeObserver.observe(container));
+    }
+}
+
+/* ==========================================================================
+   HOME PAGE INTERACTIVE MEDIA TOUCHPOINTS & CINE-BENTO HANDLERS
+   ========================================================================== */
+function initHomeMediaTouchpoints() {
+    // 1. Generic video modal triggers (.trigger-video-modal)
+    const modalTriggers = document.querySelectorAll('.trigger-video-modal');
+    modalTriggers.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const url = btn.getAttribute('data-video-url') || '/media/service-anim-1.mp4';
+            const title = btn.getAttribute('data-video-title') || 'Featured Production Reel';
+            const category = btn.getAttribute('data-video-category') || 'Visual Production';
+            const synopsis = btn.getAttribute('data-video-synopsis') || '';
+            openVideoModal(url, title, category, synopsis);
+        });
+    });
+
+    // 2. Bento Card Audio Toggle Buttons (.bento-sound-btn)
+    const soundButtons = document.querySelectorAll('.bento-sound-btn');
+    soundButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = btn.closest('.media-bento-card') || btn.parentElement;
+            if (!card) return;
+            const video = card.querySelector('video');
+            if (!video) return;
+
+            const willMute = !video.muted;
+            // If unmuting, mute all other videos on the page for single audio focus
+            if (!willMute) {
+                document.querySelectorAll('video').forEach(v => {
+                    if (v !== video) v.muted = true;
+                });
+                soundButtons.forEach(b => {
+                    if (b !== btn) {
+                        const icon = b.querySelector('i');
+                        if (icon) icon.className = 'fas fa-volume-mute';
+                    }
+                });
+            }
+
+            video.muted = willMute;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.className = willMute ? 'fas fa-volume-mute' : 'fas fa-volume-up text-[#E6C280]';
+            }
+        });
+    });
+
+    // 3. Intro Video 4-Chapter Dock Switching
+    const chapterButtons = document.querySelectorAll('#introChapterDock .chapter-dock-item');
+    const iframe = document.getElementById('pageIntroVideoIframe');
+    chapterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            chapterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const videoUrl = btn.getAttribute('data-video-url');
+            const videoTitle = btn.getAttribute('data-video-title');
+            const category = btn.getAttribute('data-category');
+            const synopsis = btn.getAttribute('data-synopsis');
+
+            if (videoUrl) {
+                if (videoUrl.includes('youtube.com')) {
+                    if (iframe) iframe.src = videoUrl;
+                } else {
+                    // For MP4/WebM videos, launch the full-resolution modal directly
+                    openVideoModal(videoUrl, videoTitle, category, synopsis);
+                }
+            }
+        });
+    });
+
+    // 4. Discipline Segmented Switcher Buttons
+    const disciplineTabs = document.querySelectorAll('.discipline-tab-btn');
+    disciplineTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            disciplineTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-target');
+            if (target) {
+                const el = document.querySelector(target);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+}
+
 // DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
     initPreloader();
@@ -2968,6 +3542,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initNavigation();
     initNavigationSubmenus();
+    initPageSectionsNav();
+    initVideoAutoplayObserver();
+    initHomeMediaTouchpoints();
     init3DTilt();
     initFloatingContactSidebar();
     initIntroVideoPlayer();

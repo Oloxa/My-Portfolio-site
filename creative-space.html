@@ -217,248 +217,68 @@
         <i class="fas fa-address-book"></i>
     </button>
 
-    <!-- FLOATING ISLAND NAVIGATION -->
-    <header class="mho-nav-pill-wrapper" role="banner">
-        <div class="mho-nav-pill">
-            <a href="index.html" class="mho-brand-mark">
-                HODM <span class="brand-sub hidden sm:inline">· H.O. Damilare Michael</span>
-            </a>
+    <!-- FLOATING SECTIONS HAMBURGER HEADER NAV -->
+    <nav class="page-sections-nav-wrapper" id="pageSectionsNav" aria-label="Page Sections Navigation">
+        <div class="page-sections-pill" id="pageSectionsPill">
+            <!-- Hamburger Toggle Trigger -->
+            <button id="sectionsMenuToggle" type="button" class="sections-hamburger-btn" aria-expanded="false" aria-controls="sectionsHorizontalMenu" aria-label="Toggle Navigation Menu">
+                <span class="hamburger-icon-wrap" aria-hidden="true">
+                    <span class="ham-bar ham-bar-1"></span>
+                    <span class="ham-bar ham-bar-2"></span>
+                    <span class="ham-bar ham-bar-3"></span>
+                </span>
+                <span class="sections-btn-label">Menu</span>
+                <span class="sections-badge-count">7</span>
+                <i class="fas fa-chevron-right sections-btn-arrow" aria-hidden="true"></i>
+            </button>
 
-            <nav class="mho-nav-links" aria-label="Main Navigation">
-                <!-- 01: Home & Bio -->
-                <div class="mho-nav-item">
-                    <a href="index.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Home &amp; Bio</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+            <!-- Horizontal Section Nav Menu (revealed when clicked) -->
+            <div id="sectionsHorizontalMenu" class="sections-horizontal-menu">
+                <div class="sections-horizontal-scroll" role="menubar">
+                    <!-- Horizontal Section Titles -->
+                    <a href="#hero" class="section-nav-link active" role="menuitem" data-section="hero">
+                        <span class="section-num">01</span>
+                        <span>Director Suite</span>
                     </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>01 // Home Navigation</span>
-                            <i class="fas fa-compass text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="index.html#hero" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-user-tie"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Bio &amp; Vision</span>
-                                <span class="mho-submenu-desc">Multidisciplinary Profile &amp; Bio</span>
-                            </div>
-                        </a>
-                        <a href="index.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Director Statement</span>
-                                <span class="mho-submenu-desc">Personal Intro Video Briefing</span>
-                            </div>
-                        </a>
-                        <a href="index.html#metrics" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-chart-line"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Impact &amp; Metrics</span>
-                                <span class="mho-submenu-desc">Enterprise Telemetry &amp; Velocity</span>
-                            </div>
-                        </a>
-                        <a href="index.html#philosophy" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-lightbulb"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Core Philosophy</span>
-                                <span class="mho-submenu-desc">Foundational Operating Pillars</span>
-                            </div>
-                        </a>
-                        <a href="index.html#timeline" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-history"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Career Milestones</span>
-                                <span class="mho-submenu-desc">Key Career Trajectory</span>
-                            </div>
-                        </a>
-                        <a href="index.html#contact" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-paper-plane"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Direct Connect</span>
-                                <span class="mho-submenu-desc">Confidential Consultation Form</span>
-                            </div>
-                        </a>
-                    </div>
+                    <a href="#intro-video" class="section-nav-link" role="menuitem" data-section="intro-video">
+                        <span class="section-num">02</span>
+                        <span>Director Brief</span>
+                    </a>
+                    <a href="#creative-sectors" class="section-nav-link" role="menuitem" data-section="creative-sectors">
+                        <span class="section-num">03</span>
+                        <span>Creative Sectors</span>
+                    </a>
+                    <a href="#video-grid" class="section-nav-link" role="menuitem" data-section="video-grid">
+                        <span class="section-num">04</span>
+                        <span>Visual Reel</span>
+                    </a>
+                    <a href="#workflow-stack" class="section-nav-link" role="menuitem" data-section="workflow-stack">
+                        <span class="section-num">05</span>
+                        <span>Production Engine</span>
+                    </a>
+                    <a href="#faq" class="section-nav-link" role="menuitem" data-section="faq">
+                        <span class="section-num">06</span>
+                        <span>Studio FAQ</span>
+                    </a>
+                    <a href="#contact-creative" class="section-nav-link" role="menuitem" data-section="contact-creative">
+                        <span class="section-num">07</span>
+                        <span>Commission</span>
+                    </a>
                 </div>
 
-                <!-- 02: Web Architecture -->
-                <div class="mho-nav-item">
-                    <a href="web-services.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Web Architecture</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>02 // Web Engineering</span>
-                            <i class="fas fa-code text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="web-services.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Engineering Philosophy</span>
-                                <span class="mho-submenu-desc">Architecture Overview Video</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#dual-carousels" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-layer-group"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Dual Motion Showcase</span>
-                                <span class="mho-submenu-desc">Bi-Directional Interactive Stream</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#paginated-portfolio" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-th"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Systems Portfolio</span>
-                                <span class="mho-submenu-desc">7-Project Paginated Grid &amp; Modals</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#services-matrix" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-cubes"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Core Capabilities</span>
-                                <span class="mho-submenu-desc">Full-Stack, UI/UX &amp; Engineering</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#contact-tech" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-terminal"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Engineering Inquiry</span>
-                                <span class="mho-submenu-desc">Commission Custom Web Systems</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 03: Creative AI Space -->
-                <div class="mho-nav-item">
-                    <a href="creative-space.html" class="mho-nav-link active" aria-haspopup="true">
-                        <span>Creative AI Space</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>03 // AI &amp; 3D Video</span>
-                            <i class="fas fa-film text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="creative-space.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Creative Director Reel</span>
-                                <span class="mho-submenu-desc">Personal Production Statement</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#creative-sectors" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-vr-cardboard"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Production Disciplines</span>
-                                <span class="mho-submenu-desc">UGC, 3D Commercials &amp; SaaS Ads</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#video-grid" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-video"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Streaming Showcase</span>
-                                <span class="mho-submenu-desc">Interactive Modal Video Library</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#workflow-stack" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-wand-magic-sparkles"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Pipeline &amp; Tooling</span>
-                                <span class="mho-submenu-desc">Veo, Kling, Midjourney &amp; Compositing</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#contact-creative" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-clapperboard"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Commission AI Video</span>
-                                <span class="mho-submenu-desc">Initiate Campaign Briefing</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 04: Leadership & Health -->
-                <div class="mho-nav-item">
-                    <a href="leadership-business.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Leadership &amp; Health</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>04 // Leadership &amp; Vitality</span>
-                            <i class="fas fa-heartbeat text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="leadership-business.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Briefing</span>
-                                <span class="mho-submenu-desc">Leadership &amp; Vitality Video</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#leadership-pillars" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-sitemap"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Duplication Architecture</span>
-                                <span class="mho-submenu-desc">Scalable Network Leadership Systems</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#supplements" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-capsules"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Cellular Health &amp; NAD+</span>
-                                <span class="mho-submenu-desc">Mitochondrial Longevity Protocols</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#ecosystem-model" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-project-diagram"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Strategic Growth Model</span>
-                                <span class="mho-submenu-desc">Distributor Scaling Blueprint</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#contact-leadership" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-handshake"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Consultation</span>
-                                <span class="mho-submenu-desc">Mentorship &amp; Health Inquiries</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="flex items-center gap-2.5">
-                <a href="#contact-creative" class="mho-nav-cta">
-                    Commission Video
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </a>
-                <button class="mho-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <!-- Close Button -->
+                <button id="sectionsMenuClose" type="button" class="sections-close-btn" aria-label="Collapse Section Menu">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
-    </header>
-
-    <!-- MOBILE DRAWER -->
-    <div class="mho-mobile-drawer" role="dialog" aria-label="Mobile Menu">
-        <a href="index.html">01 // Home &amp; Biography</a>
-        <a href="web-services.html">02 // Web Architecture</a>
-        <a href="creative-space.html" class="active">03 // Creative AI Space</a>
-        <a href="leadership-business.html">04 // Leadership &amp; Health</a>
-        <div class="pt-2">
-            <a href="#contact-creative" class="mho-nav-cta justify-center w-full">
-                Commission Video &nbsp;<i class="fas fa-video"></i>
-            </a>
-        </div>
-    </div>
+    </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow pt-28 pb-16 relative z-10">
+    <main class="flex-grow pt-20 sm:pt-24 pb-16 relative z-10">
 
         <!-- 1. CREATIVE AI HERO SECTION: VIRTUAL DIRECTOR SUITE & LATENT VIEWFINDER -->
-        <section class="relative min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-6 pb-20 overflow-hidden">
+        <section id="hero" class="relative min-h-[90vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-6 pb-20 overflow-hidden">
             <!-- Full-Page Dynamic Lunar Illumination Layer -->
             <div id="creativePageIllumination" class="creative-page-illumination" aria-hidden="true"></div>
 
@@ -683,7 +503,7 @@
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-4 hero-fade-in">
                     <a href="#video-grid" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#E6C280] text-[#0D0F12] font-bold text-sm hover:bg-[#FFF3CD] hover:shadow-[0_0_25px_rgba(230,194,128,0.5)] transition-all">
                         <i class="fas fa-layer-group"></i>
-                        <span>Inspect 6-Reel Card Stack</span>
+                        <span>Inspect Featured Works</span>
                     </a>
                     <a href="#contact-creative" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#161B22]/90 hover:bg-[#1C2128] border border-[rgba(245,230,200,0.2)] text-[#F5E6C8] font-semibold text-sm transition-all hover:border-[#E6C280]">
                         <i class="fas fa-paper-plane text-[#E6C280]"></i>
@@ -828,335 +648,459 @@
             </div>
         </section>
 
-        <!-- 3. INTERACTIVE VIDEO CARD STACK: PREVIOUS WORKS (UNFOLD ON SCROLL, REVERSE ON SCROLL BACK) -->
-        <section id="video-grid" class="cards-stack-section relative py-20 border-t border-[rgba(245,230,200,0.08)]">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div>
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12161A]/85 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3">
-                            <i class="fas fa-layer-group text-[#FFF3CD]"></i>
-                            <span>INTERACTIVE SCROLL CARD STACK // 6 PRODUCTION CUTS</span>
-                        </div>
-                        <h2 class="text-3xl sm:text-4xl font-bold font-display text-[#F5E6C8]">
-                            Previous Works: Cinematic AI Showcase
-                        </h2>
-                        <p class="text-xs sm:text-sm text-[#A0AEC0] mt-1 max-w-xl">
-                            Visually stacked video reels spanning UGC ads, 3D commercials, SaaS walkthroughs &amp; cinematic trailers. Scroll down to unfold each card into full focus; scroll up to fold them back into the stack.
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span id="stackCounterBadge" class="text-xs font-mono text-[#E6C280] px-3.5 py-1.5 rounded-full bg-[#12161A] border border-[#E6C280]/30 shadow-lg">
-                            Card <span id="stackActiveCardNum">1</span> of 6
-                        </span>
-                        <div class="flex items-center gap-1.5">
-                            <button id="stackPrevBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/25 text-[#E6C280] hover:bg-[#E6C280]/20 flex items-center justify-center text-xs transition-colors" title="Previous Stacked Card">
-                                <i class="fas fa-chevron-up"></i>
-                            </button>
-                            <button id="stackNextBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/25 text-[#E6C280] hover:bg-[#E6C280]/20 flex items-center justify-center text-xs transition-colors" title="Next Stacked Card">
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- 3. INTERACTIVE HORIZONTAL VIDEO PORTFOLIO: PREVIOUS WORKS (SCROLL-DRIVEN GSAP HORIZONTAL PINNED SHOWCASE) -->
+        <section id="video-grid" class="portfolio-showcase-section relative bg-[#0D0F12] border-t border-[rgba(245,230,200,0.08)] overflow-hidden">
+            <!-- Studio Ambient Horizon Lighting -->
+            <div class="portfolio-stage-glow pointer-events-none" aria-hidden="true"></div>
 
-            <!-- Card Stack Pinned Stage Area -->
-            <div id="cardsStackWrapper" class="cards-stack-pinned-wrapper max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div id="cardsStackStage" class="cards-stack-stage">
-                    <!-- Stack Card 1: AI UGC Viral Ad -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="0"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="Lumina Cellular Skincare — AI UGC Viral Ad"
-                         data-video-category="AI UGC Commercial"
-                         data-video-synopsis="Natural UGC creator pacing, synthetic talking avatar with lip-sync, hands-only bottle textures, and dynamic problem-solution hook.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="AI UGC Beauty Ad Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 01 // AI UGC AD · 4.8X ROAS
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    00:30
-                                </div>
+            <!-- Pinned Viewport Container -->
+            <div id="portfolioPinnedContainer" class="portfolio-pinned-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex flex-col justify-between">
+                
+                <!-- SECTION INTRO & HEADER (INSPIRED BY REFERENCE IMAGE) -->
+                <div class="portfolio-header-strip mb-4 sm:mb-6">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <!-- Left Heading & Supporting Copy -->
+                        <div class="max-w-2xl">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12161A]/90 border border-[#E6C280]/25 text-xs font-mono text-[#E6C280] mb-3 shadow-md backdrop-blur-md">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#E6C280] animate-pulse"></span>
+                                <span>FEATURED PROJECTS // SELECTED PREVIOUS WORKS</span>
                             </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 01 / 06</span>
-                                        <span>DTC &amp; E-COMMERCE</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        Lumina Cellular Skincare — AI UGC Viral Ad
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        Engineered for high-converting TikTok and Meta advertising funnels. Combines realistic synthetic creator avatars, authentic conversational pacing, micro-expressions, texture close-ups, and an immediate 3-second hook.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Veo 2</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Kling AI</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">After Effects</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-[#F5E6C8] tracking-tight leading-tight">
+                                Ideas into <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#E6C280] via-[#FFF3CD] to-[#F0C05A]">Stunning Visuals.</span>
+                            </h2>
+                            <p class="text-xs sm:text-sm text-[#A0AEC0] mt-2.5 leading-relaxed">
+                                Explore a collection of AI-powered visual projects crafted with creativity, precision and a vision for the future. Scroll down to glide forward through each production; scroll up to reverse smoothly.
+                            </p>
+                            <div class="mt-4 flex items-center gap-3">
+                                <a href="#contact-creative" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-transparent hover:bg-[#E6C280]/15 border border-[#E6C280]/40 hover:border-[#E6C280] text-[#F5E6C8] text-xs font-semibold tracking-wider uppercase transition-all duration-300">
+                                    <span>VIEW ALL PROJECTS</span>
+                                    <i class="fas fa-arrow-right text-[10px] text-[#E6C280]"></i>
+                                </a>
+                                <span class="text-[11px] font-mono text-[#8B949E] hidden sm:inline flex items-center gap-1.5">
+                                    <i class="fas fa-mouse text-[#E6C280]"></i> Vertical scroll drives film reel
+                                </span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Stack Card 2: 3D AI Product Commercial -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="1"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="Aura Luxury Chronograph — 3D AI Product Commercial"
-                         data-video-category="3D Hybrid Commercial"
-                         data-video-synopsis="Seamless combination of Blender CAD geometry, metallic raytracing, and Runway Gen-3 atmospheric dust particles and lighting.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Luxury Chronograph Commercial Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 02 // 3D PRODUCT COMMERCIAL
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    00:45
-                                </div>
-                            </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 02 / 06</span>
-                                        <span>LUXURY PRODUCT LAUNCH</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        Aura Titanium Watch — 3D AI Commercial
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        High-end horology visualization uniting CAD mesh modeling in Blender with generative particle atmosphere in Gen-3. Micro gear teeth rotation, sapphire glass refraction, and studio cinematic lighting.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Blender 3D</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Midjourney</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Runway Gen-3</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Right Controls & Active Project Indicator -->
+                        <div class="flex flex-col items-start lg:items-end gap-3 shrink-0">
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <!-- Active Project Number Badge -->
+                                <span class="text-xs font-mono text-[#E6C280] px-3.5 py-1.5 rounded-full bg-[#12161A] border border-[#E6C280]/30 shadow-lg flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    <span>REEL <strong id="portfolioActiveIndex" class="text-[#FFF3CD]">01</strong> / <span id="portfolioTotalCount">06</span></span>
+                                </span>
 
-                    <!-- Stack Card 3: SaaS Platform Explainer -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="2"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="Synthetix Cloud — SaaS Product Interface Explainer"
-                         data-video-category="SaaS Product Launch"
-                         data-video-synopsis="Turns dense analytics metrics into clear kinetic motion sequences, interface 3D tilts, and authoritative voiceover.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="SaaS Video Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 03 // SAAS MOTION EXPLAINER
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    01:15
-                                </div>
-                            </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 03 / 06</span>
-                                        <span>B2B ENTERPRISE SOFTWARE</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        Synthetix Cloud — SaaS Platform Launch
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        Deconstructs intricate cloud dashboards into kinetic 3D isometric perspectives with synced neural narration. Designed to shorten enterprise sales cycles and convert prospective CTO buyers.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Figma Motion</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">After Effects</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">ElevenLabs</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- Sound Mute / Unmute Toggle -->
+                                <button id="portfolioAudioToggle" type="button" class="px-3.5 py-1.5 rounded-full bg-[#12161A] border border-[#E6C280]/30 text-xs font-mono text-[#E6C280] hover:border-[#E6C280] hover:bg-[#E6C280]/15 flex items-center gap-1.5 transition-all shadow-md" title="Toggle Video Audio" aria-label="Toggle Audio">
+                                    <i class="fas fa-volume-mute" id="portfolioAudioIcon"></i>
+                                    <span id="portfolioAudioLabel">SOUND OFF</span>
+                                </button>
 
-                    <!-- Stack Card 4: Luxury Architectural Walkthrough -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="3"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="The Obsidian Villa — Real Estate Cinematic Walkthrough"
-                         data-video-category="Architectural Walkthrough"
-                         data-video-synopsis="Cinematic camera moves through architectural blueprints, interior golden-hour sunlight simulation, and spatial sound design.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/cinematic_ai_studio_1790219642646.jpg" alt="Real Estate Walkthrough Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 04 // ARCHITECTURAL FLYTHROUGH
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    01:30
+                                <!-- Navigation Jump Buttons (Inspired by reference image arrows) -->
+                                <div class="flex items-center gap-1.5">
+                                    <button id="portfolioPrevBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/30 text-[#E6C280] hover:bg-[#E6C280] hover:text-[#0D0F12] flex items-center justify-center text-xs transition-all shadow-md active:scale-95" title="Previous Project (or Scroll Up)" aria-label="Previous Project">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </button>
+                                    <button id="portfolioNextBtn" type="button" class="w-9 h-9 rounded-full bg-[#12161A] border border-[#E6C280]/30 text-[#E6C280] hover:bg-[#E6C280] hover:text-[#0D0F12] flex items-center justify-center text-xs transition-all shadow-md active:scale-95" title="Next Project (or Scroll Down)" aria-label="Next Project">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 04 / 06</span>
-                                        <span>HIGH-END REAL ESTATE</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        The Obsidian Villa — Luxury Property Tour
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        Seamless drone fly-ins transitioning into luxurious marble interiors, floor-to-ceiling glass daylight simulations, and acoustic spatial reverbs calibrated for multi-million dollar real estate marketing.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Hailuo Minimax</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Kling 1.5</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Premiere Pro</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Stack Card 5: Narrative Cinematic Film Trailer -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="4"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="Echoes of Andromeda — Sci-Fi Book Trailer"
-                         data-video-category="Narrative Film Trailer"
-                         data-video-synopsis="Epic scale space environments, coherent character faces across multiple emotional states, dramatic orchestral pacing.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/web_tech_architecture_1790219622367.jpg" alt="Narrative Film Trailer Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 05 // CINEMATIC FILM TRAILER
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    02:00
-                                </div>
-                            </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 05 / 06</span>
-                                        <span>AUTHORS &amp; ENTERTAINMENT</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        Echoes of Andromeda — Novel Cinematic Trailer
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        Atmospheric world-building featuring interstellar wreckage, volumetric nebulae, and facial character continuity maintained across dynamic action beats. Built to generate instant pre-orders for author releases.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Google Flow</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Veo Cinema</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Logic Pro Score</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Stack Card 6: AI Avatar Brand Ambassador -->
-                    <div class="stack-card trigger-video-modal cursor-pointer"
-                         data-stack-idx="5"
-                         data-video-url="https://www.youtube.com/embed/sECemgPYcFg?autoplay=1"
-                         data-video-title="Apex Financial — AI Brand Ambassador Campaign"
-                         data-video-category="Multilingual AI Ambassador"
-                         data-video-synopsis="HeyGen generated brand ambassador combined with generated corporate environments, b-roll compositing, and voice replication.">
-                        <div class="stack-card-inner">
-                            <div class="relative overflow-hidden bg-black/60 h-56 sm:h-full">
-                                <img src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" alt="AI Brand Ambassador Mockup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12] via-transparent to-transparent opacity-80 sm:hidden"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-[#E6C280]/90 text-[#0D0F12] flex items-center justify-center text-lg shadow-[0_0_25px_rgba(230,194,128,0.6)] hover:scale-110 transition-transform">
-                                        <i class="fas fa-play ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-4 px-2.5 py-1 rounded bg-[#0D0F12]/85 border border-[#E6C280]/30 text-[10px] font-mono text-[#E6C280]">
-                                    TYPE 06 // MULTILINGUAL AMBASSADOR
-                                </div>
-                                <div class="absolute bottom-4 right-4 px-2 py-0.5 rounded bg-black/75 text-[10px] font-mono text-[#F5E6C8]">
-                                    00:55
-                                </div>
-                            </div>
-                            <div class="p-6 sm:p-8 flex flex-col justify-between bg-[#12161A]/90">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs font-mono text-[#E6C280] mb-2">
-                                        <span>REEL 06 / 06</span>
-                                        <span>GLOBAL BRAND CAMPAIGN</span>
-                                    </div>
-                                    <h3 class="text-xl sm:text-2xl font-bold font-display text-[#F5E6C8] mb-3">
-                                        Apex Financial — Multilingual AI Ambassador
-                                    </h3>
-                                    <p class="text-xs sm:text-sm text-[#A0AEC0] leading-relaxed mb-4">
-                                        Synchronous neural persona capable of delivering unified executive statements across 28 global languages with authentic phoneme lip matching, studio depth of field, and brand color grading.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">HeyGen Pro</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Photoshop Comps</span>
-                                        <span class="px-2.5 py-1 rounded-full text-[11px] bg-[#0D0F12] text-[#E6C280] border border-[#E6C280]/20 font-mono">Voice Cloning</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-[rgba(245,230,200,0.1)]">
-                                    <span class="text-xs text-[#8B949E] flex items-center gap-1.5"><i class="fas fa-play text-[10px] text-[#E6C280]"></i> Click to Stream Reel</span>
-                                    <span class="text-xs font-bold text-[#E6C280] flex items-center gap-1 hover:translate-x-1 transition-transform">Inspect Full Cut <i class="fas fa-arrow-right text-[10px]"></i></span>
-                                </div>
+                            <!-- Progress Track Bar -->
+                            <div class="w-48 sm:w-60 bg-[#12161A] h-1.5 rounded-full overflow-hidden border border-[rgba(245,230,200,0.12)]">
+                                <div id="portfolioProgressBar" class="h-full bg-gradient-to-r from-[#E6C280] to-[#FFF3CD] w-[16.6%] transition-all duration-150"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- CENTER STAGE: HORIZONTAL MOVING TRACK & FLOATING VIDEO CARDS -->
+                <div id="portfolioStageViewport" class="portfolio-stage-viewport relative w-full my-auto">
+                    <!-- Dark Glossy Reflection Floor (Inspired by Reference Image) -->
+                    <div class="portfolio-reflection-floor pointer-events-none" aria-hidden="true"></div>
+                    <div class="portfolio-reflection-glow pointer-events-none" aria-hidden="true"></div>
+
+                    <!-- Horizontal Track -->
+                    <div id="portfolioTrack" class="portfolio-track">
+                        
+                        <!-- CARD 01: The Lost Realm (AI Cinematic) -->
+                        <div class="portfolio-card is-active group"
+                             data-idx="0"
+                             data-video-url="/media/service-anim-1.mp4"
+                             data-video-title="The Lost Realm"
+                             data-video-category="AI CINEMATIC"
+                             data-video-synopsis="Cinematic Adventure | AI Generated. Ultra-wide anamorphic capture of floating citadels and relativistic nebulas, rendered with neural physics and cinematic lighting.">
+                            <!-- Real HTML5 Video Element -->
+                            <video class="portfolio-card-video"
+                                   src="/media/service-anim-1.mp4"
+                                   poster="/src/assets/images/cinematic_ai_studio_1790219642646.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <!-- Optical Vignette Layer -->
+                            <div class="portfolio-card-vignette"></div>
+
+                            <!-- Top Bar: Category Pill & Specs Badge -->
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    AI CINEMATIC
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        2.39:1 · 4K 60FPS
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Bar: Title, Metadata, Toolchain & Action Button -->
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        The Lost Realm
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        Cinematic Adventure | AI Generated
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Veo 2</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Kling AI</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">After Effects</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CARD 02: Neon Soul (AI Character & Portrait) -->
+                        <div class="portfolio-card group"
+                             data-idx="1"
+                             data-video-url="/media/video1.webm"
+                             data-video-title="Neon Soul"
+                             data-video-category="AI PORTRAIT"
+                             data-video-synopsis="Character Design | AI Generated. Rigorous visual continuity across 50+ camera angles with cohesive facial geometry, raytraced wet pavement reflections, and cinematic depth of field.">
+                            <video class="portfolio-card-video"
+                                   src="/media/video1.webm"
+                                   poster="/src/assets/images/genai_creative_visual_1790218743541.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <div class="portfolio-card-vignette"></div>
+
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    AI PORTRAIT
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        16:9 · 4K UHD
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        Neon Soul
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        Character Design | AI Generated
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Midjourney v6</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Runway Gen-3</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Face Consistency</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CARD 03: Future Drive (3D Hybrid Commercial) -->
+                        <div class="portfolio-card group"
+                             data-idx="2"
+                             data-video-url="/media/video.mp4"
+                             data-video-title="Future Drive"
+                             data-video-category="AI CINEMATIC"
+                             data-video-synopsis="Cinematic Scene | AI Generated. Hyper-realistic supercar cruising neon rain-slicked thoroughfares. Blending CAD mesh modeling with generative particle atmosphere.">
+                            <video class="portfolio-card-video"
+                                   src="/media/video.mp4"
+                                   poster="/src/assets/images/web_tech_architecture_1790219622367.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <div class="portfolio-card-vignette"></div>
+
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    AI CINEMATIC
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        IMAX 70MM · CAD HYBRID
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        Future Drive
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        Cinematic Scene | AI Generated
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Blender 3D</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">CAD Raytracing</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">DaVinci Color</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CARD 04: Lumina Cellular Skincare (AI UGC Viral Ad) -->
+                        <div class="portfolio-card group"
+                             data-idx="3"
+                             data-video-url="/media/service-anim-2.mp4"
+                             data-video-title="Lumina Cellular Skincare"
+                             data-video-category="VIRAL UGC AD"
+                             data-video-synopsis="AI UGC Commercial | 4.8x Meta & TikTok ROAS. Realistic synthetic creator avatars, authentic conversational pacing, micro-expressions, texture close-ups, and an immediate 3-second hook.">
+                            <video class="portfolio-card-video"
+                                   src="/media/service-anim-2.mp4"
+                                   poster="https://res.cloudinary.com/iscdlbxg/image/upload/v1790332667/profile_pixx.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <div class="portfolio-card-vignette"></div>
+
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    VIRAL UGC AD
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        9:16 SOCIAL · 4.8X ROAS
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        Lumina Cellular Skincare
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        AI UGC Commercial | 4.8x Meta &amp; TikTok ROAS
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Talking Avatar</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Viral Hooks</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Meta Funnels</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CARD 05: The Obsidian Villa (Architectural Walkthrough) -->
+                        <div class="portfolio-card group"
+                             data-idx="4"
+                             data-video-url="/media/service-anim-3.mp4"
+                             data-video-title="The Obsidian Villa"
+                             data-video-category="ARCHITECTURAL WALKTHROUGH"
+                             data-video-synopsis="Luxury Real Estate | Spatial Lighting. Seamless drone fly-ins transitioning into luxurious marble interiors, floor-to-ceiling glass daylight simulations, and acoustic spatial reverbs.">
+                            <video class="portfolio-card-video"
+                                   src="/media/service-anim-3.mp4"
+                                   poster="/src/assets/images/cinematic_ai_studio_1790219642646.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <div class="portfolio-card-vignette"></div>
+
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    ARCHITECTURAL FLYTHROUGH
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        4K ARCHVIZ · SPATIAL AUDIO
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        The Obsidian Villa
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        Luxury Real Estate | Spatial Lighting
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Hailuo Minimax</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Kling 1.5</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Spatial Reverb</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CARD 06: Synthetix Cloud (SaaS Interface Explainer) -->
+                        <div class="portfolio-card group"
+                             data-idx="5"
+                             data-video-url="/media/video2.webm"
+                             data-video-title="Synthetix Cloud Platform"
+                             data-video-category="SAAS MOTION EXPLAINER"
+                             data-video-synopsis="Kinetic Interface | Neural Voiceover. Deconstructs intricate cloud dashboards into kinetic 3D isometric perspectives with synced neural narration to accelerate enterprise conversions.">
+                            <video class="portfolio-card-video"
+                                   src="/media/video2.webm"
+                                   poster="/src/assets/images/web_architecture_showcase_1790218763597.jpg"
+                                   muted
+                                   playsinline
+                                   loop
+                                   preload="metadata">
+                            </video>
+
+                            <div class="portfolio-card-vignette"></div>
+
+                            <div class="absolute top-4 sm:top-5 left-4 sm:left-5 right-4 sm:right-5 flex items-center justify-between z-20 pointer-events-none">
+                                <span class="px-3 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 font-mono text-[11px] font-bold tracking-wider backdrop-blur-md uppercase">
+                                    SAAS MOTION EXPLAINER
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <div class="portfolio-live-indicator flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/30 text-[10px] font-mono backdrop-blur-md">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span>ACTIVE REEL</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-[#0D0F12]/80 text-[#F5E6C8] border border-[rgba(245,230,200,0.15)] font-mono text-[10px] backdrop-blur-md">
+                                        60 FPS · ISOMETRIC 3D
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex items-end justify-between gap-4 z-20 pointer-events-none">
+                                <div class="max-w-lg">
+                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-[#F5E6C8] drop-shadow-md leading-tight">
+                                        Synthetix Cloud Platform
+                                    </h3>
+                                    <p class="text-xs sm:text-sm text-[#C9D1D9] font-medium mt-1 leading-snug drop-shadow">
+                                        Kinetic Interface | Neural Voice
+                                    </p>
+                                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">Figma Motion</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">After Effects</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#0D0F12]/85 text-[#E6C280] border border-[#E6C280]/20">ElevenLabs</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="portfolio-card-action-btn pointer-events-auto w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#E6C280] text-[#0D0F12] hover:bg-[#FFF3CD] flex items-center justify-center text-sm shadow-[0_0_20px_rgba(230,194,128,0.5)] transition-transform duration-300 hover:scale-110 shrink-0" aria-label="Stream Video Cut">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BOTTOM STATS / METRICS BAR (FROM REFERENCE IMAGE) -->
+                <div class="portfolio-stats-bar max-w-6xl mx-auto w-full pt-4 sm:pt-6 pb-2 border-t border-[rgba(245,230,200,0.1)]">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 text-center">
+                        <div class="flex items-center justify-center gap-3 py-2.5 px-3 rounded-xl bg-[#12161A]/70 border border-[rgba(245,230,200,0.08)] backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-lg bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-sm shrink-0">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-base sm:text-lg font-bold font-display text-[#F5E6C8] leading-tight">9+</div>
+                                <div class="text-[10px] font-mono text-[#8B949E] uppercase tracking-wider">Projects Completed</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-3 py-2.5 px-3 rounded-xl bg-[#12161A]/70 border border-[rgba(245,230,200,0.08)] backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-lg bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-sm shrink-0">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-base sm:text-lg font-bold font-display text-[#F5E6C8] leading-tight">100%</div>
+                                <div class="text-[10px] font-mono text-[#8B949E] uppercase tracking-wider">AI Powered</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-3 py-2.5 px-3 rounded-xl bg-[#12161A]/70 border border-[rgba(245,230,200,0.08)] backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-lg bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-sm shrink-0">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-base sm:text-lg font-bold font-display text-[#F5E6C8] leading-tight">5+</div>
+                                <div class="text-[10px] font-mono text-[#8B949E] uppercase tracking-wider">Happy Clients</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-3 py-2.5 px-3 rounded-xl bg-[#12161A]/70 border border-[rgba(245,230,200,0.08)] backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-lg bg-[#E6C280]/15 text-[#E6C280] flex items-center justify-center text-sm shrink-0">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-base sm:text-lg font-bold font-display text-[#F5E6C8] leading-tight">∞</div>
+                                <div class="text-[10px] font-mono text-[#8B949E] uppercase tracking-wider">Creative Possibilities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 

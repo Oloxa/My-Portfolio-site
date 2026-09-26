@@ -492,10 +492,10 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow relative z-10">
+    <main class="flex-grow pt-24 sm:pt-28 lg:pt-32 relative z-10">
 
         <!-- 1. HERO SECTION: ADVENTURE & STORYTELLING -->
-        <section id="hero" class="snap-section relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
+        <section id="hero" class="snap-section relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 lg:pt-12 pb-20 overflow-hidden">
             <!-- Background Ambient Glows -->
             <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-b from-[#E6C280]/15 via-[#FFF3CD]/5 to-transparent rounded-full blur-[140px] pointer-events-none" aria-hidden="true"></div>
 
@@ -541,45 +541,51 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Visual Portrait & Proof Badges -->
+                <!-- Right Column: Visual Portrait & Proof Badges (Optimized scale & zero face/image obstruction) -->
                 <div class="lg:col-span-5 relative hero-fade-in flex justify-center">
-                    <div class="relative w-full max-w-md">
-                        <div class="absolute -inset-1.5 rounded-[28px] bg-gradient-to-tr from-[#E6C280]/30 via-transparent to-[#FFF3CD]/20 blur-md"></div>
+                    <div class="relative w-full max-w-[320px] sm:max-w-[340px]">
+                        <!-- Subtle Ambient Glow Behind Card -->
+                        <div class="absolute -inset-1.5 rounded-[26px] bg-gradient-to-tr from-[#E6C280]/25 via-transparent to-[#FFF3CD]/15 blur-md pointer-events-none"></div>
                         
-                        <div class="relative rounded-[24px] overflow-hidden glass-container p-2.5">
-                            <div class="relative aspect-[3/4] rounded-[20px] overflow-hidden bg-[#161B22]">
+                        <!-- Portrait Glass Container -->
+                        <div class="relative rounded-[22px] overflow-hidden glass-container p-2.5 sm:p-3 shadow-2xl bg-[#0D0F12]/85 border border-[rgba(245,230,200,0.14)]">
+                            <!-- Image Frame: Unobscured Portrait View -->
+                            <div class="relative aspect-[3/4] rounded-[16px] overflow-hidden bg-[#161B22] border border-[rgba(245,230,200,0.08)]">
                                 <img 
-                                    src="/src/assets/images/michael_portrait_hero_1790219600904.jpg" 
+                                    src="https://res.cloudinary.com/iscdlbxg/image/upload/v1790332667/profile_pixx.jpg" 
                                     alt="H.O. Damilare Michael - Multidisciplinary Web Architect & AI Video Creator" 
-                                    class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                                    class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-102"
                                     loading="eager"
                                 />
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12]/85 via-transparent to-transparent"></div>
-                                <div class="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#0D0F12]/70 backdrop-blur-md border border-[rgba(245,230,200,0.12)]">
-                                    <div class="text-xs uppercase tracking-wider text-[#E6C280] font-semibold">Visionary Technologist &amp; Director</div>
-                                    <div class="text-sm font-bold text-[#F5E6C8]">H.O. Damilare Michael</div>
-                                </div>
+                                <!-- Soft Subtle Base Vignette that leaves face and torso completely visible -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0D0F12]/35 via-transparent to-transparent pointer-events-none"></div>
+                            </div>
+
+                            <!-- Dedicated Name & Title Caption Positioned Below Photo (Zero Overlap on Image) -->
+                            <div class="pt-2.5 pb-1 px-1 text-center">
+                                <div class="text-[10px] uppercase tracking-wider text-[#E6C280] font-semibold font-mono">Visionary Technologist &amp; Director</div>
+                                <div class="text-sm font-bold text-[#F5E6C8] tracking-tight">H.O. Damilare Michael</div>
                             </div>
                         </div>
 
-                        <!-- Proof Badges -->
-                        <div class="absolute -bottom-5 -left-5 bg-[#12161A]/90 backdrop-blur-md border border-[#E6C280]/30 rounded-2xl p-3.5 shadow-2xl hidden sm:flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280]">
-                                <i class="fas fa-code text-lg"></i>
+                        <!-- Proof Badges: Outward Floating Satellite Chips (Zero Obstruction on Image) -->
+                        <div class="absolute -bottom-4 -left-4 sm:-left-8 lg:-left-10 bg-[#12161A]/95 backdrop-blur-md border border-[#E6C280]/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 shadow-2xl hidden sm:flex items-center gap-2.5 z-20 hover:border-[#E6C280]/60 transition-colors">
+                            <div class="w-9 h-9 rounded-lg bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280] flex-shrink-0">
+                                <i class="fas fa-code text-base"></i>
                             </div>
                             <div>
-                                <div class="text-lg font-extrabold text-[#F5E6C8] font-mono tabular-nums">120+</div>
-                                <div class="text-xs text-[#8B949E]">Platforms &amp; Systems Shipped</div>
+                                <div class="text-base font-extrabold text-[#F5E6C8] font-mono tabular-nums leading-tight">120+</div>
+                                <div class="text-[11px] text-[#8B949E] whitespace-nowrap">Platforms Shipped</div>
                             </div>
                         </div>
 
-                        <div class="absolute -top-4 -right-4 bg-[#12161A]/90 backdrop-blur-md border border-[#E6C280]/30 rounded-2xl p-3.5 shadow-2xl hidden sm:flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280]">
-                                <i class="fas fa-users text-lg"></i>
+                        <div class="absolute -top-4 -right-4 sm:-right-8 lg:-right-10 bg-[#12161A]/95 backdrop-blur-md border border-[#E6C280]/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 shadow-2xl hidden sm:flex items-center gap-2.5 z-20 hover:border-[#E6C280]/60 transition-colors">
+                            <div class="w-9 h-9 rounded-lg bg-[#E6C280]/15 flex items-center justify-center text-[#E6C280] flex-shrink-0">
+                                <i class="fas fa-users text-base"></i>
                             </div>
                             <div>
-                                <div class="text-lg font-extrabold text-[#F5E6C8] font-mono tabular-nums">45K+</div>
-                                <div class="text-xs text-[#8B949E]">Leaders &amp; Community Coached</div>
+                                <div class="text-base font-extrabold text-[#F5E6C8] font-mono tabular-nums leading-tight">45K+</div>
+                                <div class="text-[11px] text-[#8B949E] whitespace-nowrap">Leaders Coached</div>
                             </div>
                         </div>
                     </div>

@@ -217,248 +217,68 @@
         <i class="fas fa-address-book"></i>
     </button>
 
-    <!-- FLOATING ISLAND NAVIGATION -->
-    <header class="mho-nav-pill-wrapper" role="banner">
-        <div class="mho-nav-pill">
-            <a href="index.html" class="mho-brand-mark">
-                HODM <span class="brand-sub hidden sm:inline">· H.O. Damilare Michael</span>
-            </a>
+    <!-- FLOATING SECTIONS HAMBURGER HEADER NAV -->
+    <nav class="page-sections-nav-wrapper" id="pageSectionsNav" aria-label="Page Sections Navigation">
+        <div class="page-sections-pill" id="pageSectionsPill">
+            <!-- Hamburger Toggle Trigger -->
+            <button id="sectionsMenuToggle" type="button" class="sections-hamburger-btn" aria-expanded="false" aria-controls="sectionsHorizontalMenu" aria-label="Toggle Navigation Menu">
+                <span class="hamburger-icon-wrap" aria-hidden="true">
+                    <span class="ham-bar ham-bar-1"></span>
+                    <span class="ham-bar ham-bar-2"></span>
+                    <span class="ham-bar ham-bar-3"></span>
+                </span>
+                <span class="sections-btn-label">Menu</span>
+                <span class="sections-badge-count">7</span>
+                <i class="fas fa-chevron-right sections-btn-arrow" aria-hidden="true"></i>
+            </button>
 
-            <nav class="mho-nav-links" aria-label="Main Navigation">
-                <!-- 01: Home & Bio -->
-                <div class="mho-nav-item">
-                    <a href="index.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Home &amp; Bio</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
+            <!-- Horizontal Section Nav Menu (revealed when clicked) -->
+            <div id="sectionsHorizontalMenu" class="sections-horizontal-menu">
+                <div class="sections-horizontal-scroll" role="menubar">
+                    <!-- Horizontal Section Titles -->
+                    <a href="#hero" class="section-nav-link active" role="menuitem" data-section="hero">
+                        <span class="section-num">01</span>
+                        <span>Overview</span>
                     </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>01 // Home Navigation</span>
-                            <i class="fas fa-compass text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="index.html#hero" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-user-tie"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Bio &amp; Vision</span>
-                                <span class="mho-submenu-desc">Multidisciplinary Profile &amp; Bio</span>
-                            </div>
-                        </a>
-                        <a href="index.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Director Statement</span>
-                                <span class="mho-submenu-desc">Personal Intro Video Briefing</span>
-                            </div>
-                        </a>
-                        <a href="index.html#metrics" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-chart-line"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Impact &amp; Metrics</span>
-                                <span class="mho-submenu-desc">Enterprise Telemetry &amp; Velocity</span>
-                            </div>
-                        </a>
-                        <a href="index.html#philosophy" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-lightbulb"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Core Philosophy</span>
-                                <span class="mho-submenu-desc">Foundational Operating Pillars</span>
-                            </div>
-                        </a>
-                        <a href="index.html#timeline" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-history"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Career Milestones</span>
-                                <span class="mho-submenu-desc">Key Career Trajectory</span>
-                            </div>
-                        </a>
-                        <a href="index.html#contact" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-paper-plane"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Direct Connect</span>
-                                <span class="mho-submenu-desc">Confidential Consultation Form</span>
-                            </div>
-                        </a>
-                    </div>
+                    <a href="#intro-video" class="section-nav-link" role="menuitem" data-section="intro-video">
+                        <span class="section-num">02</span>
+                        <span>Philosophy</span>
+                    </a>
+                    <a href="#dual-carousels" class="section-nav-link" role="menuitem" data-section="dual-carousels">
+                        <span class="section-num">03</span>
+                        <span>Tech Showcase</span>
+                    </a>
+                    <a href="#paginated-portfolio" class="section-nav-link" role="menuitem" data-section="paginated-portfolio">
+                        <span class="section-num">04</span>
+                        <span>Portfolio</span>
+                    </a>
+                    <a href="#services-matrix" class="section-nav-link" role="menuitem" data-section="services-matrix">
+                        <span class="section-num">05</span>
+                        <span>Solutions Matrix</span>
+                    </a>
+                    <a href="#faq" class="section-nav-link" role="menuitem" data-section="faq">
+                        <span class="section-num">06</span>
+                        <span>Technical FAQ</span>
+                    </a>
+                    <a href="#contact-tech" class="section-nav-link" role="menuitem" data-section="contact-tech">
+                        <span class="section-num">07</span>
+                        <span>Consultation</span>
+                    </a>
                 </div>
 
-                <!-- 02: Web Architecture -->
-                <div class="mho-nav-item">
-                    <a href="web-services.html" class="mho-nav-link active" aria-haspopup="true">
-                        <span>Web Architecture</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>02 // Web Engineering</span>
-                            <i class="fas fa-code text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="web-services.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Engineering Philosophy</span>
-                                <span class="mho-submenu-desc">Architecture Overview Video</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#dual-carousels" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-layer-group"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Dual Motion Showcase</span>
-                                <span class="mho-submenu-desc">Bi-Directional Interactive Stream</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#paginated-portfolio" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-th"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Systems Portfolio</span>
-                                <span class="mho-submenu-desc">7-Project Paginated Grid &amp; Modals</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#services-matrix" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-cubes"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Core Capabilities</span>
-                                <span class="mho-submenu-desc">Full-Stack, UI/UX &amp; Engineering</span>
-                            </div>
-                        </a>
-                        <a href="web-services.html#contact-tech" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-terminal"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Engineering Inquiry</span>
-                                <span class="mho-submenu-desc">Commission Custom Web Systems</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 03: Creative AI Space -->
-                <div class="mho-nav-item">
-                    <a href="creative-space.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Creative AI Space</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>03 // AI &amp; 3D Video</span>
-                            <i class="fas fa-film text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="creative-space.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Creative Director Reel</span>
-                                <span class="mho-submenu-desc">Personal Production Statement</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#creative-sectors" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-vr-cardboard"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Production Disciplines</span>
-                                <span class="mho-submenu-desc">UGC, 3D Commercials &amp; SaaS Ads</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#video-grid" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-video"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Streaming Showcase</span>
-                                <span class="mho-submenu-desc">Interactive Modal Video Library</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#workflow-stack" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-wand-magic-sparkles"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Pipeline &amp; Tooling</span>
-                                <span class="mho-submenu-desc">Veo, Kling, Midjourney &amp; Compositing</span>
-                            </div>
-                        </a>
-                        <a href="creative-space.html#contact-creative" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-clapperboard"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Commission AI Video</span>
-                                <span class="mho-submenu-desc">Initiate Campaign Briefing</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 04: Leadership & Health -->
-                <div class="mho-nav-item">
-                    <a href="leadership-business.html" class="mho-nav-link" aria-haspopup="true">
-                        <span>Leadership &amp; Health</span>
-                        <i class="fas fa-chevron-down mho-nav-chevron"></i>
-                    </a>
-                    <div class="mho-nav-submenu" role="menu">
-                        <div class="mho-submenu-header">
-                            <span>04 // Leadership &amp; Vitality</span>
-                            <i class="fas fa-heartbeat text-[10px] text-[#E6C280]"></i>
-                        </div>
-                        <a href="leadership-business.html#intro-video" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-play"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Briefing</span>
-                                <span class="mho-submenu-desc">Leadership &amp; Vitality Video</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#leadership-pillars" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-sitemap"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Duplication Architecture</span>
-                                <span class="mho-submenu-desc">Scalable Network Leadership Systems</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#supplements" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-capsules"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Cellular Health &amp; NAD+</span>
-                                <span class="mho-submenu-desc">Mitochondrial Longevity Protocols</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#ecosystem-model" class="mho-submenu-item" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-project-diagram"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Strategic Growth Model</span>
-                                <span class="mho-submenu-desc">Distributor Scaling Blueprint</span>
-                            </div>
-                        </a>
-                        <a href="leadership-business.html#contact-leadership" class="mho-submenu-item highlight" role="menuitem">
-                            <span class="mho-submenu-icon"><i class="fas fa-handshake"></i></span>
-                            <div class="mho-submenu-text">
-                                <span class="mho-submenu-title">Executive Consultation</span>
-                                <span class="mho-submenu-desc">Mentorship &amp; Health Inquiries</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="flex items-center gap-2.5">
-                <a href="#contact-tech" class="mho-nav-cta">
-                    Consultation
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </a>
-                <button class="mho-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <!-- Close Button -->
+                <button id="sectionsMenuClose" type="button" class="sections-close-btn" aria-label="Collapse Section Menu">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
-    </header>
-
-    <!-- MOBILE DRAWER -->
-    <div class="mho-mobile-drawer" role="dialog" aria-label="Mobile Menu">
-        <a href="index.html">01 // Home &amp; Biography</a>
-        <a href="web-services.html" class="active">02 // Web Architecture</a>
-        <a href="creative-space.html">03 // Creative AI Space</a>
-        <a href="leadership-business.html">04 // Leadership &amp; Health</a>
-        <div class="pt-2">
-            <a href="#contact-tech" class="mho-nav-cta justify-center w-full">
-                Request Consultation &nbsp;<i class="fas fa-terminal"></i>
-            </a>
-        </div>
-    </div>
+    </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow pt-28 pb-16 relative z-10">
+    <main class="flex-grow pt-20 sm:pt-24 pb-16 relative z-10">
 
         <!-- 1. TECHNICAL HERO SECTION -->
-        <section class="relative min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <section id="hero" class="relative min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-[#E6C280]/10 via-[#FFF3CD]/5 to-transparent rounded-full blur-[150px] pointer-events-none"></div>
 
             <div class="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
